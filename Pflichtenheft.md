@@ -39,7 +39,7 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 > ![EventErstellen](.png)
 
 #### 3.4.2 Workflow
-> Events kann man nur erstellen wenn man eingeloggt ist. Beim Eventerstellen muss man den Namen und das Datum/Uhrzeit des Events angeben. Man kann auch eine Beschreibung und Anforderungen(Bsp. Alter) hinzufügen. Wenn es wäre kann man auch den Eintritt anzeigen.
+> Events kann man nur erstellen wenn man eingeloggt ist. Beim Eventerstellen muss man den Namen, das Datum/Uhrzeit und die Eventart des Events angeben. Man kann auch eine Beschreibung und Anforderungen(Bsp. Alter) hinzufügen. Wenn es wäre, kann man auch den Eintritt anzeigen lassen.
 
 ### 3.5. Verwaltung
 #### 3.5.1 GUI-Design
@@ -53,7 +53,7 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 > ![Verifikation](.png)
 
 #### 3.6.2 Workflow
-> Veranstaltungsfirmen können eine Verifikationsanfrage stellen, die ein Admin genehmigen müssen, bevor der Account verifiziert wird. 
+> Veranstaltungsfirmen können eine Verifikationsanfrage stellen, die ein Admin genehmigen müssen, bevor der Account verifiziert wird. Die Verifikation ist dazu da, dass nicht jeder beliebig öffentliche Events erstellen kann, um Leute davon abzuhalten falsche Events zu erstellen.
 
 ### 3.7. Chat
 #### 3.7.1 GUI-Design
