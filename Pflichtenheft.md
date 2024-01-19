@@ -22,21 +22,21 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 
 ### 3.2. Restricted Events
 #### 3.2.1 GUI-Design
-> ![RestrictedEvents](.png)
+> ![RestrictedEvents](Events.png)
 
 #### 3.2.2 Workflow
 > Restricted Events sind Events, die jeder mit einem Login erstellen kann. Diese Events können nur Leute sehen, die eingeloggt und mit der Person, die es erstellt hat, folgen oder eine Einladung von der Person bekommen. Teilnehmer können hier auch direkt angeben, ob sie kommen oder nicht.
 
 ### 3.3. Public Events
 #### 3.3.1 GUI-Design
->![PublicEvents](.png)
+>![PublicEvents](Events.png)
 
 #### 3.3.2 Workflow
 > Public Events können nur von verifizierte Accounts erstellt werden. Jeder kann diese Events sehen, egal ob eingeloggte oder nicht. Wenn es ein Event ist, bei dem man Tickets braucht, wird man über einen Link auf die WebSite geleitet, die diese verkauft.
 
 ### 3.4. Event erstellen
 #### 3.4.1 GUI-Design
-> ![EventErstellen](.png)
+> ![EventErstellen](EventsErstellen.png)
 
 #### 3.4.2 Workflow
 > Events kann man nur erstellen, wenn man eingeloggt ist. Beim Eventerstellen muss man den Namen, das Datum/Uhrzeit und die Eventart des Events angeben. Man kann auch eine Beschreibung und Anforderungen(Bsp. Alter) hinzufügen. Wenn es wäre, kann man auch den Eintritt anzeigen lassen.
@@ -46,7 +46,7 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 > ![Verwaltung](.png)
 
 #### 3.5.2 Workflow
-> Admins können neben den Veranstalter Events auch verwalten und löschen.
+> Admins können neben den Veranstalter Events auch verwalten und löschen, wenn sie gegen die Nutzungsbedingungen verstoßen.
 
 ### 3.6. Verifikation
 #### 3.6.1 GUI-Design
@@ -57,7 +57,7 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 
 ### 3.7. Chat
 #### 3.7.1 GUI-Design
-> ![Chat](.png)
+> ![Chat](Chat.png)
 
 #### 3.7.2 Workflow
 > Der, der ein Event erstellt kann auch einstellen, ob es eine Chatfunktion für dieses Event geben soll.
