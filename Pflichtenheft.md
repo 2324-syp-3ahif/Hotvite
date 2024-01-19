@@ -39,14 +39,14 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 
 ### 3.4. Verwaltung
 #### 3.4.1 GUI-Design
-> ![Verwaltung](.png)
+> ![Verwaltung](Manage.png)
 
 #### 3.4.2 Workflow
 > Admins können neben den Veranstalter Events auch verwalten und löschen, wenn sie gegen die Nutzungsbedingungen verstoßen.
 
 ### 3.5. Verifikation
 #### 3.5.1 GUI-Design
-> ![Verifikation](.png)
+> ![Verifikation](Verification.png)
 
 #### 3.5.2 Workflow
 > Veranstaltungsfirmen können eine Verifikationsanfrage stellen, die ein Admin genehmigen müssen, bevor der Account verifiziert wird. Die Verifikation ist dazu da, dass nicht jeder beliebig öffentliche Events erstellen kann, um Leute davon abzuhalten falsche Events zu erstellen. 
