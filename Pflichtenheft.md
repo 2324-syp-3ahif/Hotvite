@@ -39,7 +39,7 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 > ![EventErstellen](.png)
 
 #### 3.4.2 Workflow
-> Events kann man nur erstellen wenn man eingeloggt ist.
+> Events kann man nur erstellen wenn man eingeloggt ist. Beim Eventerstellen muss man den Namen und das Datum/Uhrzeit des Events angeben. Man kann auch eine Beschreibung und Anforderungen(Bsp. Alter) hinzufügen. Wenn es wäre kann man auch den Eintritt anzeigen.
 
 ### 3.5. Verwaltung
 #### 3.5.1 GUI-Design
