@@ -12,7 +12,7 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 
 # 2. Zielsetzung
 > Wir wollen eine Plattform schaffen, die es jedem ermöglicht, ein Publikum zu finden, mit dem man die Zeit verbringen möchte. Aktuell müssen Veranstalter ihre Events online auf einer Website bekannt geben, Plakate aufhängen oder anderen Leuten davon berichten.
-![Mindmap](Mindmap.jpg)
+![Mindmap](assets/Mindmap.jpg)
 > Unsere App soll eine übersichtliche Karte von Orten in der Umgebung anzeigen, an denen Veranstaltungen stattfinden. Der Benutzer kann sich die Veranstaltungen in seiner Nähe anzeigen lassen und sich für diese anmelden. Er kann auch selber eine Veranstaltung erstellen und diese mit anderen teilen. Potenzielle Teilnehmer können sich auf Knopfdruck für Veranstaltungen anmelden und werden automatisch benachrichtigt, wenn sich etwas an der Veranstaltung ändert. Der Veranstalter kann die Teilnehmerzahl begrenzen und die Teilnehmerliste einsehen.
 
 
@@ -46,10 +46,10 @@ Ein Risiko bei der Projektentwicklung ist, dass Google die API kostenpflichtig m
 
 
 # UCD Diagram
-![UCD Diagram](HotviteUCDiagramv2.drawio.png)
+![UCD Diagram](assets/HotviteUCDiagramv2.drawio.png)
 
 # GUI Mockup
 
-![Landing Page](LandingPage.png)
+![Landing Page](assets/LandingPage.png)
 
 Link zum Mockup: https://www.figma.com/community/file/1318324013071176549
