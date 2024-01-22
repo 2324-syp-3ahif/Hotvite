@@ -57,36 +57,3 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 
 #### 3.6.2 Workflow
 > Der, der ein Event erstellt kann auch einstellen, ob es eine Chatfunktion für dieses Event geben soll.
-
-
-# 4. Anforderung
-### 4.1. Anforderungen an die Applikationssoftware
-> Die Applikation muss dem Benutzer die Möglichkeit bieten, Veranstaltungen zu erstellen, zu bearbeiten und zu löschen.
-
-### 4.2. Anforderungen an die Systemplattform
-> Geplant hier ist das wir uns einen suchen Server. Zurzeit ist aber noch keiner vorhanden.
-
-### 4.3. Anbieter bezogene Anforderungen
-> Ein Support-Service muss rund um die Uhr verfügbar sein, um Probleme zeitnah zu beheben.
-
-
-# 5. Mengengerüst
-> - Datenbewegungen: > 10MB 
-> - Verfügbarer Server Speicher: > 200GB 
-> - Anzahl der maximalen gleichzeitiger Benutzer: > 100-200 Benutzer 
-
-
-# 6. Aufbau und Inhalte der Offerte
-> - Wir wollen (Leo Oberndorfer, Lisa Wieshofer, Moritz Bernhofer) eine 1 auf das Projekt. Das ist unser Angebot. Für die Plannung eine 1. Für die kommende Implementierung 1.
-> - Management Summary
-> - Beschreibung der angebotenen Leistungen entsprechend der Gliederung der Kapitel „Zielsetzung" und „Anforderungen"
-
-
-# 7. Administratives
-> - Die Rechte des Projektes gehen an Leo Oberndorfer, Lisa Wieshofer und Moritz Bernhofer
-> - Evaluationsschwerpunkte
-> - Verteiler
-> - Wir haben kein Budge.
-> - Rückfragen zum Pflichtenheft
-> - Das Projekt wird zum Ende des zweiten Semesters fertig gestellt
-> - Eine 1 auf das Projekt in WMC und SYP.
