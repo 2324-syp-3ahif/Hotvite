@@ -18,7 +18,7 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 
 # 3. Funktionale Anforderungen
 ### 3.1. Use Case Überblick
-![UseCase](assets/HotviteUCDiagramv2.drawio.png)
+![UseCase](assets/HotviteUCDiagramv3.drawio.png)
 
 ### 3.2. Events
 #### 3.2.1 GUI-Design
