@@ -18,42 +18,46 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 
 # 3. Funktionale Anforderungen
 ### 3.1. Use Case Überblick
-![UseCase](assets/HotviteUCDiagramv3.drawio.png)
+> ![UseCase](assets/HotviteUCDiagramv4.drawio.png)
 
-### 3.2. Events
+
+## 3.2. Manage profile
 #### 3.2.1 GUI-Design
-> ![RestrictedEvents](assets/Events.png)
+> ![ManageProfile](assets/ManageProfil.png)
 
-#### 3.2.2 Workflow Restricted Events
-> Restricted Events sind Events, die jeder mit einem Login erstellen kann. Diese Events können nur Leute sehen, die eingeloggt und mit der Person, die es erstellt hat, folgen oder eine Einladung von der Person bekommen. Teilnehmer können hier auch direkt angeben, ob sie kommen oder nicht.
+#### 3.2.2 Workflow
+> Nach dem Einloggen kann das Profil angepasst werden, indem man auf sein Profil geht, auf "Bearbeiten" klickt und dann anschließend nach Belieben seinen Namen, die Beschreibung und sein Profilbild ändern. Zusätzlich kann man auch seine Sozial-Media verlinken.
 
-#### 3.2.3 Workflow Public Events
-> Public Events können nur von verifizierte Accounts erstellt werden. Jeder kann diese Events sehen, egal ob eingeloggte oder nicht. Wenn es sich um ein Event handelt, für das Tickets erforderlich sind, wird der Benutzer über einen Link zur Website weitergeleitet, auf der die Tickets verkauft werden.
 
-### 3.3. Event erstellen
+## 3.3. Creat Event
 #### 3.3.1 GUI-Design
-> ![EventErstellen](assets/EventsErstellen.png)
+> ![CreatEvent](assets/CreatEvents.png)
 
 #### 3.3.2 Workflow
-> Events kann man nur erstellen, wenn man eingeloggt ist. Bei der Erstellung müssen der Name, das Datum/Uhrzeit und die Art des Events angegeben werden. Es besteht auch die Möglichkeit, eine Beschreibung und Anforderungen(Bsp. Mindestalter) hinzuzufügen. Falls zutreffend, kann auch der Eintrittspreis angezeigt werden.
+> Events können nur erstellt werden, wenn man angemeldet ist. Bei der Erstellung müssen der Name, das Datum/Uhrzeit und die Art des Events angegeben werden. Zusätzlich besteht die Möglichkeit, eine Beschreibung sowie Anforderungen (z.B. Mindestalter). Ebenso muss der Eintrittspreis angegeben werden. Der Veranstalter kann außerdem festlegen, ob eine Chatfunktion für dieses Event aktiviert werden soll.
 
-### 3.4. Verwaltung
-#### 3.4.1 GUI-Design
-> ![Verwaltung](assets/Manage.png)
 
-#### 3.4.2 Workflow
-> Admins können neben den Veranstalter Events auch verwalten und löschen, wenn sie gegen die Nutzungsbedingungen verstoßen.
+## 3.4 Manage Event
+#### 3.4.1 Workflow
+> Nach der Erstellung des Events können weiterhin Änderungen vorgenommen werden. Der Name sowie die Beschreibung können geändert werden. Sollte das Event verschoben werden, ist es möglich, dies direkt anzupassen. Zusätzlich können Bedingungen hinzugefügt oder entfernt werden, und der Eintrittspreis kann erhöht oder gesenkt werden. Der Veranstalter hat auch die Möglichkeit, die Chatfunktion nachträglich zu aktivieren oder zu deaktivieren.
 
-### 3.5. Verifikation
+
+## 3.5 Event Chat
 #### 3.5.1 GUI-Design
-> ![Verifikation](assets/Verification.png)
+> ![ManageRunningEvent](assets/Chat.png)
 
 #### 3.5.2 Workflow
-> Veranstaltungsfirmen können eine Verifikationsanfrage stellen, die ein Admin genehmigen müssen, bevor der Account verifiziert wird. Die Verifikation ist dazu da, dass nicht jeder beliebig öffentliche Events erstellen kann, um Leute davon abzuhalten falsche Events zu erstellen. 
+> Sobald der Chat aktiviert ist, können sowohl der Veranstalter als auch die Teilnehmer miteinander chatten. Teilnehmer erhalten Zugriff auf den Chat, sobald sie dem Event beigetreten sind. Nachdem man das Event verlassen hat, bleibt der Chat zwar sichtbar, jedoch ist es einem nicht mehr möglich, Nachrichten zu schreiben. 
 
-### 3.6. Chat
+
+## 3.6 View Event
 #### 3.6.1 GUI-Design
-> ![Chat](assets/Chat.png)
+> ![EventChat](assets/Event.png)
 
 #### 3.6.2 Workflow
-> Der, der ein Event erstellt kann auch einstellen, ob es eine Chatfunktion für dieses Event geben soll.
+> Auf der Karte sind die Events sichtbar. Diese lassen sich auswählen, um zur Event-Übersicht zu gelangen. Dort findet man die Liste der Teilnehmer und kann prüfen, ob Freunde dabei sind. Teilnehmer haben hier die Möglichkeit, direkt ihre Teilnahme zu bestätigen oder abzusagen. Selbst nach dem Beitritt des Events, ist es möglich es jederzeit wieder zu verlassen.
+
+
+## 3.7. Notifications
+#### 3.7.1 Workflow
+> Wenn das Event nachträglich geändert wird, erhalten die Teilnehmer eine Nachricht und werden sofort über Änderungen informiert, wie zum Beispiel eine geänderte Uhrzeit des Events.
