@@ -46,10 +46,9 @@ Ein Risiko bei der Projektentwicklung ist, dass Google die API kostenpflichtig m
 
 
 # UCD Diagram
-![UCD Diagram](assets/HotviteUCDiagramv3.drawio.png)
+
+![UCD Diagram](assets/HotviteUCDiagramv4.drawio.png)
 
 # GUI Mockup
-
-![Landing Page](assets/LandingPage.png)
 
 Link zum Mockup: https://www.figma.com/community/file/1318324013071176549
