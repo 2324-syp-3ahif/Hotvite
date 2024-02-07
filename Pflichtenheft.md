@@ -29,10 +29,10 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 > Wenn ein User das erste Mal auf die Seite zugreift, bekommt er ein Popup mit einer kurzen Einführung bzw. den Möglichkeiten, die ihm auf unserer Seite zur Verfügung stehen. Startklar ist er, sobald er entweder auf den Button "Let's start" oder auf das X klickt. Danach wird er auf die Karte weitergeleitet. 
 
 ### 3.2.3 View Events
-#### 3.2.1 GUI-Design
+#### 3.2.3.1 GUI-Design
 > ![EventChat](assets/ViewEvents.png)
 
-#### 3.2.2 Workflow
+#### 3.2.3.2 Workflow
 > Diese Ansicht ist die Hauptansicht der Seite. Der User sieht eine Karte, auf der alle Events in seiner Nähe angezeigt werden. Ausgangspunkt der Karte ist der Standort des Users. Sie kann jedoch beliebig verschoben werden. Events, die außerhalb des fokussierten Bereiches liegen, werden erst dann geladen, sobald man die Karte dementsprechend verschiebt. Das selbe umgekehrt: Events, die aus dem Fokus geschoben werden, werden vom Frontend entfernt, um Resourcen zu sparen. Die Events sind mit einem Marker auf der Karte gekennzeichnet und Events, die im Fokus sind, haben deren Titel zusätlich in einer floating box über dem Marker. Events sind dann im Fokus, wenn sie von der Mitte der Ansicht aus die Hälfte des Abstandes zum Seitenrand nicht überschreiten. Ist jedoch nicht genug Platz für die floating box (evtl. aufgrund von zu vielen Events in der Nähe und dem Zoom Level), wird die floating box nicht (mehr) angezeigt.
 
 
