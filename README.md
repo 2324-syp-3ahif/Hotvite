@@ -18,7 +18,7 @@ Lisa Wieshofer, Leo Oberndorfer, Moritz Bernhofer
 
 # 3. Funktionale Anforderungen
 ### 3.1. Use Case Überblick
-> ![UseCase](assets/HotviteUCDiagramv5.png)
+> ![UseCase](assets/HotviteUCDiagramv6.png)
 
 
 ## 3.2 Welcome Screen
