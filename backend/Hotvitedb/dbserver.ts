@@ -1,29 +1,22 @@
-import express, {Request, Response, NextFunction} from "express"
+import express from "express"
 import * as sqlite3 from 'sqlite3';
+import {StatusCodes} from "http-status-codes";
 
 const server = express();
+const db: sqlite3.Database = new sqlite3.Database('data/Hotvitedb.db');
 
 server.use(express.json());
 
-server.listen(3000);
-
-let db: sqlite3.Database;
-server.all('*', (req: Request, res: Response, next: NextFunction) => {
-    db = new sqlite3.Database('data/Hotvitedb.db');
-
-    if (!db) {
-        res.sendStatus(400);
-    }
-
-    next();
+server.listen(3000, () => {
+    console.log("http://localhost:3000/");
 });
 
 server.get("/", (req, res) => {
-    res.send(200).send("Server online");
+    res.sendStatus(StatusCodes.OK);
 });
 
-server.get("/db", (req, res) => {
-    db.all('SELECT * FROM users', (err, rows) => {
+server.get("/db", async (req, res) => {
+   db.all('SELECT UserName, Email, Age FROM users', (err, rows) => {
         if (err) {
             return res.status(500).json({error: 'Error executing query'});
         }
