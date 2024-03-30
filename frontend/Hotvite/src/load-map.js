@@ -4,17 +4,20 @@ async function initMap() {
   // Create the map with no initial style specified.
   // It therefore has default styling.
   map = new google.maps.Map(document.getElementById("map"), {
-    // 48.26847233933563, 14.252129637252795
-    center: { lat: 48.268, lng: 14.252 },
-    zoom: 10,
+    // 48.143168, 13.991348
+    center: { lat: 48.143168, lng: 13.991348 },
+    zoom: 30,
     mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+    mapId: "de1416925a195d99",
   });
 
   const style = await queryStyle();
-  console.log(style);
   map.setOptions({
       styles: style
   });
+  initMapClickEvent(map);
 }
 
 async function queryStyle(){
