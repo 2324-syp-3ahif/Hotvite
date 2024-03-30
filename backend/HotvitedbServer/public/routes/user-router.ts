@@ -3,6 +3,7 @@ import {v4 as uuidv4} from "uuid";
 import express, { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import {check} from 'express-validator';
+import {dbUtility} from "../utilities/db-utilities";
 
 export const userRouter = express.Router();
 
@@ -29,7 +30,7 @@ userRouter.post("/create", validateUser, async (req: Request, res: Response) => 
             aboutme,
         };
 
-        //TODO: Save user to the database
+        await dbUtility.saveUser(user);
 
         res.status(201).json(user);
     } catch (error) {

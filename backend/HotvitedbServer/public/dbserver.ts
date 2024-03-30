@@ -20,13 +20,13 @@ server.listen(3000, () => {
     console.log("http://localhost:3000/");
 });
 
-server.get("/", (req: any, res: any) => {
+server.get("/", (req, res) => {
     res.send("Server online");
 });
 
 //test query
 server.get("/db", (req, res) => {
-   db.all('SELECT UserName, Email FROM user', (err, rows) => {
+    db.all('SELECT username, password, aboutme, email FROM user', (err, rows) => {
         if (err) {
             return res.status(500).json({error: 'Error executing query'});
         }
