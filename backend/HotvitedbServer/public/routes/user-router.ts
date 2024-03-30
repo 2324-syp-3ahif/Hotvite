@@ -1,9 +1,10 @@
 import {User} from "../model";
 import {v4 as uuidv4} from "uuid";
-import express, { Request, Response } from "express";
+import express, {Request, Response} from "express";
 import bcrypt from 'bcrypt';
 import {check} from 'express-validator';
 import {dbUtility} from "../utilities/db-utilities";
+import {METHOD_NOT_ALLOWED} from "http-status-codes";
 
 export const userRouter = express.Router();
 
@@ -18,6 +19,12 @@ const validateUser = [
 userRouter.post("/create", validateUser, async (req: Request, res: Response) => {
     try {
         const {username, email, password, aboutme} = req.body;
+
+        //check if the email is already in use
+        if(await dbUtility.getUserByEmail(email)){
+            res.sendStatus(METHOD_NOT_ALLOWED);
+            return;
+        }
 
         // add salt to the password
         const hashedPassword = await bcrypt.hash(password, 10);
