@@ -21,8 +21,10 @@ userRouter.post("/create", validateUser, async (req: Request, res: Response) => 
         const {username, email, password, aboutme} = req.body;
 
         //check if the email is already in use
-        if(await dbUtility.getUserByEmail(email)){
-            res.sendStatus(METHOD_NOT_ALLOWED);
+        const  result = await dbUtility.getUserByEmail(email);
+
+        if(Array.isArray(result) && result.length >= 1){
+            res.sendStatus(405);
             return;
         }
 
