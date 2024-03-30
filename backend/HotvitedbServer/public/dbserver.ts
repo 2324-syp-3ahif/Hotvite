@@ -1,22 +1,28 @@
 import express from "express"
 import * as sqlite3 from 'sqlite3';
-import {StatusCodes} from "http-status-codes";
 
 const server = express();
-const db: sqlite3.Database = new sqlite3.Database('data/Hotvitedb.db');
 
+
+// Options
 server.use(express.json());
+
+//Routes
+
+
+const db: sqlite3.Database = new sqlite3.Database('../data/Hotvitedb.db');
 
 server.listen(3000, () => {
     console.log("http://localhost:3000/");
 });
 
-server.get("/", (req, res) => {
-    res.sendStatus(StatusCodes.OK);
+server.get("/", (req: any, res: any) => {
+    res.send(200).send("Server online");
 });
 
-server.get("/db", async (req, res) => {
-   db.all('SELECT UserName, Email, Age FROM users', (err, rows) => {
+//test query
+server.get("/db", (req, res) => {
+   db.all('SELECT UserName, Email FROM user', (err, rows) => {
         if (err) {
             return res.status(500).json({error: 'Error executing query'});
         }
