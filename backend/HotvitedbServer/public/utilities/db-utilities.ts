@@ -21,9 +21,30 @@ export class dbUtility {
         }
     }
 
-    public static async getUserByEmail(email:string): Promise<any> {
+    public static async getTableByValue(table: string, column: string, value: string): Promise<any> {
+        try {
+            return new Promise((resolve, reject) => {
+                this.db.all(`SELECT *
+                             FROM ${table}
+                             WHERE ${column} = '${value}'`, (err, rows) => {
+                    if (err) {
+                        console.error('Error fetching $table:', err, {$table: table});
+                        reject(err);
+                        return;
+                    }
+                    resolve(rows);
+                });
+            });
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    public static async getAllFromTable(table: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.db.all('SELECT * FROM user WHERE email = $email', {$email: email} , (err, rows) => {
+            this.db.all(`SELECT *
+                         FROM ${table}`, (err, rows) => {
                 if (err) {
                     console.error('Error fetching users:', err);
                     reject(err);
@@ -34,16 +55,17 @@ export class dbUtility {
         });
     }
 
-    public static async getAllUsers(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.db.all('SELECT * FROM user', (err, rows) => {
-                if (err) {
-                    console.error('Error fetching users:', err);
-                    reject(err);
-                    return;
-                }
-                resolve(rows);
-            });
-        });
+    public static async hasEntryInColumnInTable(table: string, column: string, value: string): Promise<boolean> {
+        const result = await dbUtility.getTableByValue(table, column, value);
+
+        if (isArrayWithLength(result)) {
+            return true;
+        }
+
+        return false;
+
+        function isArrayWithLength<T>(value: any): value is T[] {
+            return Array.isArray(value) && value.length >= 1;
+        }
     }
 }

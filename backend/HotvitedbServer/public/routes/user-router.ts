@@ -1,10 +1,8 @@
 import {User} from "../model";
-import {v4 as uuidv4} from "uuid";
 import express, {Request, Response} from "express";
-import bcrypt from 'bcrypt';
 import {check} from 'express-validator';
 import {dbUtility} from "../utilities/db-utilities";
-import {METHOD_NOT_ALLOWED} from "http-status-codes";
+import {createUser, isValidUser} from "../logic/user-repo";
 
 export const userRouter = express.Router();
 
@@ -18,26 +16,12 @@ const validateUser = [
 
 userRouter.post("/create", validateUser, async (req: Request, res: Response) => {
     try {
-        const {username, email, password, aboutme} = req.body;
+        const user: User = await createUser(req.body);
 
-        //check if the email is already in use
-        const  result = await dbUtility.getUserByEmail(email);
-
-        if(Array.isArray(result) && result.length >= 1){
+        if(!await isValidUser(user)){
             res.sendStatus(405);
             return;
         }
-
-        // add salt to the password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const user: User = {
-            id: uuidv4(),
-            username,
-            email,
-            password: hashedPassword,
-            aboutme,
-        };
 
         await dbUtility.saveUser(user);
 
@@ -47,3 +31,4 @@ userRouter.post("/create", validateUser, async (req: Request, res: Response) => 
         res.status(500).json({error: "Internal server error"});
     }
 });
+

@@ -1,0 +1,32 @@
+@url=http://localhost:3000/api/event/
+
+POST {{url}}create
+Content-Type: application/json
+
+{
+  "title": "title",
+  "description": "desc",
+  "address": {
+    "Street": "geistig Straße 123",
+    "city": "cool city",
+    "country": "austria",
+    "state": "wien"
+  },
+  "location": {
+    "latitude": "48.2082",
+    "longitude": "16.3738"
+  },
+  "type": "event",
+  "creator_id": "30cdc1cd-f8b7-4cc6-8759-0f60f2f220b8",
+  "status": "active",
+  "chat": {
+    "about": "chat about stuff",
+    "name": "chat name"
+  },
+  "created_at": "1711833523765",
+  "event_start_date": "1811833533765",
+  "event_end_date": "1911834533765",
+  "condition": {
+    "text": "min age 18"
+  }
+}
