@@ -21,6 +21,34 @@ export class dbUtility {
         }
     }
 
+   /* public static async saveEvent(event: Event): Promise<boolean> {
+        try {
+            //save address
+
+            //save location
+
+            //save chat
+
+            //save condition
+
+
+            //save event
+            this.db.run(
+                `INSERT INTO event (id, title, description, address_id, location_id, type, creator_id, status, chat_id,
+                                    created_at, event_start_date, event_end_date)
+                 VALUES (?, ?, ?, ?, ?)`,
+                [user.id, user.username, user.email, user.password, user.aboutme]
+            );
+
+            console.log(`User ${user.username} added successfully.`);
+            return true;
+        } catch (error) {
+            console.error('Error inserting new user into database', error);
+            return false;
+        }
+
+    }*/
+
     public static async getTableByValue(table: string, column: string, value: string): Promise<any> {
         try {
             return new Promise((resolve, reject) => {

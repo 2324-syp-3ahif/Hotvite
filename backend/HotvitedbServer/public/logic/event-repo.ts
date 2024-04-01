@@ -14,10 +14,10 @@ export function createEvent(event: Event): Event {
     return event;
 }
 
-export function isValidEvent(event: Event): boolean {
+export async function isValidEvent(event: Event): Promise<boolean> {
     //check if creatorID is valid
 
-    if (!dbUtility.hasEntryInColumnInTable("user", "id", event.creator_id)) {
+    if (!await dbUtility.hasEntryInColumnInTable("user", "id", event.creator_id)) {
         //creatorID has no entry in table user
         return false;
     }

@@ -6,7 +6,6 @@ import {eventRouter} from "./routes/event-router";
 
 const server = express();
 
-
 // Options
 server.use(express.json());
 server.use(cors());

@@ -1,13 +1,17 @@
 import express from "express";
 import {Event} from "../model"
-import {createEvent} from "../logic/event-repo";
+import {createEvent, isValidEvent} from "../logic/event-repo";
 
 export const eventRouter = express.Router();
 
-eventRouter.post("/create", async (req, res) => {
+eventRouter.post("/signup", async (req, res) => {
     try {
         const event: Event = createEvent(req.body);
 
+        if(!await isValidEvent(event)){
+            res.sendStatus(405);
+            return;
+        }
 
         res.json(event);
     } catch (error) {

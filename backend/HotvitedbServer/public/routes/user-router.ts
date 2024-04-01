@@ -14,7 +14,7 @@ const validateUser = [
     check('aboutme').optional().isString(),
 ];
 
-userRouter.post("/create", validateUser, async (req: Request, res: Response) => {
+userRouter.post("/signup", validateUser, async (req: Request, res: Response) => {
     try {
         const user: User = await createUser(req.body);
 

@@ -17,8 +17,8 @@ CREATE TABLE event (
                        status VARCHAR(255),
                        chat_id TEXT,
                        created_at TIMESTAMP,
-                       event_start_data DATETIME,
-                       event_end_data DATETIME,
+                       event_start_date DATETIME,
+                       event_end_date DATETIME,
                        participation_conditions_id TEXT
 );
 
