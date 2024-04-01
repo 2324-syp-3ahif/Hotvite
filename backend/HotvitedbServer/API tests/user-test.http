@@ -1,0 +1,12 @@
+@url=http://localhost:3000/api/user/
+
+POST {{url}}signup
+Content-Type: application/json
+
+{
+  "username": "testname",
+  "email": "test@gmail.com",
+  "password": "123pw",
+  "aboutme": "about me blabla"
+}
+

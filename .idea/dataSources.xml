@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Hotvitedb.db" uuid="393be1fd-c620-4df3-826b-9c07fdb12b02">
+    <data-source source="LOCAL" name="Hotvitedb.db" uuid="e87b44fe-7f5c-4521-b690-e40c5d77985d">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/backend/Hotvitedb/data/Hotvitedb.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/backend/HotvitedbServer/data/Hotvitedb.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
