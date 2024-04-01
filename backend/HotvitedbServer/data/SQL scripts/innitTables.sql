@@ -11,20 +11,20 @@ CREATE TABLE event (
                        title VARCHAR(255),
                        description TEXT,
                        address_id TEXT,
-                       location_id INTEGER,
+                       location_id TEXT,
                        type TEXT,
                        creator_id TEXT,
                        status VARCHAR(255),
                        chat_id TEXT,
-                       created_at TIMESTAMP,
-                       event_start_date DATETIME,
-                       event_end_date DATETIME,
-                       participation_conditions_id TEXT
+                       created_at INTEGER,
+                       event_start_date INTEGER,
+                       event_end_date INTEGER
 );
 
 CREATE TABLE condition (
-                           id TEXT PRIMARY KEY,
-                           text TEXT
+                           event_id TEXT,
+                           text TEXT,
+                           FOREIGN KEY (event_id) REFERENCES event(id)
 );
 
 CREATE TABLE address (
@@ -44,9 +44,9 @@ CREATE TABLE event_participant (
 );
 
 CREATE TABLE location (
-                          id INTEGER PRIMARY KEY,
-                          latitude DECIMAL(8,6),
-                          longitude DECIMAL(9,6)
+                          id TEXT PRIMARY KEY,
+                          latitude TEXT,
+                          longitude TEXT
 );
 
 CREATE TABLE user_saved_events (

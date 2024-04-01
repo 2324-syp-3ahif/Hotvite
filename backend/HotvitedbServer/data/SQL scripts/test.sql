@@ -6,3 +6,7 @@ CREATE TABLE TEST
 select *
 from user;
 
+select *
+from event;
+
+delete from event;

@@ -18,6 +18,7 @@ DELETE FROM event_participant;
 DELETE FROM address;
 DELETE FROM condition;
 DELETE FROM event;
+
 DELETE FROM user;
 
 

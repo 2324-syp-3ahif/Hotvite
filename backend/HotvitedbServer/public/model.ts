@@ -26,7 +26,7 @@ export interface Chat {
 }
 
 export interface Condition {
-    id: string;
+    event_id: string;
     text: string;
 }
 
@@ -40,8 +40,8 @@ export interface Event {
     creator_id: string;
     status: string;
     chat: Chat;
-    created_at: string;
-    event_start_date: string;
-    event_end_date: string;
-    condition: Condition;
+    created_at: number;
+    event_start_date: number;
+    event_end_date: number;
+    conditions: Condition[];
 }
