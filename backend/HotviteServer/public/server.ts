@@ -9,11 +9,11 @@ server.use(cors());
 server.use(express.json());
 
 // Routes
-server.use("/api/v1/map/", mapRouter);
+server.use("/api/map/", mapRouter);
 
 server.listen(3001, () => {
     console.log("http://localhost:3001/");
 });
 server.get("/", (req: any, res: any) => {
-    res.send(200).send("Server online");
+    res.send("Server online");
 });
