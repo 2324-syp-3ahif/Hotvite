@@ -38,3 +38,7 @@ Content-Type: application/json
     }
   ]
 }
+
+###
+
+GET {{url}}/getAll

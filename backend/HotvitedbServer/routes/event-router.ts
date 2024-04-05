@@ -22,3 +22,8 @@ eventRouter.post("/create", async (req, res) => {
         res.status(500).json({error: "Internal server error"});
     }
 });
+eventRouter.get("/getAll", async (req, res) => {
+    const data: Event[] = await dbUtility.getAllFromTable("event");
+
+    res.status(200).json(data);
+});

@@ -3,7 +3,7 @@ import {Address, Chat, Condition, Event, Location, User} from "../model";
 
 export class dbUtility {
     private static db: sqlite3.Database =
-        new sqlite3.Database('../data/Hotvitedb.db');
+        new sqlite3.Database('./data/Hotvitedb.db');
 
     public static async saveUser(user: User): Promise<boolean> {
         try {
@@ -196,6 +196,50 @@ export class dbUtility {
         }
     }
 
+    public static async updateValueByRowInTableWithCondition(table: string
+        , column: string
+        , value: string
+        , conditionColumn: string
+        , conditionValue: string): Promise<any> {
+        try {
+            return new Promise((resolve, reject) => {
+                this.db.all(`UPDATE ${table}
+                             set ${column} = '${value}'
+                             WHERE ${conditionColumn} = '${conditionValue}'`, (err, rows) => {
+                    if (err) {
+                        console.error('Error fetching $table:', err, {$table: table});
+                        reject(err);
+                        return;
+                    }
+                    resolve(rows);
+                });
+            });
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    public static async deleteRowInTable(table: string, column: string, value: string): Promise<any> {
+        try {
+            return new Promise((resolve, reject) => {
+                this.db.all(`DELETE FROM ${table}
+                             WHERE ${column} = '${value}'`, (err, rows) => {
+                    if (err) {
+                        console.error('Error fetching $table:', err, {$table: table});
+                        reject(err);
+                        return;
+                    }
+                    resolve(rows);
+                });
+            });
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+
     public static async getAllFromTable(table: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.db.all(`SELECT *
@@ -212,7 +256,6 @@ export class dbUtility {
 
     public static async hasEntryInColumnInTable(table: string, column: string, value: string): Promise<boolean> {
         const result = await dbUtility.getTableByValue(table, column, value);
-
         if (isArrayWithLength(result)) {
             return true;
         }

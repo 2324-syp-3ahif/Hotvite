@@ -1,6 +1,6 @@
-@url=http://localhost:3000/api/user/
+@url=http://localhost:3000/api/user
 
-POST {{url}}signup
+POST {{url}}/signup
 Content-Type: application/json
 
 {
@@ -10,3 +10,21 @@ Content-Type: application/json
   "aboutme": "about me blabla"
 }
 
+### update username
+
+PUT {{url}}/changeUsername/675c4b77-8c39-42b2-bc8c-3355a601e6b2
+Content-Type: application/json
+
+{
+  "password": "123pw",
+  "username": "better name 123"
+}
+
+### delete user
+
+DELETE {{url}}/delete/c6b25e05-4ac2-4214-8826-236e7233a63e
+Content-Type: application/json
+
+{
+  "password": "123pw"
+}
