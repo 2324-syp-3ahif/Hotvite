@@ -42,3 +42,7 @@ Content-Type: application/json
 ###
 
 GET {{url}}/getAll
+
+###
+
+GET {{url}}/getLocationById/a3c008e2-04c5-4297-93a5-2e992310e5a5

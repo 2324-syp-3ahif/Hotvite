@@ -1,5 +1,5 @@
 import express from "express";
-import {Event} from "../model"
+import {Event, Location} from "../model"
 import {createEvent, isValidEvent} from "../logic/event-repo";
 import {dbUtility} from "../utilities/db-utilities";
 
@@ -25,7 +25,14 @@ eventRouter.post("/create", async (req, res) => {
 eventRouter.get("/getAll", async (req, res) => {
     const data: Event[] = await dbUtility.getAllFromTable("event");
 
-    const locations = await dbUtility.getAllFromTable("location");
 
-    res.status(200).json({data, locations });
+    res.status(200).json(data);
+});
+
+eventRouter.get("/getLocationById/:id", async (req, res) => {
+   const data: Location[] = await dbUtility.getAllFromTable("location");
+
+   const result = data.filter(location => location.id === req.params.id)[0];
+
+   res.status(200).json({latitude: result.latitude, longitude: result.longitude });
 });
