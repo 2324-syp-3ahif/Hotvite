@@ -17,7 +17,7 @@ Content-Type: application/json
     "longitude": "16.3738"
   },
   "type": "event",
-  "creator_id": "4608d979-d3e6-4b0b-bd36-783656a0f9ff",
+  "creator_id": "053d7d34-9791-4c41-ada3-7a1bed48447a",
   "status": "active",
   "chat": {
     "about": "chat about stuff",
@@ -38,6 +38,130 @@ Content-Type: application/json
     }
   ]
 }
+###
+
+POST {{url}}create
+Content-Type: application/json
+
+{
+  "title": "Birthday Party",
+  "description": "Come celebrate my birthday with me!",
+  "address": {
+    "Street": "123 Main Street",
+    "city": "Springfield",
+    "country": "United States",
+    "state": "Illinois"
+  },
+  "location": {
+    "latitude": "39.7817",
+    "longitude": "-89.6501"
+  },
+  "type": "event",
+  "creator_id": "053d7d34-9791-4c41-ada3-7a1bed48447a",
+  "status": "active",
+  "chat": {
+    "about": "Let's chat about the party details!",
+    "name": "Birthday Bash Chat"
+  },
+  "created_at": 1711833523765,
+  "event_start_date": 1811833533765,
+  "event_end_date": 1911834533765,
+  "conditions": [
+    {
+      "text": "Bring a gift!"
+    },
+    {
+      "text": "RSVP by May 1st"
+    },
+    {
+      "text": "No outside food allowed"
+    }
+  ]
+}
+
+
+###
+POST {{url}}create
+Content-Type: application/json
+
+{
+  "title": "Music Festival",
+  "description": "Join us for a weekend of music and fun!",
+  "address": {
+    "Street": "789 Festival Avenue",
+    "city": "Groovetown",
+    "country": "United States",
+    "state": "California"
+  },
+  "location": {
+    "latitude": "36.7783",
+    "longitude": "-119.4179"
+  },
+  "type": "event",
+  "creator_id": "053d7d34-9791-4c41-ada3-7a1bed48447a",
+  "status": "active",
+  "chat": {
+    "about": "Discuss lineup and ticket info here!",
+    "name": "Festival Fever Chat"
+  },
+  "created_at": 1711833523765,
+  "event_start_date": 1811833533765,
+  "event_end_date": 1911834533765,
+  "conditions": [
+    {
+      "text": "Bring sunscreen and water"
+    },
+    {
+      "text": "No re-entry after 10pm"
+    },
+    {
+      "text": "Pets on leashes allowed"
+    }
+  ]
+}
+
+
+###
+
+POST {{url}}create
+Content-Type: application/json
+
+{
+  "title": "Tech Conference",
+  "description": "Stay updated with the latest in tech!",
+  "address": {
+    "Street": "456 Tech Boulevard",
+    "city": "Silicon Valley",
+    "country": "United States",
+    "state": "California"
+  },
+  "location": {
+    "latitude": "37.7749",
+    "longitude": "-122.4194"
+  },
+  "type": "event",
+  "creator_id": "053d7d34-9791-4c41-ada3-7a1bed48447a",
+  "status": "active",
+  "chat": {
+    "about": "Exchange ideas and network here!",
+    "name": "Tech Talk Chat"
+  },
+  "created_at": 1711833523765,
+  "event_start_date": 1811833533765,
+  "event_end_date": 1911834533765,
+  "conditions": [
+    {
+      "text": "Open to all tech enthusiasts"
+    },
+    {
+      "text": "No solicitation allowed"
+    },
+    {
+      "text": "WiFi available"
+    }
+  ]
+}
+
 
 ###
 
