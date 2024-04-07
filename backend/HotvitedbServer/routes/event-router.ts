@@ -25,5 +25,7 @@ eventRouter.post("/create", async (req, res) => {
 eventRouter.get("/getAll", async (req, res) => {
     const data: Event[] = await dbUtility.getAllFromTable("event");
 
-    res.status(200).json(data);
+    const locations = await dbUtility.getAllFromTable("location");
+
+    res.status(200).json({data, locations });
 });
