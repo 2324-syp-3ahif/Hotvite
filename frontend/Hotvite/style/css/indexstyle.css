@@ -1,4 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 #map {
-  width: 97%;   /* 97 */
+  padding-left: 5%;
+  width: 95%;   /* 97 */
   height: 100%;
 }
