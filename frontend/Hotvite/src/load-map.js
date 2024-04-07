@@ -7,6 +7,7 @@ async function initMap() {
     // 48.143168, 13.991348
     center: { lat: 48.143168, lng: 13.991348 },
     zoom: 30,
+    controlSize: 20,
     mapTypeControl: false,
     streetViewControl: false,
     fullscreenControl: false,
