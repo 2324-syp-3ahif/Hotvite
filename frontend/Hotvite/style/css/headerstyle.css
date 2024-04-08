@@ -1,52 +1,29 @@
-.sideheader {
-  background-color: #333;
+.sidebar {
   background-image: linear-gradient(rgb(5, 6, 53), rgb(110, 10, 88));
   text-align: center;
   color: #fff;
   padding: 10px;
-  /*width: 40px;  85 */
-  width: 3%; /* 85 */
-  position: fixed;
   left: 0;
   top: 0;
-  height: 100%;  /* 94 */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.sideheader.expanded {
-  width: 80px; /* Breite des Headers nach Erweiterung um 40 Pixel */
+#menu-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/*img {
-  /*padding: 5px 10px 5px 10px;*//*
+#menu-buttons img {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+}
+
+#help-button {
   width: 20px;
   height: 20px;
-}*/
-
-.logo {
-  padding: 5px 0 5px 20%;
-  width: 20px;
-  height: 20px;
+  padding-bottom: 5px;
 }
-
-.helpbutton {
-  width: 15px;
-  height: 15px;
-  padding-bottom: 20px;
-}
-
-.googlebutton{
-  position: absolute;
-  width: 66px;
-  height: 26px;
-  user-select: none;
-  border: 0px;
-  padding: 0px;
-  margin: 0px;
-  overflow-clip-margin: content-box;
-  overflow: clip;
-}
-
-

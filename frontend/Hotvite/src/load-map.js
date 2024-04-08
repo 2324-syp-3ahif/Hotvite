@@ -26,6 +26,7 @@ async function loadEvents(){
     data.forEach((event) => {
       const img = document.createElement("img");
       img.src = "../assets/ev_icon.png";
+      // img.src = "https://cdn.discordapp.com/attachments/907636016674902037/1226616985413226536/2c90950f81e0533916080d2f4c8f71ad.webp?ex=66256b16&is=6612f616&hm=4560c272309319a581a433b1acac3e8f0bee79a9a558594a5fbbf0db23ab002a&;"
       img.style.width = "30px";
       img.style.height = "39px";
       img.style.filter = "drop-shadow(0 0 5px white)"

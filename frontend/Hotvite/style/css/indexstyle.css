@@ -3,9 +3,18 @@
   padding: 0;
 }
 
+body {
+  flex-direction: row;
+  display: flex;
+}
+
 #map {
-  width: 96%;   /* 97 */
   height: 100%;
+  width: 100%;
   display: flex;
   margin-left: auto;
+}
+
+img[alt="Google"] {
+  display: none;
 }
