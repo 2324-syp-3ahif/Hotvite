@@ -4,7 +4,8 @@
 }
 
 #map {
-  padding-left: 5%;
-  width: 95%;   /* 97 */
+  width: 96%;   /* 97 */
   height: 100%;
+  display: flex;
+  margin-left: auto;
 }
