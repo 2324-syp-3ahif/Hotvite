@@ -18,3 +18,23 @@ body {
 img[alt="Google"] {
   display: none;
 }
+
+.gm-style-mtc button {
+  background: #180b49 !important;
+  color: #c7c7c7 !important;
+  box-shadow: white 0 0 2px !important;
+}
+
+.gm-style-mtc button[aria-checked="true"] {
+  background: #1b0c50 !important;
+  color: #fff !important;
+  box-shadow: white 0 0 4px !important;
+}
+
+.gm-style-mtc ul {
+  display: none;
+}
+
+div[style*="border: 2px solid rgb(26, 115, 232)"] {
+  border: none !important;
+}
