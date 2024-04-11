@@ -7,8 +7,10 @@ import {eventRouter} from "./routes/event-router";
 const server = express();
 
 // Options
+server.use(express.json({limit: '50mb'}));
 server.use(express.json());
 server.use(cors());
+
 
 //Routes
 server.use("/api/user/", userRouter);

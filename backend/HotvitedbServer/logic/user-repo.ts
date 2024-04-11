@@ -16,8 +16,12 @@ export async function createUser(user: User): Promise<User> {
     };
 }
 
-export async function isValidNewUser(user: User): Promise<boolean> {
+export async function isValidNewUser(user: object): Promise<boolean> {
     //check if the email is already in use
+
+    if(!isUser(user)){
+        return false;
+    }
 
     if (await dbUtility.hasEntryInColumnInTable("user", "email", user.email)) {
         return false;
@@ -44,4 +48,15 @@ export async function isValidRequestByUser(id: string, password: string): Promis
     }
 
     return true;
+}
+
+function isUser(obj: object): obj is User {
+    if ("username" in obj
+        && "email" in obj
+        && "password" in obj
+        && "aboutme" in obj) {
+        return true;
+    }
+
+    return false;
 }
