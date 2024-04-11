@@ -7,6 +7,11 @@ export const eventRouter = express.Router();
 
 eventRouter.post("/create", async (req, res) => {
     try {
+        if (!await isValidEvent(req.body)) {
+            res.sendStatus(405);
+            return;
+        }
+
         const event: Event = createEvent(req.body);
 
         if(!await isValidEvent(event)){

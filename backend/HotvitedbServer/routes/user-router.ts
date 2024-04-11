@@ -20,12 +20,12 @@ const validateUserChangeUsername = [
 ];
 userRouter.post("/signup", validateUserSignup, async (req: Request, res: Response) => {
     try {
-        const user: User = await createUser(req.body);
-
-        if (!await isValidNewUser(user)) {
+        if (!await isValidNewUser(req.body)) {
             res.sendStatus(405);
             return;
         }
+
+        const user: User = await createUser(req.body);
 
         await dbUtility.saveUser(user);
 
