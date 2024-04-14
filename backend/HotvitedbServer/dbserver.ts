@@ -1,10 +1,14 @@
 import express from "express"
 import cors from "cors";
 import {userRouter} from "./routes/user-router";
-import {dbUtility} from "./utilities/db-utilities";
 import {eventRouter} from "./routes/event-router";
+import dotenv from "dotenv";
 
 const server = express();
+
+dotenv.config();
+export const secret_key = process.env.SECRET_KEY as String;
+
 
 // Options
 server.use(express.json({limit: '50mb'}));
@@ -18,13 +22,8 @@ server.use("/api/event/", eventRouter);
 
 server.listen(3000, () => {
     console.log("http://localhost:3000/");
+    console.log(secret_key);
 });
-
 server.get("/", (req, res) => {
     res.send("Server online");
-});
-
-//test query
-server.get("/db", async (req, res) => {
-    res.json(await dbUtility.getAllFromTable("user"));
 });

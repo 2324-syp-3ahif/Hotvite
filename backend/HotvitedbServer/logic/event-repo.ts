@@ -1,6 +1,6 @@
-import {Event} from "../model";
 import {v4 as uuidv4} from "uuid";
 import {dbUtility} from "../utilities/db-utilities";
+import {Event} from "../models/event";
 
 export function createEvent(event: Event): Event {
     //create ids

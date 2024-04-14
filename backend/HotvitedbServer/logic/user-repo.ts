@@ -1,7 +1,7 @@
-import {User} from "../model";
 import {dbUtility} from "../utilities/db-utilities";
 import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
+import {User} from "../models/user";
 
 export async function createUser(user: User): Promise<User> {
     // add salt to the password

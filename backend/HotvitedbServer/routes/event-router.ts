@@ -1,7 +1,8 @@
 import express from "express";
-import {Event, Location} from "../model"
 import {createEvent, isValidEvent} from "../logic/event-repo";
 import {dbUtility} from "../utilities/db-utilities";
+import {Event} from "../models/event";
+import {Location} from "../models/location";
 
 export const eventRouter = express.Router();
 

@@ -1,5 +1,10 @@
 import * as sqlite3 from "sqlite3";
-import {Address, Chat, Condition, Event, Location, User} from "../model";
+import {Event} from "../models/event";
+import {Address} from "../model/address";
+import {Condition} from "../models/condition";
+import {Chat} from "../models/chat";
+import {Location} from "../models/location";
+import {User} from "../models/user";
 
 export class dbUtility {
     private static db: sqlite3.Database =

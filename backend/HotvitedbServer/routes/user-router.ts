@@ -1,8 +1,8 @@
-import {User} from "../model";
 import express, {Request, Response} from "express";
 import {check} from 'express-validator';
 import {dbUtility} from "../utilities/db-utilities";
 import {createUser, isValidNewUser, isValidRequestByUser} from "../logic/user-repo";
+import {User} from "../models/user";
 
 export const userRouter = express.Router();
 
