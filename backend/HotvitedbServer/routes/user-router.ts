@@ -3,6 +3,9 @@ import {check} from 'express-validator';
 import {dbUtility} from "../utilities/db-utilities";
 import {createUser, isValidNewUser, isValidRequestByUser} from "../logic/user-repo";
 import {User} from "../models/user";
+import {isAuthenticated} from "../middleware/auth-handler";
+import jwt from "jsonwebtoken";
+import {secret_key} from "../dbserver";
 
 export const userRouter = express.Router();
 
@@ -14,7 +17,7 @@ const validateUserSignup = [
     check('aboutme').optional().isString(),
 ];
 
-const validateUserChangeUsername = [
+const validateUsernameAndPassword = [
     check('username').isLength({min: 3}),
     check('password').isLength({min: 6}),
 ];
@@ -36,7 +39,32 @@ userRouter.post("/signup", validateUserSignup, async (req: Request, res: Respons
     }
 });
 
-userRouter.put("/changeUsername/:id", validateUserChangeUsername, async (req: Request, res: Response) => {
+userRouter.post("/login", async (req :  Request, res : Response) => {
+    const {username, email} = {username: req.body.username, email: req.body.email};
+
+    if(secret_key){
+        return res.status(500);
+    }
+
+    const userClaims = {
+        email: email,
+        role: username,
+    };
+    const minutes = 15;
+    const expiresAt = new Date(Date.now() + minutes * 60);
+
+    const token = jwt.sign(
+        {
+            user: userClaims,
+            exp: expiresAt.getTime(),
+        },
+        secret_key
+    );
+
+    res.json(token);
+});
+
+userRouter.put("/changeUsername/:id", validateUsernameAndPassword, isAuthenticated, async (req: Request, res: Response) => {
     const {password, username, id} = {
         password: req.body.password,
         username: req.body.username,
@@ -46,8 +74,8 @@ userRouter.put("/changeUsername/:id", validateUserChangeUsername, async (req: Re
     const result = await isValidRequestByUser(id, password);
 
     if (typeof result === "string") {
-        res.status(403).send(result);
-        return;
+
+        return res.status(403).send(result);
     }
 
     await dbUtility.updateValueByRowInTableWithCondition("user"
@@ -63,12 +91,10 @@ userRouter.put("/changeUsername/:id", validateUserChangeUsername, async (req: Re
 userRouter.delete("/delete/:id", async (req, res) => {
     const {id, password} = {id: req.params.id, password: req.body.password};
 
-
     const result = await isValidRequestByUser(id, password);
 
     if (typeof result === "string") {
-        res.status(403).send(result);
-        return;
+        return res.status(403).send(result);;
     }
 
     await dbUtility.deleteRowInTable("user", "id", id);
