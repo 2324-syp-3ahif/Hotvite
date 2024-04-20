@@ -3,21 +3,20 @@ import {createEvent, isValidEvent} from "../logic/event-repo";
 import {dbUtility} from "../utilities/db-utilities";
 import {Event} from "../models/event";
 import {Location} from "../models/location";
+import {isAuthenticated} from "../middleware/auth-handler";
+import {AuthRequest} from "../models/authRequest";
 
 export const eventRouter = express.Router();
 
-eventRouter.post("/create", async (req, res) => {
+eventRouter.post("/create", isAuthenticated, async (req, res) => {
     try {
-        if (!await isValidEvent(req.body)) {
-            res.sendStatus(405);
-            return;
-        }
+        const payload = (req as AuthRequest).payload;
+        const user = await dbUtility.getTableByValue("user", "email", payload.user.email);
 
-        const event: Event = createEvent(req.body);
+        const event: Event = createEvent(req.body, user);
 
-        if(!await isValidEvent(event)){
-            res.sendStatus(405);
-            return;
+        if (!await isValidEvent(event)) {
+            return res.sendStatus(405);
         }
 
         await dbUtility.saveEvent(event);
@@ -28,21 +27,30 @@ eventRouter.post("/create", async (req, res) => {
         res.status(500).json({error: "Internal server error"});
     }
 });
+
 eventRouter.get("/getAll", async (req, res) => {
-    const data: Event[] = await dbUtility.getAllFromTable("event");
+    try {
+        const data: Event[] = await dbUtility.getAllFromTable("event");
 
-
-    res.status(200).json(data);
+        res.status(200).json(data);
+    } catch (error) {
+        console.error("Error getting all events:", error);
+        res.status(500).json({error: "Internal server error"});
+    }
 });
 
-eventRouter.get("/getLocationById/:id", async (req, res) => {
-   const data: Location[] = await dbUtility.getAllFromTable("location");
+eventRouter.get("/getLocationsFromUser", isAuthenticated, async (req, res) => {
+    try {
+        const payload = (req as AuthRequest).payload;
+        const user = await dbUtility.getTableByValue("user", "email", payload.user.email);
 
-   if(data.length <= 0){
-       return res.status(204).send("no location was found by id");
-   }
+        const allLocations: Location[] = await dbUtility.getAllFromTable("location");
 
-   const result = data.filter(location => location.id === req.params.id)[0];
+        const result = allLocations.filter(location => location.id === user.id);
 
-   res.status(200).json({latitude: result.latitude, longitude: result.longitude });
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error getting locations from user:", error);
+        res.status(500).json({error: "Internal server error"});
+    }
 });

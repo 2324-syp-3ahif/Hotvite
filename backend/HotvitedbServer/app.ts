@@ -7,8 +7,7 @@ import dotenv from "dotenv";
 const server = express();
 
 dotenv.config();
-export const secret_key = process.env.SECRET_KEY as String;
-
+export const secret_key = process.env.SECRET_KEY as string;
 
 // Options
 server.use(express.json({limit: '50mb'}));

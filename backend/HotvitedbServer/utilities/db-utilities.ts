@@ -12,17 +12,17 @@ export class dbUtility {
 
     public static async saveUser(user: User): Promise<boolean> {
         try {
-            this.db.run(
-                `INSERT INTO user (id, username, email, password, aboutme)
-                 VALUES (?, ?, ?, ?, ?)`,
-                [user.id, user.username, user.email, user.password, user.aboutme]
-            );
+            const stmt = this.db.prepare('INSERT INTO user (id, username, email, password, aboutme) VALUES (?1, ?2, ?3, ?4, ?5)');
+            stmt.bind({1: user.id, 2: user.username, 3: user.email, 4: user.password, 5: user.aboutme});
+            const operationResult = stmt.run();
+            stmt.finalize();
+
             return true;
         } catch (error) {
+            console.error(error);
             return false;
         }
     }
-
     public static async saveEvent(event: Event): Promise<boolean> {
         return new Promise((resolve, reject) => {
             try {
@@ -108,13 +108,12 @@ export class dbUtility {
         });
     }
 
-    private static async saveAddress(address: Address) {
+    private static async saveAddress(address: Address): Promise<boolean> {
         try {
-            this.db.run(
-                `INSERT INTO address (id, Street, city, country, state)
-                 VALUES (?, ?, ?, ?, ?)`,
-                [address.id, address.Street, address.city, address.country, address.state]
-            );
+            const stmt = this.db.prepare('INSERT INTO address (id, Street, city, country, state) VALUES (?1, ?2, ?3, ?4, ?5)');
+            stmt.bind({1: address.id, 2: address.Street, 3: address.city, 4: address.country, 5: address.state});
+            const operationResult = stmt.run();
+            stmt.finalize();
 
             return true;
         } catch (error) {
@@ -123,20 +122,19 @@ export class dbUtility {
         }
     }
 
-    private static async saveLocation(location: Location) {
-        try {
-            this.db.run(
-                `INSERT INTO location (id, latitude, longitude)
-                 VALUES (?, ?, ?)`,
-                [location.id, location.latitude, location.longitude]
-            );
+private static async saveLocation(location: Location): Promise<boolean> {
+    try {
+        const stmt = this.db.prepare('INSERT INTO location (id, latitude, longitude) VALUES (?1, ?2, ?3)');
+        stmt.bind({1: location.id, 2: location.latitude, 3: location.longitude});
+        const operationResult = stmt.run();
 
-            return true;
-        } catch (error) {
-            console.error('Error inserting new location into database', error);
-            return false;
-        }
+        stmt.finalize();
+        return true;
+    } catch (error) {
+        console.error('Error inserting new location into database', error);
+        return false;
     }
+}
 
     private static async saveChat(chat: Chat) {
         try {

@@ -1,8 +1,11 @@
 import {v4 as uuidv4} from "uuid";
 import {dbUtility} from "../utilities/db-utilities";
 import {Event} from "../models/event";
+import express from "express";
+import {AuthRequest} from "../models/authRequest";
+import {User} from "../models/user";
 
-export function createEvent(event: Event): Event {
+export function createEvent(event: Event, user: User): Event {
     //create ids
 
     const eventID = uuidv4()
@@ -13,51 +16,15 @@ export function createEvent(event: Event): Event {
     event.chat.id = uuidv4();
     event.conditions.forEach(c => c.event_id = eventID);
 
+    event.creator_id = user.id;
+
     return event;
 }
 
-export async function isValidEvent(event: object): Promise<boolean> {
-    //check if creatorID is valid
+export async function isValidEvent(event: Event): Promise<boolean> {
+    //possible to add check here for the future
+    //checking creator_id is no longer need because of token
 
-    if (!isEvent(event)) {
-        return false;
-    }
-
-    if (!await dbUtility.hasEntryInColumnInTable("user", "id", event.creator_id)) {
-        //creatorID has no entry in table user
-        return false;
-    }
-
-    if (event.created_at > event.event_start_date ||
-        event.event_start_date > event.event_end_date) {
-        //not valid dates
-        return false;
-    }
-
-    return true;
-}
-
-function isEvent(obj: object): obj is Event {
-    if (
-        "title" in obj &&
-        "description" in obj &&
-        "address" in obj &&
-        "location" in obj &&
-        "type" in obj &&
-        "creator_id" in obj &&
-        "status" in obj &&
-        "chat" in obj &&
-        "created_at" in obj &&
-        "event_start_date" in obj &&
-        "event_end_date" in obj &&
-        "conditions" in obj
-    ) {
-        if (Number.isInteger(obj.created_at) &&
-            Number.isInteger(obj.event_start_date) &&
-            Number.isInteger(obj.event_end_date)) {
-            return true;
-        }
-    }
-
-    return false;
+    return !(event.created_at > event.event_start_date ||
+        event.event_start_date > event.event_end_date);
 }

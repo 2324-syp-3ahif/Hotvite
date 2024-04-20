@@ -3,7 +3,7 @@ import {AuthRequest} from "../models/authRequest";
 
 export const adminHandler = (req: Request, res: Response, next: NextFunction) => {
     try {
-        let payload = (req as AuthRequest).payload;
+        const payload = (req as AuthRequest).payload;
 
         if (payload.user.role === "admin") {
             next();

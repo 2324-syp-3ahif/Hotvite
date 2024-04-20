@@ -1,6 +1,9 @@
 @url=http://localhost:3000/api/event/
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTM2Mzc1NzkuOTI5LCJpYXQiOjE3MTM2MzU3Nzl9.yWGoVwMQPmteGWTgWESLht30uMqabnwkZ2qlTm_48uM
+
 
 POST {{url}}create
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -17,7 +20,6 @@ Content-Type: application/json
     "longitude": "16.3738"
   },
   "type": "event",
-  "creator_id": "053d7d34-9791-4c41-ada3-7a1bed48447a",
   "status": "active",
   "chat": {
     "about": "chat about stuff",

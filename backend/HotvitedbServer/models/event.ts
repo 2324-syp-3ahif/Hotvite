@@ -10,8 +10,8 @@ export interface Event {
     address: Address;
     location: Location;
     type: string;
-    creator_id: string;
     status: string;
+    creator_id: string;
     chat: Chat;
     created_at: number;
     event_start_date: number;
