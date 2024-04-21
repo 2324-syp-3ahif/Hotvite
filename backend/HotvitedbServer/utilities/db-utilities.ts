@@ -29,15 +29,12 @@ export class dbUtility {
                 this.db.serialize(() => {
                     this.db.run('BEGIN TRANSACTION;');
 
-
                     //save address
                     this.saveAddress(event.address).catch(error => {
                         console.error('Error inserting new address into database', error);
                         this.db.run('ROLLBACK;');
                         reject(false);
                     });
-
-
 
                     //save location
                     this.saveLocation(event.location).catch(error => {
@@ -53,15 +50,13 @@ export class dbUtility {
                         reject(false);
                     });
 
-
                     //save conditions
                     this.saveConditions(event.conditions).catch(error => {
                         console.error('Error inserting new conditions into database', error);
                         this.db.run('ROLLBACK;');
                         reject(false);
                     });
-
-
+                    
                     //save event
                     this.db.run(
                         `INSERT INTO event ( id
@@ -149,6 +144,8 @@ private static async saveLocation(location: Location): Promise<boolean> {
             console.error('Error inserting new chat into database', error);
             return false;
         }
+
+
     }
 
 
