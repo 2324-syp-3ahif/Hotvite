@@ -1,0 +1,104 @@
+.welcome {
+  height: 70%;
+  width: 60%;
+  position: absolute;
+  margin: 0 !important;
+  padding: 10px;
+  top: 15%;
+  left: 20%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: #323232;
+  box-shadow: 0 0 4px 3px rgba(255, 255, 255, 0.25);
+  transition: height 30s ease, width 30s ease;
+}
+
+.banner h2 {
+  color: white;
+  margin: 5px;
+  font-size: 36px;
+  text-align: center;
+  line-height: 44px;
+}
+
+#close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#close-button img {
+  width: 30px;
+  height: 30px;
+}
+
+#close-button button {
+  background: #323232;
+  border: none;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0;
+}
+
+#close-button button:hover img {
+  filter: brightness(0.8);
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  padding-top: 20px;
+}
+
+.icon-text-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.icon-text-container img {
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+.icon-text-container p {
+  color: white;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-end;
+  margin-top: 25px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.cookie p {
+  flex: 1;
+  color: white;
+  font-size: 10px;
+}
+.cookie a {
+  color: #21BED3;
+  text-decoration: none;
+}
+
+#start{
+  text-align: right;
+}
+
+.bottom button{
+  border: none;
+  background-color: #2C5660;
+  color: white;
+  padding: 6px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
