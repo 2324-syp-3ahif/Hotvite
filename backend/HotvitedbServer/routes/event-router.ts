@@ -5,13 +5,18 @@ import {Event} from "../models/event";
 import {Location} from "../models/location";
 import {isAuthenticated} from "../middleware/auth-handler";
 import {AuthRequest} from "../models/authRequest";
+import {User} from "../models/user";
 
 export const eventRouter = express.Router();
 
 eventRouter.post("/create", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
-        const user = await dbUtility.getTableByValue("user", "email", payload.user.email);
+        const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
+
+        if(!user){
+            return res.sendStatus(500);
+        }
 
         const event: Event = createEvent(req.body, user);
 
@@ -30,7 +35,7 @@ eventRouter.post("/create", isAuthenticated, async (req, res) => {
 
 eventRouter.get("/getAll", async (req, res) => {
     try {
-        const data: Event[] = await dbUtility.getAllFromTable("event");
+        const data = await dbUtility.getAllFromTable<Event[]>("event");
 
         res.status(200).json(data);
     } catch (error) {
@@ -42,9 +47,13 @@ eventRouter.get("/getAll", async (req, res) => {
 eventRouter.get("/getLocationsFromUser", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
-        const user = await dbUtility.getTableByValue("user", "email", payload.user.email);
+        const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
 
-        const allLocations: Location[] = await dbUtility.getAllFromTable("location");
+        const allLocations = await dbUtility.getAllFromTable<Location[]>("location");
+
+        if(!allLocations || !user){
+            return res.sendStatus(500);
+        }
 
         const result = allLocations.filter(location => location.id === user.id);
 

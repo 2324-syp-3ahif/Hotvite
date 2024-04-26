@@ -3,6 +3,7 @@ import cors from "cors";
 import {userRouter} from "./routes/user-router";
 import {eventRouter} from "./routes/event-router";
 import dotenv from "dotenv";
+import {dbUtility} from "./utilities/db-utilities";
 
 const server = express();
 
@@ -19,10 +20,14 @@ server.use(cors());
 server.use("/api/user/", userRouter);
 server.use("/api/event/", eventRouter);
 
-server.listen(3000, () => {
+
+server.listen(3000, async () => {
+    //initialize
+    await dbUtility.initialize();
+
     console.log("http://localhost:3000/");
     console.log(secret_key);
 });
 server.get("/", (req, res) => {
-    res.send("Server online");
+    res.send("Database server online");
 });

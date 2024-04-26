@@ -22,7 +22,11 @@ export async function isValidNewUser(user: User): Promise<boolean> {
 }
 
 export async function validateUserCredentials(password: string, id: string) {
-    const user: User = (await dbUtility.getTableByValue("user", "id", id))[0];
+    const user = await dbUtility.getTableByValue<User>("user", "id", id);
+
+    if (!user) {
+        return false;
+    }
 
     return await comparePassword(password, user.password);
 }

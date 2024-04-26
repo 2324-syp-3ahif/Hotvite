@@ -1,4 +1,6 @@
-import * as sqlite3 from "sqlite3";
+import * as sqlite from "sqlite";
+import {open} from "sqlite";
+import sqlite3 from "sqlite3";
 import {Event} from "../models/event";
 import {Condition} from "../models/condition";
 import {Chat} from "../models/chat";
@@ -7,15 +9,29 @@ import {User} from "../models/user";
 import {Address} from "../models/address";
 
 export class dbUtility {
-    private static db: sqlite3.Database =
-        new sqlite3.Database('./data/Hotvitedb.db');
+    private static db: sqlite.Database;
+
+    static async initialize() {
+        this.db = await open({
+            filename: './data/Hotvitedb.db',
+            driver: sqlite3.Database
+        });
+    }
 
     public static async saveUser(user: User): Promise<boolean> {
         try {
-            const stmt = this.db.prepare('INSERT INTO user (id, username, email, password, aboutme) VALUES (?1, ?2, ?3, ?4, ?5)');
-            stmt.bind({1: user.id, 2: user.username, 3: user.email, 4: user.password, 5: user.aboutme});
-            const operationResult = stmt.run();
-            stmt.finalize();
+            const stmt = await
+                this.db.prepare('INSERT INTO user (id, username, email, password, aboutme) VALUES (:id, :username, :email, :password, :aboutme)');
+
+            await stmt.bind({
+                ':id': user.id,
+                ':username': user.username,
+                ':email': user.email,
+                ':password': user.password,
+                ':aboutme': user.aboutme
+            });
+            await stmt.run();
+            await stmt.finalize();
 
             return true;
         } catch (error) {
@@ -23,92 +39,170 @@ export class dbUtility {
             return false;
         }
     }
+
     public static async saveEvent(event: Event): Promise<boolean> {
-        return new Promise((resolve, reject) => {
+        try {
+            await this.db.run('BEGIN TRANSACTION;');
+
             try {
-                this.db.serialize(() => {
-                    this.db.run('BEGIN TRANSACTION;');
+                await this.saveAddress(event.address);
+            } catch (error) {
+                console.error('Error inserting new address into database', error);
+                await this.db.run('ROLLBACK;');
+                return false;
+            }
 
-                    //save address
-                    this.saveAddress(event.address).catch(error => {
-                        console.error('Error inserting new address into database', error);
-                        this.db.run('ROLLBACK;');
-                        reject(false);
-                    });
+            try {
+                await this.saveLocation(event.location);
+            } catch (error) {
+                console.error('Error inserting new location into database', error);
+                await this.db.run('ROLLBACK;');
+                return false;
+            }
 
-                    //save location
-                    this.saveLocation(event.location).catch(error => {
-                        console.error('Error inserting new location into database', error);
-                        this.db.run('ROLLBACK;');
-                        reject(false);
-                    });
+            try {
+                await this.saveChat(event.chat);
+            } catch (error) {
+                console.error('Error inserting new chat into database', error);
+                await this.db.run('ROLLBACK;');
+                return false;
+            }
 
-                    //save chat
-                    this.saveChat(event.chat).catch(error => {
-                        console.error('Error inserting new chat into database', error);
-                        this.db.run('ROLLBACK;');
-                        reject(false);
-                    });
+            try {
+                await this.saveConditions(event.conditions);
+            } catch (error) {
+                console.error('Error inserting new conditions into database', error);
+                await this.db.run('ROLLBACK;');
+                return false;
+            }
 
-                    //save conditions
-                    this.saveConditions(event.conditions).catch(error => {
-                        console.error('Error inserting new conditions into database', error);
-                        this.db.run('ROLLBACK;');
-                        reject(false);
-                    });
-                    
-                    //save event
-                    this.db.run(
-                        `INSERT INTO event ( id
-                                           , title
-                                           , description
-                                           , address_id
-                                           , location_id
-                                           , type
-                                           , creator_id
-                                           , status
-                                           , chat_id
-                                           , created_at
-                                           , event_start_date
-                                           , event_end_date)
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                        [event.id
-                            , event.title
-                            , event.description
-                            , event.address.id
-                            , event.location.id
-                            , event.type
-                            , event.creator_id
-                            , event.status
-                            , event.chat.id
-                            , event.created_at
-                            , event.event_start_date
-                            , event.event_end_date],
-                        (error) => {
-                            if (error) {
-                                console.error('Error inserting new event into database', error);
-                                this.db.run('ROLLBACK;');
-                                reject(false);
-                            } else {
-                                this.db.run('COMMIT;');
-                                resolve(true);
-                            }
-                        }
-                    );
+            try {
+                const stmt = await this.db.prepare(
+                    `INSERT INTO event ( id
+                                       , title
+                                       , description
+                                       , address_id
+                                       , location_id
+                                       , type
+                                       , creator_id
+                                       , status
+                                       , chat_id
+                                       , created_at
+                                       , event_start_date
+                                       , event_end_date)
+                     VALUES (:id, :title, :description, :address_id, :location_id, :type, :creator_id, :status,
+                             :chat_id, :created_at, :event_start_date, :event_end_date)`
+                );
+                await stmt.bind({
+                    ':id': event.id,
+                    ':title': event.title,
+                    ':description': event.description,
+                    ':address_id': event.address.id,
+                    ':location_id': event.location.id,
+                    ':type': event.type,
+                    ':creator_id': event.creator_id,
+                    ':status': event.status,
+                    ':chat_id': event.chat.id,
+                    ':created_at': event.created_at,
+                    ':event_start_date': event.event_start_date,
+                    ':event_end_date': event.event_end_date
                 });
+
+                await stmt.run();
+                await stmt.finalize();
             } catch (error) {
                 console.error('Error inserting new event into database', error);
-                reject(false);
+                await this.db.run('ROLLBACK;');
+                return false;
             }
-        });
+
+            await this.db.run('COMMIT;');
+            return true;
+        } catch (error) {
+            console.error('Error inserting new event into database', error);
+            return false;
+        }
+    }
+
+    public static async getTableByValue<T>(table: string, column: string, value: string): Promise<T | undefined> {
+        try {
+            const stmt = await this.db.prepare(`select ${column}
+                                                from ${table}
+                                                WHERE ${column} = :value`);
+
+            await stmt.bind({':value': value});
+
+            const result = await stmt.all<T>();
+
+            await stmt.finalize();
+
+            return result;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    public static async updateValueByRowInTableWithCondition(table: string, column: string, value: string, conditionColumn: string, conditionValue: string): Promise<boolean> {
+        try {
+            const stmt = await this.db.prepare(`UPDATE ${table}
+                                                SET ${column} = :value
+                                                WHERE ${conditionColumn} = :conditionValue`);
+            await stmt.bind({
+                ':value': value,
+                ':conditionValue': conditionValue
+            });
+
+            await stmt.run();
+            await stmt.finalize();
+
+            return true;
+        } catch (error) {
+            console.error(`Error updating ${table} in database`, error);
+            return false;
+        }
+    }
+
+    public static async deleteRowInTable(table: string, column: string, value: string): Promise<boolean> {
+        try {
+            const stmt = await this.db.prepare(`DELETE
+                                                FROM ${table}
+                                                WHERE ${column} = :value`);
+            await stmt.bind({':value': value});
+            await stmt.run();
+            await stmt.finalize();
+
+            return true;
+        } catch (error) {
+            console.error(`Error deleting from ${table} in database`, error);
+            return false;
+        }
+    }
+
+    public static async getAllFromTable<T>(table: string): Promise<T | undefined> {
+        try {
+            const stmt = await this.db.prepare(`SELECT *
+                                                FROM ${table}`);
+            const result = await stmt.all<T>();
+            await stmt.finalize();
+
+            return result;
+        } catch (error) {
+            console.error(`Error retrieving data from ${table} in database`, error);
+        }
     }
 
     private static async saveAddress(address: Address): Promise<boolean> {
         try {
-            const stmt = this.db.prepare('INSERT INTO address (id, Street, city, country, state) VALUES (?1, ?2, ?3, ?4, ?5)');
-            stmt.bind({1: address.id, 2: address.Street, 3: address.city, 4: address.country, 5: address.state});
-            const operationResult = stmt.run();
-            stmt.finalize();
+            const stmt = await this.db.prepare('INSERT INTO address (id, Street, city, country, state) VALUES (:id, :Street, :city, :country, :state)');
+            await stmt.bind({
+                ':id': address.id,
+                ':Street': address.Street,
+                ':city': address.city,
+                ':country': address.country,
+                ':state': address.state
+            });
+            await stmt.run();
+            await stmt.finalize();
 
             return true;
         } catch (error) {
@@ -117,131 +211,62 @@ export class dbUtility {
         }
     }
 
-private static async saveLocation(location: Location): Promise<boolean> {
-    try {
-        const stmt = this.db.prepare('INSERT INTO location (id, latitude, longitude) VALUES (?1, ?2, ?3)');
-        stmt.bind({1: location.id, 2: location.latitude, 3: location.longitude});
-        const operationResult = stmt.run();
-
-        stmt.finalize();
-        return true;
-    } catch (error) {
-        console.error('Error inserting new location into database', error);
-        return false;
-    }
-}
-
-    private static async saveChat(chat: Chat) {
+    private static async saveLocation(location: Location): Promise<boolean> {
         try {
-            this.db.run(
-                `INSERT INTO chat (id, about, name)
-                 VALUES (?, ?, ?)`,
-                [chat.id, chat.about, chat.name]
-            );
+            const stmt = await this.db.prepare('INSERT INTO location (id, latitude, longitude) VALUES (:id, :latitude, :longitude)');
+
+            await stmt.bind({
+                ':id': location.id,
+                ':latitude': location.latitude,
+                ':longitude': location.longitude
+            });
+            await stmt.run();
+            await stmt.finalize();
+
+            return true;
+        } catch (error) {
+            console.error('Error inserting new location into database', error);
+            return false;
+        }
+    }
+
+    private static async saveChat(chat: Chat): Promise<boolean> {
+        try {
+            const stmt = await this.db.prepare('INSERT INTO chat (id, about, name) VALUES (:id, :about, :name)');
+            await stmt.bind({
+                ':id': chat.id,
+                ':about': chat.about,
+                ':name': chat.name
+            });
+            await stmt.run();
+            await stmt.finalize();
 
             return true;
         } catch (error) {
             console.error('Error inserting new chat into database', error);
             return false;
         }
-
-
     }
 
-
-    private static async saveConditions(conditions: Condition[]) {
+    private static async saveConditions(conditions: Condition[]): Promise<boolean> {
         try {
-            conditions.forEach(condition => {
-                this.db.run(
-                    `INSERT INTO condition (event_id, text)
-                     VALUES (?, ?)`,
-                    [condition.event_id, condition.text]
-                );
-            });
+            const stmt = await this.db.prepare('INSERT INTO condition (event_id, text) VALUES (:event_id, :text)');
+
+            for (const condition of conditions) {
+                await stmt.bind({
+                    ':event_id': condition.event_id,
+                    ':text': condition.text
+                });
+                await stmt.run();
+            }
+
+            await stmt.finalize();
 
             return true;
         } catch (error) {
-            console.error('Error inserting new user into database', error);
+            console.error('Error inserting new conditions into database', error);
             return false;
         }
-    }
-
-    public static async getTableByValue(table: string, column: string, value: string): Promise<any> {
-        try {
-            return new Promise((resolve, reject) => {
-                this.db.all(`SELECT *
-                             FROM ${table}
-                             WHERE ${column} = '${value}'`, (err, rows) => {
-                    if (err) {
-                        console.error('Error fetching $table:', err, {$table: table});
-                        reject(err);
-                        return;
-                    }
-                    resolve(rows);
-                });
-            });
-        } catch (e) {
-            console.error(e);
-            throw e;
-        }
-    }
-
-    public static async updateValueByRowInTableWithCondition(table: string
-        , column: string
-        , value: string
-        , conditionColumn: string
-        , conditionValue: string): Promise<any> {
-        try {
-            return new Promise((resolve, reject) => {
-                this.db.all(`UPDATE ${table}
-                             set ${column} = '${value}'
-                             WHERE ${conditionColumn} = '${conditionValue}'`, (err, rows) => {
-                    if (err) {
-                        console.error('Error fetching $table:', err, {$table: table});
-                        reject(err);
-                        return;
-                    }
-                    resolve(rows);
-                });
-            });
-        } catch (e) {
-            console.error(e);
-            throw e;
-        }
-    }
-
-    public static async deleteRowInTable(table: string, column: string, value: string): Promise<any> {
-        try {
-            return new Promise((resolve, reject) => {
-                this.db.all(`DELETE FROM ${table}
-                             WHERE ${column} = '${value}'`, (err, rows) => {
-                    if (err) {
-                        console.error('Error fetching $table:', err, {$table: table});
-                        reject(err);
-                        return;
-                    }
-                    resolve(rows);
-                });
-            });
-        } catch (e) {
-            console.error(e);
-            throw e;
-        }
-    }
-
-
-    public static async getAllFromTable(table: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.db.all(`SELECT *
-                         FROM ${table}`, (err, rows) => {
-                if (err) {
-                    console.error('Error fetching users:', err);
-                    reject(err);
-                    return;
-                }
-                resolve(rows);
-            });
-        });
     }
 
     public static async hasEntryInColumnInTable(table: string, column: string, value: string): Promise<boolean> {

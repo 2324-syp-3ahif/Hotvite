@@ -48,7 +48,11 @@ userRouter.post("/login", async (req :  Request, res : Response) => {
             return res.sendStatus(500);
         }
 
-        const user: User = (await dbUtility.getTableByValue("user", "email", email))[0];
+        const user = await dbUtility.getTableByValue<User>("user", "email", email);
+
+        if (!user) {
+            return res.sendStatus(500);
+        }
 
         const isValid = await comparePassword(password, user.password);
 
