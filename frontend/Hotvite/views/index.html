@@ -12,6 +12,7 @@
   <script src="../src/click-event.js"></script>
   <link rel="stylesheet" href="../style/css/indexstyle.css">
   <link rel="stylesheet" href="../style/css/headerstyle.css">
+  <link rel="stylesheet" href="../style/css/welcome-popupstyle.css">
   <style>
     /**
      * @license
@@ -38,13 +39,13 @@
 <body>
 <header class="sidebar">
   <div id="menu-buttons">
-    <a href="#"><img src="../assets/LoginButton.png" alt="login"></a>
-    <a href="#"><img src="../assets/MenuButton.png" alt="menu"></a>
-    <a href="#"><img src="../assets/RecentButton.png" alt="recent"></a>
-    <a href="#"><img src="../assets/SavedButton.png" alt="saved"></a>
-    <a href="#"><img src="../assets/ChatButton.png" alt="chat"></a>
+    <a href="#"><img src="../assets/sidebar/LoginButton.png" alt="login"></a>
+    <a href="#"><img src="../assets/sidebar/MenuButton.png" alt="menu"></a>
+    <a href="#"><img src="../assets/sidebar/RecentButton.png" alt="recent"></a>
+    <a href="#"><img src="../assets/sidebar/SavedButton.png" alt="saved"></a>
+    <a href="#"><img src="../assets/sidebar/ChatButton.png" alt="chat"></a>
   </div>
-  <a href="#"><img id="help-button" src="../assets/HelpButton.png" alt="help"></a>
+  <a href="#"><img id="help-button" src="../assets/sidebar/HelpButton.png" alt="help"></a>
 </header>
 <div id="map"></div>
 <script
@@ -52,5 +53,72 @@
   defer
   async
 ></script>
+
+<!--Welcome popup-->
+<div id="welcome-popup">
+  <form class="welcome">
+    <div class="banner">
+      <div class="welcome-titel">
+        <h2>Welcome to Hotvite</h2>
+      </div>
+      <div id="close-button">
+        <button type="button" class="btn cancel" onclick="closeForm()"><img src="../assets/welcome-popup/x.png" alt="x"></button>
+        <!--<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        <img src="../assets/x.png" alt="x">-->
+      </div>
+    </div>
+    <div class="description">
+      <!--map-->
+      <div class="icon-text-container">
+        <img src="../assets/welcome-popup/map.png" alt="map">
+        <p>Explore the Map and find interesting events nearby.</p>
+      </div>
+      <!--details-->
+      <div class="icon-text-container">
+        <img src="../assets/welcome-popup/details.png" alt="details">
+        <p>Easily view details of an event.</p>
+      </div>
+      <!--people-->
+      <div class="icon-text-container">
+        <img src="../assets/welcome-popup/baseline-people.png" alt="people">
+        <p>Join events and meet up with people you may know or get to know other people.</p>
+      </div>
+      <!--save-->
+      <div class="icon-text-container">
+        <img src="../assets/welcome-popup/save-line.png" alt="save">
+        <p>Not sure if you can show up? No problem, save the event for later!</p>
+      </div>
+      <!--notification-->
+      <div class="icon-text-container">
+        <img src="../assets/welcome-popup/notification-fill.png" alt="notification">
+        <p>Get notified when information of events you have joined change.</p>
+      </div>
+      <!--invite-->
+      <div class="icon-text-container">
+        <img src="../assets/welcome-popup/invite.png" alt="invite">
+        <p>Is your birthday right around the corner? Create your own event!</p>
+      </div>
+      <!--edit-->
+      <div class="icon-text-container">
+        <img src="../assets/welcome-popup/edit.png" alt="edit">
+        <p>Tell other people who you are by signing up and personalizing your profile.</p>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="cookie">
+        <p>By using our service you agree to our <a href="#">terms of service</a> and accept the <a href="#">cookies</a>
+          we need to ensure a great experience!</p>
+      </div>
+      <div id="start">
+        <button>Let's start!</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script>
+  function closeForm() {
+    document.getElementById("welcome-popup").style.display = "none";
+  }
+</script>
 </body>
 </html>
