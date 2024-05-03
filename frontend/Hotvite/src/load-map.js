@@ -61,13 +61,12 @@ function createImgElement(imgSrc){
 
 async function initMapClickEvent(AdvancedMarkerElement) {
   //const {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
-
-  // Right click event
   map.addListener("rightclick", async (event) => {
+    window.location.href = "./create-event.html";
+    /*
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
 
-    // Remove old marker from map
     if (setMarker) {
       setMarker.setMap(null);
     }
@@ -76,8 +75,15 @@ async function initMapClickEvent(AdvancedMarkerElement) {
       map,
       content: createImgElement("../assets/event/create_event_icon.png"),
     });
-
+    startWatching(setMarker);
     map.panTo({ lat, lng });
+     */
+  });
+
+  map.addListener("click", async (event) => {
+    if (setMarker) {
+      setMarker.setMap(null);
+    }
   });
 }
 
