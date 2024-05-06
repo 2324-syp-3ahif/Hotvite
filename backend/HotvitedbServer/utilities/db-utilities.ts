@@ -12,11 +12,8 @@ export class dbUtility {
                  VALUES (?, ?, ?, ?, ?)`,
                 [user.id, user.username, user.email, user.password, user.aboutme]
             );
-
-            console.log(`User ${user.username} added successfully.`);
             return true;
         } catch (error) {
-            console.error('Error inserting new user into database', error);
             return false;
         }
     }
@@ -94,7 +91,6 @@ export class dbUtility {
                                 reject(false);
                             } else {
                                 this.db.run('COMMIT;');
-                                console.log(`Event ${event.title} added successfully.`);
                                 resolve(true);
                             }
                         }
@@ -115,7 +111,6 @@ export class dbUtility {
                 [address.id, address.Street, address.city, address.country, address.state]
             );
 
-            console.log(`Address added successfully.`);
             return true;
         } catch (error) {
             console.error('Error inserting new address into database', error);
@@ -131,7 +126,6 @@ export class dbUtility {
                 [location.id, location.latitude, location.longitude]
             );
 
-            console.log(`Location added successfully.`);
             return true;
         } catch (error) {
             console.error('Error inserting new location into database', error);
@@ -147,7 +141,6 @@ export class dbUtility {
                 [chat.id, chat.about, chat.name]
             );
 
-            console.log(`Chat added successfully.`);
             return true;
         } catch (error) {
             console.error('Error inserting new chat into database', error);
@@ -164,10 +157,7 @@ export class dbUtility {
                      VALUES (?, ?)`,
                     [condition.event_id, condition.text]
                 );
-
-                console.log(`Condition added successfully.`);
             });
-
 
             return true;
         } catch (error) {
