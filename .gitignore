@@ -2,7 +2,8 @@
 
 **/.DS_Store
 .idea/Hotvite.iml
-frontend/Hotvite/assets/env/
+frontend/Hotvite/assets/env
+frontend/Hotvite/tests/
 
 **/**/**/.idea/
 **/**/.idea/
