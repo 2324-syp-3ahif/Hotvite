@@ -1,0 +1,428 @@
+<html><head><meta charset="UTF-8"><script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-http.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-json.min.js"></script><style>
+        .api-block {
+            padding: 15px 15px 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        
+
+        .api-code-green {
+            color: #4dbb5f;
+        }
+        
+
+        .api-code-red {
+            color: #fa5c4a;
+        }
+        
+
+        .api-content-type {
+            font-size: 12px;
+        }
+        
+
+        .api-endpoint {
+            display:inline-flex;
+            align-items:center;
+            padding:8px 16px;
+            margin-bottom:12px;
+            background-color: rgba(25, 25, 28, .05);
+            border-radius:8px;
+        }
+        
+
+        .api-grey-block {
+            background-color: rgba(25, 25, 28, .05);
+        }
+        
+
+        .api-grey-text {
+            color: #67686b;
+        }
+        
+
+        .api-header {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        
+
+        .api-path {
+            margin-left: 15px;
+        }
+        
+
+        .api-required {
+            color: #307fff;
+            margin-left: 8px;
+        }
+        
+
+        .api-section {
+            width: 75%;
+            margin-bottom: 12px;
+        }
+        
+
+        .api-status-code {
+            margin-right: 8px;
+        }
+        
+
+        .api-white-block {
+            background-color: white;
+        }
+        
+
+        .article {
+            position: relative;
+            padding-bottom: 24px;
+        }
+        
+
+        .bordered-element-rounded {
+            border: 1px solid #c4c4c4;
+            border-radius: 7px;
+            overflow: hidden;
+        }
+        
+
+        .code-block {
+            overflow: hidden;
+            position: relative;
+            padding: 0;
+            border-radius: 8px;
+            font-variant-ligatures: none;
+            background-color: rgba(25, 25, 28, .05);
+            word-break: break-all;
+        }
+        
+
+        .detached {
+            margin-block-start: 0;
+            margin-block-end: 0;
+            margin-bottom: 8px;
+        }
+        
+
+        .flex {
+            display: flex;
+        }
+        
+
+        .image {
+            max-width: 100%;
+            max-height: 90vh;
+            width: auto;
+        }
+        
+
+        .image-container {
+            max-width: 100vw;
+        }
+        
+
+        .inline-icon {
+            vertical-align: middle;
+        }
+        
+
+        .list {
+            list-style-type: disc;
+            padding-left: 0;
+            margin-left: 15px;
+        }
+        
+
+        .list-item {
+            margin-top: 6px;
+            margin-bottom: 6px;
+            margin-left: 4px;
+        }
+        
+
+        .main-title {
+            padding-bottom: 24px;
+            margin-top: 0;
+            font-size: 40px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+
+        .note {
+            background: rgba(77, 187, 95, .2);
+        }
+        
+
+        .prism {
+            page-break-inside: avoid;
+        }
+        
+        /* PrismJS 1.29.0
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+abap+abnf+actionscript+ada+agda+al+antlr4+apacheconf+apex+apl+applescript+aql+arduino+arff+armasm+arturo+asciidoc+aspnet+asm6502+asmatmel+autohotkey+autoit+avisynth+avro-idl+awk+bash+basic+batch+bbcode+bbj+bicep+birb+bison+bnf+bqn+brainfuck+brightscript+bro+bsl+c+csharp+cpp+cfscript+chaiscript+cil+cilkc+cilkcpp+clojure+cmake+cobol+coffeescript+concurnas+csp+cooklang+coq+crystal+css-extras+csv+cue+cypher+d+dart+dataweave+dax+dhall+diff+django+dns-zone-file+docker+dot+ebnf+editorconfig+eiffel+ejs+elixir+elm+etlua+erb+erlang+excel-formula+fsharp+factor+false+firestore-security-rules+flow+fortran+ftl+gml+gap+gcode+gdscript+gedcom+gettext+gherkin+git+glsl+gn+linker-script+go+go-module+gradle+graphql+groovy+haml+handlebars+haskell+haxe+hcl+hlsl+hoon+http+hpkp+hsts+ichigojam+icon+icu-message-format+idris+ignore+inform7+ini+io+j+java+javadoc+javadoclike+javastacktrace+jexl+jolie+jq+jsdoc+js-extras+json+json5+jsonp+jsstacktrace+js-templates+julia+keepalived+keyman+kotlin+kumir+kusto+latex+latte+less+lilypond+liquid+lisp+livescript+llvm+log+lolcode+lua+magma+makefile+markdown+markup-templating+mata+matlab+maxscript+mel+mermaid+metafont+mizar+mongodb+monkey+moonscript+n1ql+n4js+nand2tetris-hdl+naniscript+nasm+neon+nevod+nginx+nim+nix+nsis+objectivec+ocaml+odin+opencl+openqasm+oz+parigp+parser+pascal+pascaligo+psl+pcaxis+peoplecode+perl+php+phpdoc+php-extras+plant-uml+plsql+powerquery+powershell+processing+prolog+promql+properties+protobuf+pug+puppet+pure+purebasic+purescript+python+qsharp+q+qml+qore+r+racket+cshtml+jsx+tsx+reason+regex+rego+renpy+rescript+rest+rip+roboconf+robotframework+ruby+rust+sas+sass+scss+scala+scheme+shell-session+smali+smalltalk+smarty+sml+solidity+solution-file+soy+sparql+splunk-spl+sqf+sql+squirrel+stan+stata+iecst+stylus+supercollider+swift+systemd+t4-templating+t4-cs+t4-vb+tap+tcl+tt2+textile+toml+tremor+turtle+twig+typescript+typoscript+unrealscript+uorazor+uri+v+vala+vbnet+velocity+verilog+vhdl+vim+visual-basic+warpscript+wasm+web-idl+wgsl+wiki+wolfram+wren+xeora+xml-doc+xojo+xquery+yaml+yang+zig&plugins=highlight-keywords */
+code[class*=language-],pre[class*=language-]{color:#000;background:0 0;text-shadow:0 1px #fff;font-family:Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;font-size:1em;text-align:left;white-space:pre-wrap;word-spacing:normal;word-wrap:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}code[class*=language-] ::-moz-selection,code[class*=language-]::-moz-selection,pre[class*=language-] ::-moz-selection,pre[class*=language-]::-moz-selection{text-shadow:none;background:#b3d4fc}code[class*=language-] ::selection,code[class*=language-]::selection,pre[class*=language-] ::selection,pre[class*=language-]::selection{text-shadow:none;background:#b3d4fc}@media print{code[class*=language-],pre[class*=language-]{text-shadow:none}}pre[class*=language-]{padding:16px;margin:0;overflow:auto}:not(pre)>code[class*=language-],pre[class*=language-]{background:#f5f2f0}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal}.token.cdata,.token.comment,.token.doctype,.token.prolog{color:#708090}.token.punctuation{color:#999}.token.namespace{opacity:.7}.token.boolean,.token.constant,.token.deleted,.token.number,.token.property,.token.symbol,.token.tag{color:#905}.token.attr-name,.token.builtin,.token.char,.token.inserted,.token.selector,.token.string{color:#690}.language-css .token.string,.style .token.string,.token.entity,.token.operator,.token.url{color:#9a6e3a;background:hsla(0,0%,100%,.5)}.token.atrule,.token.attr-value,.token.keyword{color:#07a}.token.class-name,.token.function{color:#dd4a68}.token.important,.token.regex,.token.variable{color:#e90}.token.bold,.token.important{font-weight:700}.token.italic{font-style:italic}.token.entity{cursor:help}
+
+        
+
+        .prompt {
+            flex-direction: row;
+            letter-spacing: .0015em;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        
+
+        .prompt-content {
+            padding: 15px;
+            overflow: hidden;
+            flex: 1 1 auto;
+        }
+        
+
+        .prompt-content-p p {
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+
+        .prompt-icon {
+            flex: 0 0 auto;
+            margin-left: 15px;
+            margin-top: 15px;
+            fill: currentcolor;
+            width: 24px;
+            height: 24px;
+        }
+        
+
+        :root {
+            width: 95%;
+            max-width: 95vw;
+            padding: 0 0 0 30px;
+        }
+        
+        body {
+            font-family: JetBrains Sans,serif;
+        }
+        
+        a {
+            overflow-wrap: anywhere;
+            width: 100vw;
+        }
+        
+        
+        @font-face {
+            font-family: JetBrains Sans;
+            src: url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Light.woff2) format("woff2"), url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Light.woff) format("woff");
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: JetBrains Sans;
+            src: url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Regular.woff2) format("woff2"), url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-Regular.woff) format("woff");
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: JetBrains Sans;
+            src: url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-SemiBold.woff2) format("woff2"), url(https://resources.jetbrains.com/storage/jetbrains-sans/JetBrainsSans-SemiBold.woff) format("woff");
+            font-weight: 600;
+            font-style: normal;
+        }
+        
+        
+        code {
+            display: inline;
+            word-break: break-word;
+            font-size: 15px;
+            line-height: inherit;
+            font-variant-ligatures: none;
+            font-family: JetBrains Sans,monospace;
+            white-space: pre-line;
+            overflow-wrap: break-word;
+        }
+        
+        figcaption {
+            margin-top: 5px;
+        }
+        
+        h2 {
+            padding-top: 16px;
+            padding-bottom: 8px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+        h3 {
+            padding-top: 8px;
+            padding-bottom: 8px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+        h4 {
+            padding-top: 4px;
+            padding-bottom: 8px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        
+        p {
+            padding: 0;
+            border: 0;
+            line-height: 25px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            padding-bottom: 8px;
+        }
+        
+        div {
+            display: block;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            page-break-inside: avoid;
+        }
+        
+        th, td {
+            border: 1px solid #c4c4c4;
+            padding: 10px;
+            text-align: left;
+            word-break: break-all;
+        }
+        
+        .entry {
+            display: grid;
+            grid-template-columns: auto max-content;
+            grid-template-areas: "chapter page";
+            align-items: end;
+            gap: 0 .25rem;
+            line-height: 25px;
+        }
+        
+        .toc-link-container{
+            grid-area: chapter;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toc-link{
+            text-decoration: none;
+            color: black;
+        }
+        
+        .toc-link-container::after {
+            position: absolute;
+            padding-left: .25ch;
+            content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+            ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . "
+            ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
+            text-align: right;
+        }
+        
+        .page {
+            grid-area: page;
+            width: 30px;
+            text-align: right;
+        }
+        
+
+        .topic {
+            page-break-before: always;
+        }
+        </style></head><body><div><section class="topic"><div><article class="article"><h1 class="main-title">Table of contents</h1><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#920783374">API Overview</a></div><div class="page">2</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#-1521149880">API Quickstart</a></div><div class="page">3</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#633564984">API Reference</a></div><div class="page">5</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#1128157660">Create user</a></div><div class="page">6</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#-319361887">Create list of users with given input array</a></div><div class="page">9</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#-525688876">Log user into the system</a></div><div class="page">13</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#1631193570">Log current user out</a></div><div class="page">15</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#471905602">Find user</a></div><div class="page">16</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#1048285743">Update user</a></div><div class="page">18</div></div><div class="entry"><div class="toc-link-container"><a class="toc-link" href="#499909261">Delete user</a></div><div class="page">21</div></div></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="920783374">API Overview</h1><section><h2 id="920783374#introduction" data-toc="introduction#api-docs.md-introduction">Introduction</h2><p id="920783374#-kgt9su_22">Provide a brief introduction to the API, explaining its purpose and scope.</p></section><section><h2 id="920783374#what-you-can-do-using-this-api" data-toc="what-you-can-do-using-this-api#api-docs.md-what-you-can-do-using-this-api">What you can do using this API</h2><p id="920783374#-kgt9su_23">Provide some simple usage examples to help users get started quickly.</p></section><section><h2 id="920783374#authentication" data-toc="authentication#api-docs.md-authentication">Authentication</h2><p id="920783374#-kgt9su_24">Explain the authentication methods and requirements for accessing the API.</p></section><section><h2 id="920783374#base-url" data-toc="base-url#api-docs.md-base-url">Base URL</h2><p id="920783374#-kgt9su_25">Specify the base URL for making API requests.</p><p id="920783374#-kgt9su_26">If you have more than one environment (production and sandbox) explain the difference and provide links to both.</p></section><section><h2 id="920783374#rate-limiting" data-toc="rate-limiting#api-docs.md-rate-limiting">Rate Limiting</h2><p id="920783374#-kgt9su_27">Explain any rate limiting policies, if applicable.</p></section><section><h2 id="920783374#error-handling" data-toc="error-handling#api-docs.md-error-handling">Error Handling</h2><p id="920783374#-kgt9su_28">Describe the API's error response format and provide common error codes and their meanings.</p></section><section><h2 id="920783374#versioning" data-toc="versioning#api-docs.md-versioning">Versioning</h2><p id="920783374#-kgt9su_29">Explain how the API versioning works and how to specify the desired API version in requests.</p></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="-1521149880">API Quickstart</h1><p> In this section, you'll find a step-by-step guide to quickly start using the API. </p><section><h2 id="-1521149880#prerequisites" data-toc="prerequisites#API-quickstart.md-prerequisites">Prerequisites</h2><p id="-1521149880#i8pp4h4_13">List any prerequisites or dependencies that users need to have in place before they can start using the API.</p><ul class="list" id="-1521149880#i8pp4h4_14" start="1"><li class="list-item" id="-1521149880#i8pp4h4_15"><p>Pre-requisite one</p></li><li class="list-item" id="-1521149880#i8pp4h4_16"><p>Pre-requisite two</p></li></ul></section><section><h2 id="-1521149880#authentication" data-toc="authentication#API-quickstart.md-authentication">Authentication</h2><p id="-1521149880#i8pp4h4_17">Explain how to authenticate with the API, including obtaining API keys or tokens.</p></section><section><h2 id="-1521149880#making-your-first-request" data-toc="making-your-first-request#API-quickstart.md-making-your-first-request">Making Your First Request</h2><p id="-1521149880#i8pp4h4_18">Provide a simple example of making a request to one of the API's endpoints. Use clear and concise code snippets.</p><div class="code-block detached" id="-1521149880#i8pp4h4_19"><pre><code class="language-http">GET /api/endpoint HTTP/1.1
+Host: api.example.com
+Authorization: Bearer YOUR_ACCESS_TOKEN</code></pre></div></section><section><h2 id="-1521149880#response-handling" data-toc="response-handling#API-quickstart.md-response-handling">Response Handling</h2><p id="-1521149880#i8pp4h4_20">Explain how to handle the API responses, including parsing JSON data and handling errors.</p></section><section><h2 id="-1521149880#api-usage-tips" data-toc="api-usage-tips#API-quickstart.md-api-usage-tips">API Usage Tips</h2><p id="-1521149880#i8pp4h4_21">Offer tips and best practices for using the API effectively and efficiently.</p></section><section><h2 id="-1521149880#next-steps" data-toc="next-steps#API-quickstart.md-next-steps">Next Steps</h2><p id="-1521149880#i8pp4h4_22">Suggest what users can do next, such as exploring more endpoints or integrating the API into their applications.</p></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="633564984">API Reference</h1><p id="633564984#lul4ad_10">This is a sample Pet Store Server based on the OpenAPI 3.0 specification.</p><blockquote class="prompt flex bordered-element-rounded note detached">
+  <svg xmlns="http://www.w3.org/2000/svg" class="prompt-icon">
+    <path d="M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9zM10.5 7.5A1.5 1.5 0 1 0 12 6a1.5 1.5 0 0 0-1.5 1.5zm-.5 3.54v1h1V18h2v-6a.96.96 0 0 0-.96-.96z"></path>
+  </svg>
+  <div class="prompt-content prompt-content-p"><p id="633564984#lul4ad_12">A very important note about this API.</p></div>
+</blockquote></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="1128157660">Create user</h1><div class="api-endpoint"><img class="inline-icon image image-container" src="https://img.shields.io/badge/-POST-28B8A0" title="POST method"><span class="api-path">/user</span></div><p id="1128157660#mr6th8_24">This can only be done by the logged in user.</p><section><h2 id="1128157660#mr6th8_25" data-toc="mr6th8_25#Create-user.md-mr6th8_25">Request parameters</h2><div class="detached"><div class="api-section"><p><b>Body</b></p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">application/json</b><span class="api-grey-text">User</span></p><p class="api-content-type">Child attributes</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">id</b><span class="api-grey-text">integer int64</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">firstName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">lastName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">email</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">password</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">phone</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">userStatus</b><span class="api-grey-text">integer int32</span></p><p>User Status</p></div></div></div><div><p><b>JSON example</b></p><div class="code-block detached" id="mr6th8_27"><pre><code class="language-json">{
+  &quot;id&quot;: 10,
+  &quot;username&quot;: &quot;theUser&quot;,
+  &quot;firstName&quot;: &quot;John&quot;,
+  &quot;lastName&quot;: &quot;James&quot;,
+  &quot;email&quot;: &quot;john@email.com&quot;,
+  &quot;password&quot;: &quot;12345&quot;,
+  &quot;phone&quot;: &quot;12345&quot;,
+  &quot;userStatus&quot;: 1
+}</code></pre></div></div></div></section><section><h2 id="1128157660#mr6th8_28" data-toc="mr6th8_28#Create-user.md-mr6th8_28">Responses</h2><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-green">default</span><b>successful operation</b></p><p class="api-content-type"><span><b>Content type</b></span><span class="api-path api-grey-text">application/json</span></p><p>successful operation</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">application/json</b><span class="api-grey-text">User</span></p><p class="api-content-type">Child attributes</p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">id</b><span class="api-grey-text">integer int64</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">firstName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">lastName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">email</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">password</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">phone</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">userStatus</b><span class="api-grey-text">integer int32</span></p><p>User Status</p></div></div></div><div><p><b>JSON example</b></p><div class="code-block detached" id="mr6th8_30"><pre><code class="language-json">{
+  &quot;id&quot;: 11,
+  &quot;username&quot;: &quot;theUser&quot;,
+  &quot;firstName&quot;: &quot;John&quot;,
+  &quot;lastName&quot;: &quot;Doe&quot;,
+  &quot;email&quot;: &quot;john@email.com&quot;,
+  &quot;password&quot;: &quot;12345&quot;,
+  &quot;phone&quot;: &quot;12345&quot;,
+  &quot;userStatus&quot;: 1
+}</code></pre></div></div></section></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="-319361887">Create list of users with given input array</h1><div class="api-endpoint"><img class="inline-icon image image-container" src="https://img.shields.io/badge/-POST-28B8A0" title="POST method"><span class="api-path">/user/createWithList</span></div><p id="-319361887#dbi29o_25">Creates list of users with given input array</p><section><h2 id="-319361887#dbi29o_26" data-toc="dbi29o_26#Creates-list-of-users-with-given-input-array.md-dbi29o_26">Request parameters</h2><div class="detached"><div class="api-section"><p><b>Body</b></p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">application/json</b><span class="api-grey-text">Array of User</span></p><p class="api-content-type">Child attributes</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">id</b><span class="api-grey-text">integer int64</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">firstName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">lastName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">email</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">password</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">phone</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">userStatus</b><span class="api-grey-text">integer int32</span></p><p>User Status</p></div></div></div><div><p><b>JSON example</b></p><div class="code-block detached" id="dbi29o_28"><pre><code class="language-json">[
+  {
+    &quot;id&quot;: 10,
+    &quot;username&quot;: &quot;theUser&quot;,
+    &quot;firstName&quot;: &quot;John&quot;,
+    &quot;lastName&quot;: &quot;James&quot;,
+    &quot;email&quot;: &quot;john@email.com&quot;,
+    &quot;password&quot;: &quot;12345&quot;,
+    &quot;phone&quot;: &quot;12345&quot;,
+    &quot;userStatus&quot;: 1
+  }
+]</code></pre></div></div></div></section><section><h2 id="-319361887#dbi29o_29" data-toc="dbi29o_29#Creates-list-of-users-with-given-input-array.md-dbi29o_29">Responses</h2><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-green">200</span><b>Successful operation</b></p><p class="api-content-type"><span><b>Content type</b></span><span class="api-path api-grey-text">application/json</span></p><p>Successful operation</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">application/json</b><span class="api-grey-text">User</span></p><p class="api-content-type">Child attributes</p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">id</b><span class="api-grey-text">integer int64</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">firstName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">lastName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">email</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">password</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">phone</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">userStatus</b><span class="api-grey-text">integer int32</span></p><p>User Status</p></div></div></div><div><p><b>JSON example</b></p><div class="code-block detached" id="dbi29o_31"><pre><code class="language-json">{
+  &quot;id&quot;: 10,
+  &quot;username&quot;: &quot;theUser&quot;,
+  &quot;firstName&quot;: &quot;John&quot;,
+  &quot;lastName&quot;: &quot;James&quot;,
+  &quot;email&quot;: &quot;john@email.com&quot;,
+  &quot;password&quot;: &quot;12345&quot;,
+  &quot;phone&quot;: &quot;12345&quot;,
+  &quot;userStatus&quot;: 1
+}</code></pre></div></div></section><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-green">default</span><b>successful operation</b></p><p class="api-content-type"><span><b>Content type</b></span></p><p>successful operation</p></div></section><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-red">400</span><b>Invalid username supplied</b></p><p class="api-content-type"><span><b>Content type</b></span><span class="api-path api-grey-text">application/json</span></p><p>Invalid username supplied</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">application/json</b><span class="api-grey-text">ErrorResponse</span></p><p class="api-content-type">Child attributes</p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">code</b><span class="api-grey-text">integer int32</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">details</b><span class="api-grey-text">Array of object</span></p><p class="api-content-type">Child attributes</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">typeUrl</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">value</b><span class="api-grey-text">string</span></p></div></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">message</b><span class="api-grey-text">string</span></p></div></div></div><div><p><b>JSON example</b></p><div class="code-block detached" id="dbi29o_34"><pre><code class="language-json">{
+  &quot;code&quot;: 0,
+  &quot;details&quot;: [
+    {
+      &quot;typeUrl&quot;: &quot;string&quot;,
+      &quot;value&quot;: &quot;string&quot;
+    }
+  ],
+  &quot;message&quot;: &quot;string&quot;
+}</code></pre></div></div></section></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="-525688876">Log user into the system</h1><div class="api-endpoint"><img class="inline-icon image image-container" src="https://img.shields.io/badge/-GET-167DFF" title="GET method"><span class="api-path">/user/login</span></div><p id="-525688876#o2f45o_20"></p><section><h2 id="-525688876#o2f45o_21" data-toc="o2f45o_21#Logs-user-into-the-system.md-o2f45o_21">Request parameters</h2><div class="detached"><div class="api-section"><p><b>Query</b></p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span></p><p>The user name for login</p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">password</b><span class="api-grey-text">string</span></p><p>The password for login in clear text</p></div></div></div></section><section><h2 id="-525688876#o2f45o_23" data-toc="o2f45o_23#Logs-user-into-the-system.md-o2f45o_23">Responses</h2><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-green">200</span><b>successful operation</b></p><p class="api-content-type"><span><b>Content type</b></span><span class="api-path api-grey-text">application/json</span></p><p>successful operation</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">application/json</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">X-Rate-Limit (Header)</b><span class="api-grey-text">integer int32</span><span class="api-required">required</span></p><p>calls per hour allowed by the user</p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">X-Expires-After (Header)</b><span class="api-grey-text">string date-time</span><span class="api-required">required</span></p><p>date in UTC when token expires</p></div></div><div><p><b>JSON example</b></p><div class="code-block detached" id="o2f45o_25"><pre><code class="language-json">&quot;example&quot;</code></pre></div></div></section><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-red">400</span><b>Invalid username/password supplied</b></p><p class="api-content-type"><span><b>Content type</b></span></p><p>Invalid username/password supplied</p></div></section></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="1631193570">Log current user out</h1><div class="api-endpoint"><img class="inline-icon image image-container" src="https://img.shields.io/badge/-GET-167DFF" title="GET method"><span class="api-path">/user/logout</span></div><p id="1631193570#-e8aqlw_12"></p><section><h2 id="1631193570#-e8aqlw_13" data-toc="-e8aqlw_13#Logs-out-current-logged-in-user-session.md--e8aqlw_13">Responses</h2><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-green">default</span><b>successful operation</b></p><p class="api-content-type"><span><b>Content type</b></span></p><p>successful operation</p></div></section></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="471905602">Find user</h1><div class="api-endpoint"><img class="inline-icon image image-container" src="https://img.shields.io/badge/-GET-167DFF" title="GET method"><span class="api-path">/user/{username}</span></div><p id="471905602#-ip8f9h_23"></p><section><h2 id="471905602#-ip8f9h_24" data-toc="-ip8f9h_24#Get-user-by-user-name.md--ip8f9h_24">Request parameters</h2><div class="detached"><div class="api-section"><p><b>Path</b></p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span><span class="api-required">required</span></p><p>The name that needs to be fetched. Use user1 for testing. </p></div></div></div></section><section><h2 id="471905602#-ip8f9h_26" data-toc="-ip8f9h_26#Get-user-by-user-name.md--ip8f9h_26">Responses</h2><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-green">200</span><b>successful operation</b></p><p class="api-content-type"><span><b>Content type</b></span><span class="api-path api-grey-text">application/json</span></p><p>successful operation</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">application/json</b><span class="api-grey-text">User</span></p><p class="api-content-type">Child attributes</p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">id</b><span class="api-grey-text">integer int64</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">firstName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">lastName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">email</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">password</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">phone</b><span class="api-grey-text">string</span></p></div><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">userStatus</b><span class="api-grey-text">integer int32</span></p><p>User Status</p></div></div></div><div><p><b>JSON example</b></p><div class="code-block detached" id="-ip8f9h_28"><pre><code class="language-json">{
+  &quot;id&quot;: 10,
+  &quot;username&quot;: &quot;theUser&quot;,
+  &quot;firstName&quot;: &quot;John&quot;,
+  &quot;lastName&quot;: &quot;James&quot;,
+  &quot;email&quot;: &quot;john@email.com&quot;,
+  &quot;password&quot;: &quot;12345&quot;,
+  &quot;phone&quot;: &quot;12345&quot;,
+  &quot;userStatus&quot;: 1
+}</code></pre></div></div></section><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-red">400</span><b>Invalid username supplied</b></p><p class="api-content-type"><span><b>Content type</b></span></p><p>Invalid username supplied</p></div></section><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-red">404</span><b>User not found</b></p><p class="api-content-type"><span><b>Content type</b></span></p><p>User not found</p></div></section></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="1048285743">Update user</h1><div class="api-endpoint"><img class="inline-icon image image-container" src="https://img.shields.io/badge/-PUT-FC801D" title="PUT method"><span class="api-path">/user/{username}</span></div><p id="1048285743#iaen5s_21">This can only be done by the logged in user.</p><section><h2 id="1048285743#iaen5s_22" data-toc="iaen5s_22#Update-user.md-iaen5s_22">Request parameters</h2><div class="detached"><div class="api-section"><p><b>Path</b></p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span><span class="api-required">required</span></p><p>name that needs to be updated</p></div></div><div class="api-section"><p><b>Body</b></p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">application/json</b><span class="api-grey-text">User</span></p><p class="api-content-type">Child attributes</p><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">id</b><span class="api-grey-text">integer int64</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">firstName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">lastName</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">email</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">password</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">phone</b><span class="api-grey-text">string</span></p></div><div class="api-block api-white-block"><p class="api-header"><b class="api-status-code">userStatus</b><span class="api-grey-text">integer int32</span></p><p>User Status</p></div></div></div><div><p><b>JSON</b></p><div class="code-block detached" id="iaen5s_25"><pre><code class="language-json">{
+&quot;id&quot;: 10,
+&quot;username&quot;: &quot;theUser&quot;,
+&quot;firstName&quot;: &quot;John&quot;,
+&quot;lastName&quot;: &quot;James&quot;,
+&quot;email&quot;: &quot;john@email.com&quot;,
+&quot;password&quot;: &quot;12345&quot;,
+&quot;phone&quot;: &quot;12345&quot;,
+&quot;userStatus&quot;: 1
+}</code></pre></div></div><div><p><b>JavaScript</b></p><div class="code-block detached" id="iaen5s_26"><pre><code class="language-javascript">const userPayload = {
+  id: 10,
+  username: &quot;theUser&quot;,
+  firstName: &quot;John&quot;,
+  lastName: &quot;James&quot;,
+  email: &quot;john@email.com&quot;,
+  password: &quot;12345&quot;,
+  phone: &quot;12345&quot;,
+  userStatus: 1
+};
+console.log(userPayload);</code></pre></div></div></div></section><section><h2 id="1048285743#iaen5s_27" data-toc="iaen5s_27#Update-user.md-iaen5s_27">Responses</h2><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-green">default</span><b>successful operation</b></p><p class="api-content-type"><span><b>Content type</b></span></p><p>successful operation</p></div></section></section></article></div></section><section class="topic"><div><article class="article"><h1 class="main-title" id="499909261">Delete user</h1><div class="api-endpoint"><img class="inline-icon image image-container" src="https://img.shields.io/badge/-DELETE-FF318C" title="DELETE method"><span class="api-path">/user/{username}</span></div><p id="499909261#-37ep89_19">This can only be done by the logged in user.</p><section><h2 id="499909261#-37ep89_20" data-toc="-37ep89_20#Delete-user.md--37ep89_20">Request parameters</h2><div class="detached"><div class="api-section"><p><b>Path</b></p><div class="api-block api-grey-block"><p class="api-header"><b class="api-status-code">username</b><span class="api-grey-text">string</span><span class="api-required">required</span></p><p>The name that needs to be deleted</p></div></div></div></section><section><h2 id="499909261#-37ep89_22" data-toc="-37ep89_22#Delete-user.md--37ep89_22">Responses</h2><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-red">400</span><b>Invalid username supplied</b></p><p class="api-content-type"><span><b>Content type</b></span></p><p>Invalid username supplied</p></div></section><section class="api-section"><div class="api-block api-grey-block"><p><span class="api-status-code api-code-red">404</span><b>User not found</b></p><p class="api-content-type"><span><b>Content type</b></span></p><p>User not found</p></div></section></section></article></div></section></div></body></html>
