@@ -164,11 +164,30 @@ Content-Type: application/json
   ]
 }
 
+### register user to event
+
+POST {{url}}register
+Content-Type: application/json
+
+{
+  "event_id": "asd"
+}
+
+### unregister user to event
+
+
+POST {{url}}unregister
+Content-Type: application/json
+
+{
+  "event_id": "asd"
+}
+
 
 ###
 
-GET {{url}}/getAll
+GET {{url}}getAll
 
 ###
 
-GET {{url}}/getLocationById/a3c008e2-04c5-4297-93a5-2e992310e5a5
+GET {{url}}getLocationById/a3c008e2-04c5-4297-93a5-2e992310e5a5

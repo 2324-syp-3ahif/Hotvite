@@ -44,6 +44,49 @@ eventRouter.get("/getAll", async (req, res) => {
     }
 });
 
+eventRouter.post("/register", isAuthenticated, async (req, res) => {
+    try {
+        const payload = (req as AuthRequest).payload;
+        const eventID = req.body.event_id;
+
+        const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
+        const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
+
+        if (!user || !event) {
+            return res.sendStatus(500);
+        }
+
+        let result = await dbUtility.registerUserToEvent(user, event)
+
+        res.send(200).json({result: result, user: user, event: event});
+    } catch (error) {
+        console.error("Error registering user to event:", error);
+        res.status(500).json({error: "Internal server error"});
+    }
+});
+
+eventRouter.delete("/unregister", isAuthenticated, async (req, res) => {
+    try {
+        const payload = (req as AuthRequest).payload;
+        const eventID = req.body.event_id;
+
+        const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
+        const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
+
+        if (!user || !event) {
+            return res.sendStatus(500);
+        }
+
+        let result = await dbUtility.unregisterUserFromEvent(user, event)
+
+        res.send(200).json({result: result, user: user, event: event});
+    } catch (error) {
+        console.error("Error unregistering user to event:", error);
+        res.status(500).json({error: "Internal server error"});
+    }
+});
+
+
 eventRouter.get("/getLocationsFromUser", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;

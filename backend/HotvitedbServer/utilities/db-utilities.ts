@@ -40,6 +40,45 @@ export class dbUtility {
         }
     }
 
+    public static async registerUserToEvent(user: User, event: Event): Promise<boolean> {
+        try {
+            const stmt = await
+                this.db.prepare('INSERT INTO event_participant (event_id, user_id) VALUES (:event_id, :user_id)');
+
+            await stmt.bind({
+                'event_id': event.id,
+                'user_id': user.id
+            });
+
+            await stmt.run();
+            await stmt.finalize();
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+    public static async unregisterUserFromEvent(user: User, event: Event): Promise<boolean> {
+        try {
+            const stmt = await
+                this.db.prepare('delete from event_participant where event_id = :event_id AND user_id = :user_id');
+
+            await stmt.bind({
+                'event_id': event.id,
+                'user_id': user.id
+            });
+
+            await stmt.run();
+            await stmt.finalize();
+
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
     public static async saveEvent(event: Event): Promise<boolean> {
         try {
             await this.db.run('BEGIN TRANSACTION;');
