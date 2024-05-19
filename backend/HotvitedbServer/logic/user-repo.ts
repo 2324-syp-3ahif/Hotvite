@@ -1,10 +1,10 @@
-import {User} from "../model";
 import {dbUtility} from "../utilities/db-utilities";
 import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
+import {User} from "../models/user";
+import {UserDto} from "../models/userDto";
 
-export async function createUser(user: User): Promise<User> {
-    // add salt to the password
+export async function createUser(user: UserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
     return {
@@ -16,47 +16,30 @@ export async function createUser(user: User): Promise<User> {
     };
 }
 
-export async function isValidNewUser(user: object): Promise<boolean> {
+export async function isValidNewUser(user: User): Promise<boolean> {
     //check if the email is already in use
 
-    if(!isUser(user)){
-        return false;
-    }
-
-    if (await dbUtility.hasEntryInColumnInTable("user", "email", user.email)) {
-        return false;
-    }
-
-    return true;
+    return !await dbUtility.hasEntryInColumnInTable("user", "email", user.email);
 }
 
 export async function validateUserCredentials(password: string, id: string) {
-    const user: User = (await dbUtility.getTableByValue("user", "id", id))[0];
+    const user = await dbUtility.getTableByValue<User>("user", "id", id);
 
-    const hashedPassword = user.password;
+    if (!user) {
+        return false;
+    }
 
+    return await comparePassword(password, user.password);
+}
+
+export async function comparePassword(password: string, hashedPassword: string) {
     return await bcrypt.compare(password, hashedPassword);
 }
 
-export async function isValidRequestByUser(id: string, password: string): Promise<boolean | string> {
+export async function isValidRequestByUser(id: string, password: string) {
     if (!await dbUtility.hasEntryInColumnInTable("user", "id", id)) {
-        return `user with id: ${id} does not exit`;
+        return false;
     }
 
-    if (!await validateUserCredentials(password, id)) {
-        return `password entered: ${password} not valid`;
-    }
-
-    return true;
-}
-
-function isUser(obj: object): obj is User {
-    if ("username" in obj
-        && "email" in obj
-        && "password" in obj
-        && "aboutme" in obj) {
-        return true;
-    }
-
-    return false;
+    return await validateUserCredentials(password, id);
 }

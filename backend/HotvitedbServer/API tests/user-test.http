@@ -1,30 +1,41 @@
 @url=http://localhost:3000/api/user
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYxNDI5MjAuMDA4LCJpYXQiOjE3MTYxNDExMjB9.Rqj2bdC2J0zCoEjoRb3FASRIvp0bnxtohhNBUcFQTrA
+
+### signup
 
 POST {{url}}/signup
 Content-Type: application/json
 
 {
   "username": "testname",
-  "email": "test123@gmail.com",
+  "email": "test12@gmail.com",
   "password": "123pw",
   "aboutme": "about me blabla"
 }
 
-### update username
+### login
 
-PUT {{url}}/changeUsername/675c4b77-8c39-42b2-bc8c-3355a601e6b2
+POST {{url}}/login
 Content-Type: application/json
 
 {
-  "password": "123pw",
-  "username": "better name 123"
+  "email": "test12@gmail.com",
+  "password": "123pw"
+}
+
+
+### update username
+
+PUT {{url}}/changeUsername/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "username": "asdoijsaldjasl"
 }
 
 ### delete user
 
-DELETE {{url}}/delete/c6b25e05-4ac2-4214-8826-236e7233a63e
+DELETE {{url}}/delete
+Authorization: Bearer {{token}}
 Content-Type: application/json
-
-{
-  "password": "123pw"
-}

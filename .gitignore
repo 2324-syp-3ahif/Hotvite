@@ -8,4 +8,4 @@ frontend/Hotvite/tests/
 **/**/**/.idea/
 **/**/.idea/
 **/.idea/
-
+/backend/HotvitedbServer/.env
