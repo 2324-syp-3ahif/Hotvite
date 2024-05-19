@@ -110,7 +110,7 @@ userRouter.delete("/delete", isAuthenticated, async (req, res) => {
 
         await dbUtility.deleteRowInTable("user", "email", payload.user.email);
 
-        res.status(StatusCodes.NO_CONTENT).send("user deleted");
+        res.status(StatusCodes.OK).send("user deleted");
     } catch (error) {
         console.error("Error deleting user:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});

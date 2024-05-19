@@ -7,6 +7,7 @@ import {Chat} from "../models/chat";
 import {Location} from "../models/location";
 import {User} from "../models/user";
 import {Address} from "../models/address";
+import {UpdateEventDto} from "../models/updateEventDto";
 
 export class dbUtility {
     private static db: sqlite.Database;
@@ -43,11 +44,12 @@ export class dbUtility {
     public static async registerUserToEvent(user: User, event: Event): Promise<boolean> {
         try {
             const stmt = await
-                this.db.prepare('INSERT INTO event_participant (event_id, user_id) VALUES (:event_id, :user_id)');
+                this.db.prepare(`INSERT INTO event_participant (user_id, event_id)
+                                 VALUES (:user_id, :event_id)`);
 
             await stmt.bind({
-                'event_id': event.id,
-                'user_id': user.id
+                ':event_id': event.id,
+                ':user_id': user.id
             });
 
             await stmt.run();
@@ -60,37 +62,16 @@ export class dbUtility {
         }
     }
 
-    public static async updateEvent(event: Event): Promise<boolean> {
+    public static async updateEvent(event: UpdateEventDto): Promise<boolean> {
         try {
             const stmt = await this.db.prepare(
-                `UPDATE event
-                 SET title            = :title,
-                     description      = :description,
-                     address_id       = :address_id,
-                     location_id      = :location_id,
-                     type             = :type,
-                     creator_id       = :creator_id,
-                     status           = :status,
-                     chat_id          = :chat_id,
-                     created_at       = :created_at,
-                     event_start_date = :event_start_date,
-                     event_end_date   = :event_end_date
-                 WHERE id = :id`
+                `UPDATE event SET title = :title, description = :description, status = :status WHERE id = '${event.id}'`
             );
 
             await stmt.bind({
-                ':id': event.id,
                 ':title': event.title,
                 ':description': event.description,
-                ':address_id': event.address.id,
-                ':location_id': event.location.id,
-                ':type': event.type,
-                ':creator_id': event.creator_id,
                 ':status': event.status,
-                ':chat_id': event.chat.id,
-                ':created_at': event.created_at,
-                ':event_start_date': event.event_start_date,
-                ':event_end_date': event.event_end_date
             });
 
             await stmt.run();
@@ -109,8 +90,8 @@ export class dbUtility {
                 this.db.prepare('delete from event_participant where event_id = :event_id AND user_id = :user_id');
 
             await stmt.bind({
-                'event_id': event.id,
-                'user_id': user.id
+                ':event_id': event.id,
+                ':user_id': user.id
             });
 
             await stmt.run();
@@ -212,13 +193,14 @@ export class dbUtility {
             if (!value || !table || !column) {
                 return undefined;
             }
-            const stmt = await this.db.prepare(`select ${column}
+
+            const stmt = await this.db.prepare(`select *
                                                 from ${table}
                                                 WHERE ${column} = :value`);
 
             await stmt.bind({':value': value});
 
-            const result = await stmt.all<T>();
+            const result = await stmt.get();
 
             await stmt.finalize();
 
@@ -253,6 +235,7 @@ export class dbUtility {
             const stmt = await this.db.prepare(`DELETE
                                                 FROM ${table}
                                                 WHERE ${column} = :value`);
+
             await stmt.bind({':value': value});
             await stmt.run();
             await stmt.finalize();
@@ -268,6 +251,7 @@ export class dbUtility {
         try {
             const stmt = await this.db.prepare(`SELECT *
                                                 FROM ${table}`);
+
             const result = await stmt.all<T>();
             await stmt.finalize();
 

@@ -1,5 +1,7 @@
 @url=http://localhost:3000/api/user
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTM2Mzc1NzkuOTI5LCJpYXQiOjE3MTM2MzU3Nzl9.yWGoVwMQPmteGWTgWESLht30uMqabnwkZ2qlTm_48uM
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYxNDI5MjAuMDA4LCJpYXQiOjE3MTYxNDExMjB9.Rqj2bdC2J0zCoEjoRb3FASRIvp0bnxtohhNBUcFQTrA
+
+### signup
 
 POST {{url}}/signup
 Content-Type: application/json

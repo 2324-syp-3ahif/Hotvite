@@ -1,6 +1,5 @@
 @url=http://localhost:3000/api/event/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTM2Mzc1NzkuOTI5LCJpYXQiOjE3MTM2MzU3Nzl9.yWGoVwMQPmteGWTgWESLht30uMqabnwkZ2qlTm_48uM
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYxNDUwMzAuMjY3LCJpYXQiOjE3MTYxNDMyMzB9.bPH-a3oDVGBOP4DQy0t-sAS9FdugV-XjohiIM0ytO-g
 
 POST {{url}}create
 Authorization: Bearer {{token}}
@@ -43,6 +42,7 @@ Content-Type: application/json
 ###
 
 POST {{url}}create
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -84,6 +84,7 @@ Content-Type: application/json
 
 ###
 POST {{url}}create
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -126,6 +127,7 @@ Content-Type: application/json
 ###
 
 POST {{url}}create
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -167,20 +169,34 @@ Content-Type: application/json
 ### register user to event
 
 POST {{url}}register
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "event_id": "asd"
+  "event_id": "1a153caf-b0a9-417f-b043-1b885633a25f"
 }
 
 ### unregister user to event
 
-
 POST {{url}}unregister
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "event_id": "asd"
+  "event_id": "1a153caf-b0a9-417f-b043-1b885633a25f"
+}
+
+### update event
+
+POST {{url}}changeEventDetails
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "731b6d58-e980-4597-8c9f-be3e0f2c3ac7",
+  "title": "Tech Conference 123123123",
+  "description": "desc1231",
+  "status": "active"
 }
 
 

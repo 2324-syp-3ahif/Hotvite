@@ -7,6 +7,7 @@ import {isAuthenticated} from "../middleware/auth-handler";
 import {AuthRequest} from "../models/authRequest";
 import {User} from "../models/user";
 import {StatusCodes} from "http-status-codes";
+import {UpdateEventDto} from "../models/updateEventDto";
 
 export const eventRouter = express.Router();
 
@@ -48,7 +49,7 @@ eventRouter.get("/getAll", async (req, res) => {
 eventRouter.post("/changeEventDetails", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
-        const newEvent: Event = req.body;
+        const newEvent: UpdateEventDto = req.body;
 
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
         const oldEvent = await dbUtility.getTableByValue<Event>("event", "id", newEvent.id)
@@ -61,9 +62,9 @@ eventRouter.post("/changeEventDetails", isAuthenticated, async (req, res) => {
             return res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
         }
 
-        const result = dbUtility.updateEvent(newEvent)
+        const result = await dbUtility.updateEvent(newEvent)
 
-        res.status(StatusCodes.OK).json({result: result, oldEvent: oldEvent, newEvent: newEvent});
+        res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error registering user to event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
@@ -84,14 +85,14 @@ eventRouter.post("/register", isAuthenticated, async (req, res) => {
 
         const result = await dbUtility.registerUserToEvent(user, event)
 
-        res.status(StatusCodes.OK).json({result: result, user: user, event: event});
+        res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error registering user to event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });
 
-eventRouter.delete("/unregister", isAuthenticated, async (req, res) => {
+eventRouter.post("/unregister", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
         const eventID = req.body.event_id;
@@ -105,7 +106,7 @@ eventRouter.delete("/unregister", isAuthenticated, async (req, res) => {
 
         const result = await dbUtility.unregisterUserFromEvent(user, event)
 
-        res.status(StatusCodes.OK).json({result: result, user: user, event: event});
+        res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error unregistering user to event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
@@ -124,14 +125,13 @@ eventRouter.delete("/deleteEvent", isAuthenticated, async (req, res) => {
             return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
         }
 
-
         if (event.creator_id !== user.id) {
             return res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
         }
 
-        let result = await dbUtility.unregisterUserFromEvent(user, event)
+        const result = await dbUtility.unregisterUserFromEvent(user, event)
 
-        res.status(StatusCodes.OK).json({result: result, user: user, event: event});
+        res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error unregistering user to event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
@@ -152,7 +152,7 @@ eventRouter.get("/getLocationsFromUser", isAuthenticated, async (req, res) => {
 
         const result = allLocations.filter(location => location.id === user.id);
 
-        res.status(StatusCodes.OK).json(result);
+        res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error getting locations from user:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});

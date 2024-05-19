@@ -9,6 +9,9 @@ from user;
 select *
 from event;
 
+select * from event_participant;
+
+
 delete from event;
 
 delete from event_participant
