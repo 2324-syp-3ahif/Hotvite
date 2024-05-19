@@ -1,25 +1,24 @@
 import {v4 as uuidv4} from "uuid";
-import {dbUtility} from "../utilities/db-utilities";
 import {Event} from "../models/event";
-import express from "express";
-import {AuthRequest} from "../models/authRequest";
 import {User} from "../models/user";
+import {EventDto} from "../models/eventDto";
 
-export function createEvent(event: Event, user: User): Event {
-    //create ids
-
-    const eventID = uuidv4()
-
-    event.id = eventID;
+function generateUUIDs(event: Event, eventID: string): void {
     event.address.id = uuidv4();
     event.location.id = uuidv4();
     event.chat.id = uuidv4();
     event.conditions.forEach(c => c.event_id = eventID);
+}
 
-    event.creator_id = user.id;
+export function createEvent(eventDto: EventDto, user: User): Event {
+    const eventID = uuidv4();
+    const event: Event = {...eventDto, id: eventID, creator_id: user.id} as Event;
+
+    generateUUIDs(event, eventID);
 
     return event;
 }
+
 
 export async function isValidEvent(event: Event): Promise<boolean> {
     //possible to add check here for the future

@@ -7,6 +7,7 @@ import {isAuthenticated} from "../middleware/auth-handler";
 import jwt from "jsonwebtoken";
 import {secret_key} from "../app";
 import {AuthRequest} from "../models/authRequest";
+import {StatusCodes} from "http-status-codes";
 
 export const userRouter = express.Router();
 
@@ -20,19 +21,19 @@ const validateUserSignup = [
 
 userRouter.post("/signup", validateUserSignup, async (req: Request, res: Response) => {
     try {
-        if (!await isValidNewUser(req.body)) {
-            res.sendStatus(405);
+        const user: User = await createUser(req.body);
+
+        if (!await isValidNewUser(user)) {
+            res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
             return;
         }
 
-        const user: User = await createUser(req.body);
-
         await dbUtility.saveUser(user);
 
-        res.status(201).json(user);
+        res.status(StatusCodes.CREATED).json(user);
     } catch (error) {
         console.error("Error creating user:", error);
-        res.status(500).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });
 
@@ -41,23 +42,23 @@ userRouter.post("/login", async (req :  Request, res : Response) => {
         const {email, password} = {email: req.body.email, password: req.body.password};
 
         if (!password || !email) {
-            return res.status(400).send("requiring <email, password>");
+            return res.status(StatusCodes.BAD_REQUEST).send("requiring <email, password>");
         }
 
         if (!secret_key) {
-            return res.sendStatus(500);
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
         }
 
         const user = await dbUtility.getTableByValue<User>("user", "email", email);
 
         if (!user) {
-            return res.sendStatus(500);
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
         }
 
         const isValid = await comparePassword(password, user.password);
 
         if (!isValid) {
-            return res.status(400).send("email or password not valid");
+            return res.status(StatusCodes.BAD_REQUEST).send("email or password not valid");
         }
 
         const userClaims = {
@@ -75,10 +76,10 @@ userRouter.post("/login", async (req :  Request, res : Response) => {
             secret_key
         );
 
-        res.status(200).json({token: token, username: user.username});
+        res.status(StatusCodes.OK).json({token: token, username: user.username});
     } catch (error) {
         console.error("Error in login:", error);
-        res.status(500).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });
 
@@ -88,7 +89,7 @@ userRouter.put("/changeUsername", isAuthenticated, async (req: Request, res: Res
         const username = req.body.username;
 
         if (!username)
-            return res.status(400).send("need username as");
+            return res.status(StatusCodes.BAD_REQUEST).send("need username as");
 
         await dbUtility.updateValueByRowInTableWithCondition("user"
             , "username"
@@ -96,10 +97,10 @@ userRouter.put("/changeUsername", isAuthenticated, async (req: Request, res: Res
             , "email"
             , payload.user.email);
 
-        res.status(200).send("username changed");
+        res.status(StatusCodes.OK).send("username changed");
     } catch (error) {
         console.error("Error in login:", error);
-        res.status(500).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });
 
@@ -109,9 +110,9 @@ userRouter.delete("/delete", isAuthenticated, async (req, res) => {
 
         await dbUtility.deleteRowInTable("user", "email", payload.user.email);
 
-        res.status(204).send("user deleted");
+        res.status(StatusCodes.NO_CONTENT).send("user deleted");
     } catch (error) {
         console.error("Error deleting user:", error);
-        res.status(500).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });

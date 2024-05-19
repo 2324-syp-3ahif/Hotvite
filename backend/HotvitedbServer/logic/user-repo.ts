@@ -2,8 +2,9 @@ import {dbUtility} from "../utilities/db-utilities";
 import bcrypt from "bcrypt";
 import {v4 as uuidv4} from "uuid";
 import {User} from "../models/user";
+import {UserDto} from "../models/userDto";
 
-export async function createUser(user: User): Promise<User> {
+export async function createUser(user: UserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
     return {

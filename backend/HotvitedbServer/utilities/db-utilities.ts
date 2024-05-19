@@ -59,6 +59,50 @@ export class dbUtility {
             return false;
         }
     }
+
+    public static async updateEvent(event: Event): Promise<boolean> {
+        try {
+            const stmt = await this.db.prepare(
+                `UPDATE event
+                 SET title            = :title,
+                     description      = :description,
+                     address_id       = :address_id,
+                     location_id      = :location_id,
+                     type             = :type,
+                     creator_id       = :creator_id,
+                     status           = :status,
+                     chat_id          = :chat_id,
+                     created_at       = :created_at,
+                     event_start_date = :event_start_date,
+                     event_end_date   = :event_end_date
+                 WHERE id = :id`
+            );
+
+            await stmt.bind({
+                ':id': event.id,
+                ':title': event.title,
+                ':description': event.description,
+                ':address_id': event.address.id,
+                ':location_id': event.location.id,
+                ':type': event.type,
+                ':creator_id': event.creator_id,
+                ':status': event.status,
+                ':chat_id': event.chat.id,
+                ':created_at': event.created_at,
+                ':event_start_date': event.event_start_date,
+                ':event_end_date': event.event_end_date
+            });
+
+            await stmt.run();
+            await stmt.finalize();
+
+            return true;
+        } catch (error) {
+            console.error('Error updating event in database', error);
+            return false;
+        }
+    }
+
     public static async unregisterUserFromEvent(user: User, event: Event): Promise<boolean> {
         try {
             const stmt = await
@@ -165,6 +209,9 @@ export class dbUtility {
 
     public static async getTableByValue<T>(table: string, column: string, value: string): Promise<T | undefined> {
         try {
+            if (!value || !table || !column) {
+                return undefined;
+            }
             const stmt = await this.db.prepare(`select ${column}
                                                 from ${table}
                                                 WHERE ${column} = :value`);
