@@ -11,6 +11,7 @@ from event;
 
 select * from event_participant;
 
+delete from user;
 
 delete from event;
 

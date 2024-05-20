@@ -24,13 +24,13 @@ userRouter.post("/signup", validateUserSignup, async (req: Request, res: Respons
         const user: User = await createUser(req.body);
 
         if (!await isValidNewUser(user)) {
-            res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
+            res.status(StatusCodes.METHOD_NOT_ALLOWED).json({result: "user already exists"});
             return;
         }
 
         await dbUtility.saveUser(user);
 
-        res.status(StatusCodes.CREATED).json(user);
+        res.status(StatusCodes.CREATED).json({result: "user created"});
     } catch (error) {
         console.error("Error creating user:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});

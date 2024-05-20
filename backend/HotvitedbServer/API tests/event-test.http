@@ -1,5 +1,5 @@
 @url=http://localhost:3000/api/event/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYxNDUwMzAuMjY3LCJpYXQiOjE3MTYxNDMyMzB9.bPH-a3oDVGBOP4DQy0t-sAS9FdugV-XjohiIM0ytO-g
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYyMjE2NzguNDQxLCJpYXQiOjE3MTYyMTk4Nzh9.l7Vq8P11gqiJAvwOPQWzBpzE_Vie_p2T2qJ2vZpBl8Y
 
 POST {{url}}create
 Authorization: Bearer {{token}}
@@ -199,6 +199,15 @@ Content-Type: application/json
   "status": "active"
 }
 
+### delete event
+
+DELETE {{url}}/deleteEvent
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "event_id": "8ccf736c-7367-4d68-9fae-c5df6317ba35"
+}
 
 ###
 
