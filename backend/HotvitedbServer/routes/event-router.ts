@@ -28,7 +28,7 @@ eventRouter.post("/create", isAuthenticated, async (req, res) => {
 
         await dbUtility.saveEvent(event);
 
-        res.status(StatusCodes.CREATED).json(event);
+        res.status(StatusCodes.CREATED).json({result: true, event_id: event.id});
     } catch (error) {
         console.error("Error creating event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
@@ -129,7 +129,7 @@ eventRouter.delete("/deleteEvent", isAuthenticated, async (req, res) => {
             return res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
         }
 
-        const result = await dbUtility.unregisterUserFromEvent(user, event)
+        const result = await dbUtility.deleteRowInTable("event", "id", event.id);
 
         res.status(StatusCodes.OK).json({result: result});
     } catch (error) {

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2b2b2b;
+            color: #f8f8f2;
+        }
+
+        h1, h2, h3 {
+            color: #f8f8f2;
+        }
+
+        pre {
+            background-color: #3c3c3c;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: auto;
+            white-space: pre-wrap;
+            font-family: Consolas, "Courier New", monospace;
+        }
+
+        .token-required {
+            color: #ff5555;
+            font-weight: bold;
+        }
+
+        .no-token-required {
+            color: #50fa7b;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>API Documentation</h1>
+
+<h2>/api/user/ Endpoints</h2>
+
+<h3>POST /signup</h3>
+<p>Creates a new user. <span class="no-token-required">No token required.</span></p>
+<pre>
+    Request:
+    {
+      "username": "testname",
+      "email": "test12@gmail.com",
+      "password": "123pw",
+      "aboutme": "about me blabla"
+    }
+    </pre>
+    good Responses:
+    <pre>
+    code: 201
+    {
+      "result": "user created"
+    }
+    </pre>
+
+<h3>POST /login</h3>
+<p>Logs in a user. <span class="no-token-required">No token required.</span></p>
+<pre>
+    Request:
+    {
+      "email": "test12@gmail.com",
+      "password": "123pw"
+    }
+    </pre>
+<pre>
+    good Response:
+
+    {
+      "token": "generated_token",
+      "username": "test name"
+    }
+    </pre>
+
+<h3>PUT /changeUsername/</h3>
+<p>Changes the username of a user. <span class="token-required">Requires Bearer token.</span></p>
+<pre>
+    Request:
+    {
+      "username": "new user name"
+    }
+    </pre>
+<pre>
+    good Response:
+    {
+      "result": "username changed"
+    }
+    </pre>
+
+<h3>DELETE /delete</h3>
+<p>Deletes a user. <span class="token-required">Requires Bearer token.</span></p>
+<pre>
+    good Response:
+    {
+      "result": "user deleted"
+    }
+    </pre>
+
+<h2>/api/event/ Endpoints</h2>
+
+<h3>POST /create</h3>
+<p>Creates a new event. <span class="token-required">Requires Bearer token.</span></p>
+<pre>
+    Request:
+    {
+      "title": "title",
+      "description": "desc",
+      "address": {
+        "Street": "geistig Straße 123",
+        "city": "cool city",
+        "country": "austria",
+        "state": "wien"
+      },
+      "location": {
+        "latitude": "48.2082",
+        "longitude": "16.3738"
+      },
+      "type": "event",
+      "status": "active",
+      "chat": {
+        "about": "chat about stuff",
+        "name": "chat name"
+      },
+      "created_at": 1711833523765,
+      "event_start_date": 1811833533765,
+      "event_end_date": 1911834533765,
+      "conditions": [
+        {
+          "text": "min age 18"
+        },
+        {
+          "text": "max participants 50"
+        },
+        {
+          "text": "no pets allowed"
+        }
+      ]
+    }
+    </pre>
+<pre>
+    good Response:
+    code: 201
+    {
+      "result": true,
+      "event_id": "event_id"
+    }
+    </pre>
+
+<h3>POST /register</h3>
+<p>Registers a user to an event. <span class="token-required">Requires Bearer token.</span></p>
+<pre>
+    Request:
+    {
+      "event_id": "1a153caf-b0a9-417f-b043-1b885633a25f"
+    }
+    </pre>
+<pre>
+    good Response:
+    {
+      "result": true
+    }
+    </pre>
+
+<h3>POST /unregister</h3>
+<p>Unregisters a user from an event. <span class="token-required">Requires Bearer token.</span></p>
+<pre>
+    Request:
+    {
+      "event_id": "1a153caf-b0a9-417f-b043-1b885633a25f"
+    }
+    </pre>
+<pre>
+    good Response:
+    {
+      "result": true
+    }
+    </pre>
+
+<h3>POST /changeEventDetails</h3>
+<p>Updates the details of an event. <span class="token-required">Requires Bearer token.</span></p>
+<pre>
+    Request:
+    {
+      "id": "731b6d58-e980-4597-8c9f-be3e0f2c3ac7",
+      "title": "Tech Conference 123123123",
+      "description": "desc1231",
+      "status": "active"
+    }
+    </pre>
+<pre>
+    good Response:
+    {
+      "result": true
+    }
+    </pre>
+
+<h3>GET /getAll</h3>
+<p>Gets all events. <span class="no-token-required">No token required.</span></p>
+<pre>
+    good Response:
+    {
+      "events": [...]
+    }
+    </pre>
+
+<h3>GET /getLocationById/{id}</h3>
+<p>Gets the location of an event by its ID. <span class="no-token-required">No token required.</span></p>
+<pre>
+    good Response:
+    {
+      "location": {...}
+    }
+    </pre>
+
+<h3>delete /deleteEvent/</h3>
+<p>Gets the location of an event by its ID. <span class="no-token-required">No token required.</span></p>
+<pre>
+    good Response:
+    {
+      "result": true
+    }
+    </pre>
+</body>
+</html>

@@ -341,10 +341,7 @@ export class dbUtility {
 
     public static async hasEntryInColumnInTable(table: string, column: string, value: string): Promise<boolean> {
         const result = await dbUtility.getTableByValue(table, column, value);
-        return isArrayWithLength(result);
 
-        function isArrayWithLength<T>(value: any): value is T[] {
-            return Array.isArray(value) && value.length >= 1;
-        }
+        return result !== undefined;
     }
 }

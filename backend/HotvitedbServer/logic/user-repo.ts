@@ -19,7 +19,7 @@ export async function createUser(user: UserDto): Promise<User> {
 export async function isValidNewUser(user: User): Promise<boolean> {
     //check if the email is already in use
 
-    return !await dbUtility.hasEntryInColumnInTable("user", "email", user.email);
+    return !(await dbUtility.hasEntryInColumnInTable("user", "email", user.email));
 }
 
 export async function validateUserCredentials(password: string, id: string) {
