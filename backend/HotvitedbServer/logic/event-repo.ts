@@ -1,63 +1,29 @@
-import {Event} from "../model";
 import {v4 as uuidv4} from "uuid";
-import {dbUtility} from "../utilities/db-utilities";
+import {Event} from "../models/event";
+import {User} from "../models/user";
+import {EventDto} from "../models/eventDto";
 
-export function createEvent(event: Event): Event {
-    //create ids
-
-    const eventID = uuidv4()
-
-    event.id = eventID;
+function generateUUIDs(event: Event, eventID: string): void {
     event.address.id = uuidv4();
     event.location.id = uuidv4();
     event.chat.id = uuidv4();
     event.conditions.forEach(c => c.event_id = eventID);
+}
+
+export function createEvent(eventDto: EventDto, user: User): Event {
+    const eventID = uuidv4();
+    const event: Event = {...eventDto, id: eventID, creator_id: user.id} as Event;
+
+    generateUUIDs(event, eventID);
 
     return event;
 }
 
-export async function isValidEvent(event: object): Promise<boolean> {
-    //check if creatorID is valid
 
-    if (!isEvent(event)) {
-        return false;
-    }
+export async function isValidEvent(event: Event): Promise<boolean> {
+    //possible to add check here for the future
+    //checking creator_id is no longer need because of token
 
-    if (!await dbUtility.hasEntryInColumnInTable("user", "id", event.creator_id)) {
-        //creatorID has no entry in table user
-        return false;
-    }
-
-    if (event.created_at > event.event_start_date ||
-        event.event_start_date > event.event_end_date) {
-        //not valid dates
-        return false;
-    }
-
-    return true;
-}
-
-function isEvent(obj: object): obj is Event {
-    if (
-        "title" in obj &&
-        "description" in obj &&
-        "address" in obj &&
-        "location" in obj &&
-        "type" in obj &&
-        "creator_id" in obj &&
-        "status" in obj &&
-        "chat" in obj &&
-        "created_at" in obj &&
-        "event_start_date" in obj &&
-        "event_end_date" in obj &&
-        "conditions" in obj
-    ) {
-        if (Number.isInteger(obj.created_at) &&
-            Number.isInteger(obj.event_start_date) &&
-            Number.isInteger(obj.event_end_date)) {
-            return true;
-        }
-    }
-
-    return false;
+    return !(event.created_at > event.event_start_date ||
+        event.event_start_date > event.event_end_date);
 }

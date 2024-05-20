@@ -1,6 +1,8 @@
 @url=http://localhost:3000/api/event/
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYxNDUwMzAuMjY3LCJpYXQiOjE3MTYxNDMyMzB9.bPH-a3oDVGBOP4DQy0t-sAS9FdugV-XjohiIM0ytO-g
 
 POST {{url}}create
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -17,7 +19,6 @@ Content-Type: application/json
     "longitude": "16.3738"
   },
   "type": "event",
-  "creator_id": "053d7d34-9791-4c41-ada3-7a1bed48447a",
   "status": "active",
   "chat": {
     "about": "chat about stuff",
@@ -41,6 +42,7 @@ Content-Type: application/json
 ###
 
 POST {{url}}create
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -82,6 +84,7 @@ Content-Type: application/json
 
 ###
 POST {{url}}create
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -124,6 +127,7 @@ Content-Type: application/json
 ###
 
 POST {{url}}create
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -162,11 +166,44 @@ Content-Type: application/json
   ]
 }
 
+### register user to event
+
+POST {{url}}register
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "event_id": "1a153caf-b0a9-417f-b043-1b885633a25f"
+}
+
+### unregister user to event
+
+POST {{url}}unregister
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "event_id": "1a153caf-b0a9-417f-b043-1b885633a25f"
+}
+
+### update event
+
+POST {{url}}changeEventDetails
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "731b6d58-e980-4597-8c9f-be3e0f2c3ac7",
+  "title": "Tech Conference 123123123",
+  "description": "desc1231",
+  "status": "active"
+}
+
 
 ###
 
-GET {{url}}/getAll
+GET {{url}}getAll
 
 ###
 
-GET {{url}}/getLocationById/a3c008e2-04c5-4297-93a5-2e992310e5a5
+GET {{url}}getLocationById/a3c008e2-04c5-4297-93a5-2e992310e5a5

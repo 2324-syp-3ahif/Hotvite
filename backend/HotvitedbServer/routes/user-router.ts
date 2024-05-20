@@ -1,8 +1,13 @@
-import {User} from "../model";
 import express, {Request, Response} from "express";
 import {check} from 'express-validator';
 import {dbUtility} from "../utilities/db-utilities";
-import {createUser, isValidNewUser, isValidRequestByUser} from "../logic/user-repo";
+import {comparePassword, createUser, isValidNewUser} from "../logic/user-repo";
+import {User} from "../models/user";
+import {isAuthenticated} from "../middleware/auth-handler";
+import jwt from "jsonwebtoken";
+import {secret_key} from "../app";
+import {AuthRequest} from "../models/authRequest";
+import {StatusCodes} from "http-status-codes";
 
 export const userRouter = express.Router();
 
@@ -14,64 +19,100 @@ const validateUserSignup = [
     check('aboutme').optional().isString(),
 ];
 
-const validateUserChangeUsername = [
-    check('username').isLength({min: 3}),
-    check('password').isLength({min: 6}),
-];
 userRouter.post("/signup", validateUserSignup, async (req: Request, res: Response) => {
     try {
-        if (!await isValidNewUser(req.body)) {
-            res.sendStatus(405);
+        const user: User = await createUser(req.body);
+
+        if (!await isValidNewUser(user)) {
+            res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
             return;
         }
 
-        const user: User = await createUser(req.body);
-
         await dbUtility.saveUser(user);
 
-        res.status(201).json(user);
+        res.status(StatusCodes.CREATED).json(user);
     } catch (error) {
         console.error("Error creating user:", error);
-        res.status(500).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });
 
-userRouter.put("/changeUsername/:id", validateUserChangeUsername, async (req: Request, res: Response) => {
-    const {password, username, id} = {
-        password: req.body.password,
-        username: req.body.username,
-        id: req.params.id,
-    };
+userRouter.post("/login", async (req :  Request, res : Response) => {
+    try {
+        const {email, password} = {email: req.body.email, password: req.body.password};
 
-    const result = await isValidRequestByUser(id, password);
+        if (!password || !email) {
+            return res.status(StatusCodes.BAD_REQUEST).send("requiring <email, password>");
+        }
 
-    if (typeof result === "string") {
-        res.status(403).send(result);
-        return;
+        if (!secret_key) {
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+
+        const user = await dbUtility.getTableByValue<User>("user", "email", email);
+
+        if (!user) {
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+
+        const isValid = await comparePassword(password, user.password);
+
+        if (!isValid) {
+            return res.status(StatusCodes.BAD_REQUEST).send("email or password not valid");
+        }
+
+        const userClaims = {
+            email: email
+        };
+
+        const minutes = 30;
+        const expiresAt = new Date(Date.now() + minutes * 60_000);
+
+        const token = jwt.sign(
+            {
+                user: userClaims,
+                exp: expiresAt.getTime() / 1000,
+            },
+            secret_key
+        );
+
+        res.status(StatusCodes.OK).json({token: token, username: user.username});
+    } catch (error) {
+        console.error("Error in login:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
-
-    await dbUtility.updateValueByRowInTableWithCondition("user"
-        , "username"
-        , username
-        , "id"
-        , id);
-
-
-    res.status(200).send("username changed");
 });
 
-userRouter.delete("/delete/:id", async (req, res) => {
-    const {id, password} = {id: req.params.id, password: req.body.password};
+userRouter.put("/changeUsername", isAuthenticated, async (req: Request, res: Response) => {
+    try {
+        const payload = (req as AuthRequest).payload;
+        const username = req.body.username;
 
+        if (!username)
+            return res.status(StatusCodes.BAD_REQUEST).send("need username as");
 
-    const result = await isValidRequestByUser(id, password);
+        await dbUtility.updateValueByRowInTableWithCondition("user"
+            , "username"
+            , username
+            , "email"
+            , payload.user.email);
 
-    if (typeof result === "string") {
-        res.status(403).send(result);
-        return;
+        res.status(StatusCodes.OK).send("username changed");
+    } catch (error) {
+        console.error("Error in login:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
+});
 
-    await dbUtility.deleteRowInTable("user", "id", id);
+userRouter.delete("/delete", isAuthenticated, async (req, res) => {
+    try {
+        const payload = (req as AuthRequest).payload;
 
-    res.status(204).send("user deleted");
+        await dbUtility.deleteRowInTable("user", "email", payload.user.email);
+
+        res.status(StatusCodes.OK).send("user deleted");
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+    }
 });

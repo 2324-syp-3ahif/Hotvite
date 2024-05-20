@@ -9,4 +9,11 @@ from user;
 select *
 from event;
 
+select * from event_participant;
+
+
 delete from event;
+
+delete from event_participant
+where event_id = 'eID'
+AND user_id = 'uID';
