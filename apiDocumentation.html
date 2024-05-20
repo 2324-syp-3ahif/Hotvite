@@ -51,8 +51,8 @@
       "aboutme": "about me blabla"
     }
     </pre>
-    good Responses:
     <pre>
+    good Responses:
     code: 201
     {
       "result": "user created"
@@ -70,7 +70,7 @@
     </pre>
 <pre>
     good Response:
-
+    code: 200
     {
       "token": "generated_token",
       "username": "test name"
@@ -87,6 +87,7 @@
     </pre>
 <pre>
     good Response:
+    code: 200
     {
       "result": "username changed"
     }
@@ -96,6 +97,7 @@
 <p>Deletes a user. <span class="token-required">Requires Bearer token.</span></p>
 <pre>
     good Response:
+    code: 200
     {
       "result": "user deleted"
     }
@@ -161,6 +163,7 @@
     </pre>
 <pre>
     good Response:
+    code: 200
     {
       "result": true
     }
@@ -176,6 +179,7 @@
     </pre>
 <pre>
     good Response:
+    code: 200
     {
       "result": true
     }
@@ -194,6 +198,7 @@
     </pre>
 <pre>
     good Response:
+    code: 200
     {
       "result": true
     }
@@ -203,24 +208,33 @@
 <p>Gets all events. <span class="no-token-required">No token required.</span></p>
 <pre>
     good Response:
+    code: 200
     {
       "events": [...]
     }
     </pre>
 
-<h3>GET /getLocationById/{id}</h3>
-<p>Gets the location of an event by its ID. <span class="no-token-required">No token required.</span></p>
+<h3>GET /getLocationsFromUser</h3>
+<p>Gets the location of an event by its ID. <span class="token-required">Requires Bearer token.</span></p>
 <pre>
     good Response:
+    code: 200
     {
       "location": {...}
     }
     </pre>
 
-<h3>delete /deleteEvent/</h3>
-<p>Gets the location of an event by its ID. <span class="no-token-required">No token required.</span></p>
+<h3>delete /deleteEvent</h3>
+<p>Gets the location of an event by its ID. <span class="token-required">Requires Bearer token.</span></p>
+<pre>
+    Request:
+    {
+        "event_id": "event_id"
+    }
+    </pre>
 <pre>
     good Response:
+    code: 200
     {
       "result": true
     }
