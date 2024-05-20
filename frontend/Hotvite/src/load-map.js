@@ -41,7 +41,7 @@ async function createMarker(event, AdvancedMarkerElement){
   const img = createImgElement("../assets/event/ev_icon.png");
   requestJSON(`/api/event/getLocationById/${event.location_id}`).then((location) => {
     const { latitude, longitude } = location;
-    const marker = new AdvancedMarkerElement({
+    new AdvancedMarkerElement({
       position: { lat: +latitude, lng: +longitude },
       map,
       content: img,

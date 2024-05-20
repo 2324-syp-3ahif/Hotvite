@@ -1,0 +1,15 @@
+body {
+  font-family: Inter, sans-serif;
+}
+
+:root {
+  --primary-color: #050635;
+  --secondary-color: #200759;
+  --accent-color: #3477BF;
+  --button-color: #226A81;
+  --electric-pruple: #600F93;
+  --event-input-bg: #2A292E;
+  --field-color: #242429;
+  --font-fade: #A7A7A7;
+  --bg-fill: #181818;
+}

@@ -3,8 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <title>Hotvite - Create Event</title>
+  <link rel="stylesheet" href="../style/css/headerstyle.css">
+  <link rel="stylesheet" href="../style/css/indexstyle.css">
+  <link rel="stylesheet" href="../style/css/create-event.css">
+  <link rel="stylesheet" href="../style/css/palettes.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body>
-
+<header class="hv-sidebar">
+  <div id="menu-buttons">
+    <a href="#"><img src="../assets/sidebar/LoginButton.png" alt="login"></a>
+    <a href="#"><img src="../assets/sidebar/MenuButton.png" alt="menu"></a>
+    <a href="#"><img src="../assets/sidebar/RecentButton.png" alt="recent"></a>
+    <a href="#"><img src="../assets/sidebar/SavedButton.png" alt="saved"></a>
+    <a href="#"><img src="../assets/sidebar/ChatButton.png" alt="chat"></a>
+  </div>
+  <a href="#"><img id="help-button" src="../assets/sidebar/HelpButton.png" alt="help"></a>
+</header>
+<div id="create-event">
+  <div id="no-property-section">
+    <div id="mini-map"></div>
+    <div id="profile">
+      <div id="profile-card">
+        <div id="name-block">
+          <div id="picture"></div>
+          <div id="display-name">
+            <h4 id="name">John Doe</h4>
+            <small id="role">User role</small>
+          </div>
+          <button id="user-action-button">Follow</button>
+        </div>
+        <div id="about-block">
+          <span id="abt-text">About me:</span>
+          <p id="abt-user-text">Some text here yayayayyayayayyaaya test to see if it works with line breaks and stuff</p>
+        </div>
+      </div>
+      <div id="contact-block">
+        <div id="youtube"></div>
+        <div id="discord"></div>
+      </div>
+    </div>
+  </div>
+  <div id="property-section">
+    <div id="event-head">
+      <h1 id="event-title">Create Event</h1>
+      <img id="event-action-close" alt="close" src="../assets/event/close.png">
+    </div>
+    <div>
+      <form id="event-form">
+        <div class="row">
+          <div class="form-group">
+            <div class="group-child">
+              <label for="event-description">Description:</label>
+              <textarea class="form-control" id="event-description" rows="1" placeholder="Event description"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="group-child">
+              <label for="event-date">Date:</label>
+              <input name="datetimes" class="form-control" id="event-date">
+            </div>
+            <div class="group-child">
+              <label for="event-type">Type:</label>
+              <select class="form-select" id="event-type">
+                <option selected>Choose...</option>
+                <option>...</option>
+              </select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 </body>
+<script>
+  $(function() {
+    $('input[name="datetimes"]').daterangepicker({
+      timePicker: true,
+      startDate: moment().startOf('hour'),
+      endDate: moment().startOf('hour').add(32, 'hour'),
+      locale: {
+        format: 'M/DD hh:mm A'
+      }
+    });
+  });
+</script>
 </html>
