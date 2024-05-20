@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-width: 350px;
+  min-width: 450px;
 }
 
 #mini-map{
@@ -103,8 +103,25 @@
 Property Section
  */
 
+.form-control, .form-select {
+  background-color: var(--event-input-bg) !important;
+  border: none !important;
+  padding: 10px;
+  margin: 5px 0;
+  color: white !important;
+}
+
+.form-control::placeholder, .form-select::placeholder {
+  color: var(--font-fade) !important;
+}
+
+.form-control:focus, .form-select:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
 #property-section {
-  padding: 50px;
+  padding: 30px 50px;
   background-color: var(--bg-fill);
   flex: 3;
 }
@@ -113,6 +130,17 @@ Property Section
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
+}
+
+#event-head #event-title {
+  max-width: 650px;
+  font-size: 32px;
+  font-weight: 650;
+  background-color: transparent !important;
+  border-radius: 0;
+  border-bottom: var(--font-fade) 1px solid !important;
+  padding: 10px 0;
 }
 
 #event-action-close {
@@ -125,12 +153,42 @@ Property Section
   cursor: pointer;
 }
 
-.form-group {
-  width: 400px !important;
+.f-group {
   display: flex;
   flex-direction: column;
 }
 
 .row {
   display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+#event-description-group{
+  flex: 2;
+  min-width: 450px;
+  max-width: 700px;
+}
+
+#event-specifications-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex: 1;
+  gap: 10px;
+}
+
+#event-specifications-group .group-child {
+  width: 350px;
+}
+
+#event-description {
+  resize: none;
+  height: 250px;
+}
+
+#event-address {
+  resize: none;
+  height: 90px;
 }
