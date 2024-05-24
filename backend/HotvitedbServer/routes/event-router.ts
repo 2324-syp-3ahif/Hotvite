@@ -8,6 +8,8 @@ import {AuthRequest} from "../models/authRequest";
 import {User} from "../models/user";
 import {StatusCodes} from "http-status-codes";
 import {UpdateEventDto} from "../models/updateEventDto";
+import {Event_participant} from "../models/event_participant";
+import {UserPublic} from "../models/userPublic";
 
 export const eventRouter = express.Router();
 
@@ -113,6 +115,36 @@ eventRouter.post("/unregister", isAuthenticated, async (req, res) => {
     }
 });
 
+eventRouter.get("/getParticipantsFromEvent/:event_id", isAuthenticated, async (req, res) => {
+    try {
+        const payload = (req as AuthRequest).payload;
+        const event_id = req.params.event_id;
+
+        const loggedInUser = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
+        const participants = await dbUtility.getAllFromTable<Event_participant[]>("event_participant");
+
+        if (!loggedInUser || !participants) {
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+
+        const userIDs = participants.filter(value => value.event_id === event_id).map(value => value.user_id);
+
+        let allUsers = await dbUtility.getAllFromTable<User[]>("user");
+
+        if (!allUsers) {
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+
+        const users : UserPublic[] = allUsers.filter(user => userIDs.includes(user.id)).map(user => ({username: user.username, aboutme: user.aboutme}));
+
+        res.status(200).json({users: users});
+
+    } catch (error) {
+        console.error("Error getting users from event", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+    }
+});
+
 eventRouter.delete("/deleteEvent", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
@@ -139,7 +171,7 @@ eventRouter.delete("/deleteEvent", isAuthenticated, async (req, res) => {
 });
 
 
-eventRouter.get("/getLocationsFromUser", isAuthenticated, async (req, res) => {
+eventRouter.get("/getMyLocations", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);

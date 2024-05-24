@@ -214,8 +214,9 @@
     }
     </pre>
 
-<h3>GET /getLocationsFromUser</h3>
-<p>Gets the location of an event by its ID. <span class="token-required">Requires Bearer token.</span></p>
+<h3>GET /getMyLocations</h3>
+<p>Gets all Locations created by the current user. Who is logged in<span
+        class="token-required">Requires Bearer token.</span></p>
 <pre>
     good Response:
     code: 200
@@ -237,6 +238,20 @@
     code: 200
     {
       "result": true
+    }
+    </pre>
+<h3>get /getParticipantsFromEvent/:event_id</h3>
+<p>Gets all users registered to event <span class="token-required">Requires Bearer token.</span></p>
+<pre>
+    good Response:
+    code: 200
+    {
+  "users": [
+    {
+      "username": "testname",
+      "aboutme": "about me blabla"
+    }
+    ...
     }
     </pre>
 </body>

@@ -1,5 +1,5 @@
 @url=http://localhost:3000/api/event/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYyMjE2NzguNDQxLCJpYXQiOjE3MTYyMTk4Nzh9.l7Vq8P11gqiJAvwOPQWzBpzE_Vie_p2T2qJ2vZpBl8Y
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTY1NDkxODguODAzLCJpYXQiOjE3MTY1NDczODh9.wIDM8OBoznAWxbnmbI9dbHrZ0V-5j8A7NK_1BdOpHn4
 
 POST {{url}}create
 Authorization: Bearer {{token}}
@@ -173,7 +173,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "event_id": "1a153caf-b0a9-417f-b043-1b885633a25f"
+  "event_id": "a4ae88fd-b0e6-49af-a730-0da9c6334299"
 }
 
 ### unregister user to event
@@ -216,3 +216,8 @@ GET {{url}}getAll
 ###
 
 GET {{url}}getLocationById/a3c008e2-04c5-4297-93a5-2e992310e5a5
+
+### get participants by event id
+
+GET {{url}}getParticipantsFromEvent/a4ae88fd-b0e6-49af-a730-0da9c6334299
+Authorization: Bearer {{token}}
