@@ -1,7 +1,0 @@
-@url=http://localhost:3000/
-
-### check if server is online
-GET {{ url }}
-
-### check db
-GET {{ url }}/db

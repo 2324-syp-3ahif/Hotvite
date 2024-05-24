@@ -158,3 +158,4 @@ eventRouter.get("/getLocationsFromUser", isAuthenticated, async (req, res) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });
+
