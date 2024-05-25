@@ -78,7 +78,7 @@
             </div>
             <div class="group-child">
               <label for="event-price">Price:</label>
-              <input onblur="formatPrice()" value="0.00€" min="0" class="form-control" id="event-price" placeholder="Price">
+              <input value="0.00€" min="0" class="form-control" id="event-price" placeholder="Price">
             </div>
             <div class="group-child">
               <label for="event-address">Address:</label>
@@ -88,24 +88,24 @@
         </div>
         <div class="row">
           <div class="f-group" id="event-requirements-group">
+            <div class="group-child" id="event-requirements-tags">
               <label>Requirements:</label>
               <div id="event-requirements-container">
                 <!-- Event requirements will be added here. Example: -->
-                <div class="event-requirement">
-                  <input class="event-req-input" maxlength="30" type="text" placeholder="New Requirement">
-                  <div class="event-requirement-remove-button">
-                    <img src="../assets/event/close.png" alt="Remove" width="13" height="13">
-                  </div>
-                </div>
                 <div id="event-requirements-add-button">
                   <img src="../assets/event/add_event.png" alt="Add" width="15" height="15">
                 </div>
               </div>
             </div>
-          <div class="f-group" id="event-people-group">
+            <div class="group-child" id="event-requirements-chat">
+              <label for="event-chat-button">Chat:</label>
+              <input id="event-chat-button" type="button" value="Disabled">
+            </div>
+          </div>
+          <div class="f-group" id="event-participant-group">
             <div class="group-child">
-              <label for="event-people">People:</label>
-              <input type="number" min="0" class="form-control" id="event-people" placeholder="People">
+              <label for="event-participants">Participants:</label>
+              <input type="number" min="0" class="form-control" id="event-participants" placeholder="People">
             </div>
           </div>
         </div>

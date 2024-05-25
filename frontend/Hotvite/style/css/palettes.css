@@ -12,4 +12,6 @@ body {
   --field-color: #242429;
   --font-fade: #A7A7A7;
   --bg-fill: #181818;
+  --accept-bg-color: #458531;
+  --reject-bg-color: #8f222f;
 }
