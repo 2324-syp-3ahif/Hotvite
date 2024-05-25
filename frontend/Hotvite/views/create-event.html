@@ -55,7 +55,6 @@
       <input class="form-control" id="event-title" value="New Event" maxlength="35">
       <img onclick="window.location.href='./index.html'" id="event-action-close" alt="close" src="../assets/event/close.png">
     </div>
-    <div>
       <form id="event-form">
         <div class="row">
           <div class="form-section" id="event-description-group">
@@ -66,21 +65,23 @@
           </div>
           <div class="f-group" id="event-specifications-group">
             <div class="group-child">
-              <label for="event-date">Date:</label>
-              <input name="datetimes" class="form-control" id="event-date">
+                <label for="event-date">Date:</label>
+                <input name="datetimes" class="form-control" id="event-date">
+              </div>
+            <div class="group-child prop-col-2">
+              <div id="event-type-container">
+                <label for="event-type">Type:</label>
+                <select class="form-select" id="event-type">
+                  <option selected>Not specified</option>
+                  <option>...</option>
+                </select>
+              </div>
+              <div id="event-price-container">
+                <label for="event-price">Price:</label>
+                <input value="0.00€" min="0" class="form-control" id="event-price" placeholder="Price">
+              </div>
             </div>
-            <div class="group-child">
-              <label for="event-type">Type:</label>
-              <select class="form-select" id="event-type">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-            </div>
-            <div class="group-child">
-              <label for="event-price">Price:</label>
-              <input value="0.00€" min="0" class="form-control" id="event-price" placeholder="Price">
-            </div>
-            <div class="group-child">
+            <div class="group-child" id="event-address-container">
               <label for="event-address">Address:</label>
               <textarea class="form-control" id="event-address" placeholder="Address"></textarea>
             </div>
@@ -104,15 +105,20 @@
           </div>
           <div class="f-group" id="event-participant-group">
             <div class="group-child">
-              <label for="event-participants">Participants:</label>
-              <input type="number" min="0" class="form-control" id="event-participants" placeholder="People">
+              <label for="event-participants-count">Participants:</label>
+              <div id="event-participants-container">
+                <span id="participants-display-text">Participants will be displayed here</span>
+                <input class="form-control" type="number" min="0" step="1" id="event-participants-count">
             </div>
           </div>
+        </div>
+        </div>
+        <div class="row" id="form-handle-buttons">
+          <input type="button" id="event-action-save" value="Create Event">
         </div>
       </form>
     </div>
   </div>
-</div>
 </body>
 <script>
   $(function() {
