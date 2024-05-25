@@ -18,11 +18,11 @@
 <body>
 <header class="hv-sidebar">
   <div id="menu-buttons">
-    <a href="#"><img src="../assets/sidebar/LoginButton.png" alt="login"></a>
-    <a href="#"><img src="../assets/sidebar/MenuButton.png" alt="menu"></a>
-    <a href="#"><img src="../assets/sidebar/RecentButton.png" alt="recent"></a>
-    <a href="#"><img src="../assets/sidebar/SavedButton.png" alt="saved"></a>
-    <a href="#"><img src="../assets/sidebar/ChatButton.png" alt="chat"></a>
+    <a class="menu-button" href="#"><img src="../assets/sidebar/LoginButton.png" alt="login"></a>
+    <a class="menu-button" href="#"><img src="../assets/sidebar/MenuButton.png" alt="menu"></a>
+    <a class="menu-button" href="#"><img src="../assets/sidebar/RecentButton.png" alt="recent"></a>
+    <a class="menu-button" href="#"><img src="../assets/sidebar/SavedButton.png" alt="saved"></a>
+    <a class="menu-button" href="#"><img src="../assets/sidebar/ChatButton.png" alt="chat"></a>
   </div>
   <a href="#"><img id="help-button" src="../assets/sidebar/HelpButton.png" alt="help"></a>
 </header>
@@ -52,8 +52,8 @@
   </div>
   <div id="property-section">
     <div id="event-head">
-      <input class="form-control" id="event-title" value="Create Event" maxlength="35">
-      <img id="event-action-close" alt="close" src="../assets/event/close.png">
+      <input class="form-control" id="event-title" value="New Event" maxlength="35">
+      <img onclick="window.location.href='./index.html'" id="event-action-close" alt="close" src="../assets/event/close.png">
     </div>
     <div>
       <form id="event-form">
@@ -78,11 +78,34 @@
             </div>
             <div class="group-child">
               <label for="event-price">Price:</label>
-              <input type="number" min="0" class="form-control" id="event-price" placeholder="Price">
+              <input onblur="formatPrice()" value="0.00€" min="0" class="form-control" id="event-price" placeholder="Price">
             </div>
             <div class="group-child">
               <label for="event-address">Address:</label>
               <textarea class="form-control" id="event-address" placeholder="Address"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="f-group" id="event-requirements-group">
+              <label>Requirements:</label>
+              <div id="event-requirements-container">
+                <!-- Event requirements will be added here. Example: -->
+                <div class="event-requirement">
+                  <input class="event-req-input" maxlength="30" type="text" placeholder="New Requirement">
+                  <div class="event-requirement-remove-button">
+                    <img src="../assets/event/close.png" alt="Remove" width="13" height="13">
+                  </div>
+                </div>
+                <div id="event-requirements-add-button">
+                  <img src="../assets/event/add_event.png" alt="Add" width="15" height="15">
+                </div>
+              </div>
+            </div>
+          <div class="f-group" id="event-people-group">
+            <div class="group-child">
+              <label for="event-people">People:</label>
+              <input type="number" min="0" class="form-control" id="event-people" placeholder="People">
             </div>
           </div>
         </div>
@@ -96,11 +119,17 @@
     $('input[name="datetimes"]').daterangepicker({
       timePicker: true,
       startDate: moment().startOf('hour'),
-      endDate: moment().startOf('hour').add(32, 'hour'),
+      endDate: moment().startOf('hour').add(4, 'hour'),
       locale: {
-        format: 'DD.M.Y h:mm A'
+        format: 'DD.M.Y HH:mm'
       }
     });
   });
+
+  window.onload = function() {
+    const s = document.createElement('script');
+    s.src = "../src/create-event-src.js";
+    document.body.appendChild(s);
+  }
 </script>
 </html>

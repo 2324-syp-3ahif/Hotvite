@@ -192,3 +192,55 @@ Property Section
   resize: none;
   height: 90px;
 }
+
+#event-requirements-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.event-requirement {
+  display: flex;
+  padding: 5px 10px;
+  align-items: center;
+  background-color: var(--event-input-bg);
+  border-radius: 5px;
+}
+
+.event-req-input {
+  background-color: var(--event-input-bg);
+  border: none;
+  color: white;
+  box-sizing: content-box;
+  padding-right: 5px;
+}
+
+.event-req-input::placeholder {
+  color: var(--font-fade);
+}
+
+.event-req-input:focus {
+  outline: none;
+}
+
+.event-requirement-remove-button {
+  background-color: var(--field-color);
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+#event-requirements-add-button {
+  background-color: var(--field-color);
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+#event-requirements-add-button img {
+  filter: invert(1);
+}

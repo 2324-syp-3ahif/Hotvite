@@ -21,6 +21,10 @@ body {
   justify-content: space-between;
 }
 
+.hv-sidebar * {
+  box-sizing: unset !important;
+}
+
 #menu-buttons {
   display: flex;
   flex-direction: column;
@@ -37,4 +41,8 @@ body {
   width: 20px;
   height: 20px;
   padding-bottom: 5px;
+}
+
+.menu-button {
+  padding: 0;
 }
