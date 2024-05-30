@@ -1,13 +1,12 @@
 let map;
-let setMarker;
-// const { AdvancedMarkerElement } = async () =>  await google.maps.importLibrary("marker");
+let miniMarker;
 
-async function initMap() {
+async function initMap(fullInit = true) {
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
   map = new google.maps.Map(document.getElementById("map"), {
     // 48.143168, 13.991348
     center: { lat: 48.143168, lng: 13.991348 },
-    zoom: 8,
+    zoom: fullInit ? 8 : 15,
     minZoom: 3,
     restriction: {
       latLngBounds: {
@@ -17,15 +16,38 @@ async function initMap() {
         east: 180
       },
     },
-    mapTypeControl: true,
+    mapTypeControl: fullInit,
+    zoomControl: fullInit,
     streetViewControl: false,
     fullscreenControl: false,
     mapId: "de1416925a195d99",
   });
 
-  console.log("Map loaded");
-  loadEvents(AdvancedMarkerElement);
-  initMapClickEvent(AdvancedMarkerElement);
+  if(fullInit) {
+    loadEvents(AdvancedMarkerElement);
+    initMapClickEvent(AdvancedMarkerElement);
+  }
+}
+
+async function initMiniMap() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const lat = +urlParams.get('lat');
+  const lng = +urlParams.get('lng');
+  await initMap(false);
+  await updateMiniMarker(lat, lng);
+}
+
+async function updateMiniMarker(lat, lng) {
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+  map.panTo({ lat: lat, lng: lng });
+  if (miniMarker) {
+    miniMarker.setMap(null);
+  }
+  miniMarker = new AdvancedMarkerElement({
+    position: { lat, lng },
+    map,
+    content: createImgElement("../assets/event/create_event_icon.png")
+  });
 }
 
 
@@ -60,27 +82,33 @@ function createImgElement(imgSrc){
 }
 
 async function initMapClickEvent(AdvancedMarkerElement) {
-  //const {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
+  let currentTimeout = null;
+  let setMarker = null;
   map.addListener("rightclick", async (event) => {
-    window.location.href = "./create-event.html";
-    /*
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
-
+    if (currentTimeout) {
+      clearTimeout(currentTimeout);
+    }
     if (setMarker) {
       setMarker.setMap(null);
     }
     setMarker = new AdvancedMarkerElement({
       position: { lat, lng },
       map,
-      content: createImgElement("../assets/event/create_event_icon.png"),
+      content: createImgElement("../assets/event/ev_icon.png"),
     });
-    startWatching(setMarker);
+    map.setZoom(12);
     map.panTo({ lat, lng });
-     */
+    currentTimeout = setTimeout(() => {
+      window.location.href = "./create-event.html?lat=" + lat + "&lng=" + lng;
+    }, 1000);
   });
 
   map.addListener("click", async (event) => {
+    if (currentTimeout) {
+      clearTimeout(currentTimeout);
+    }
     if (setMarker) {
       setMarker.setMap(null);
     }
