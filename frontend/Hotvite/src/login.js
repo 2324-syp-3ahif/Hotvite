@@ -16,7 +16,7 @@ async function login(user) {
   }
 }
 
-async function fetchRestEndpoint(route: string, method: "GET" | "POST" | "PUT" | "DELETE", data?: object) {
+async function fetchRestEndpoint(route, method: "GET" | "POST" | "PUT" | "DELETE", data?) {
   let options = {method};
   if (data) {
     options.headers = {"Content-Type": "application/json"};

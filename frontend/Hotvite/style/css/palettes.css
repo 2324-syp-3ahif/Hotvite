@@ -14,4 +14,19 @@ body {
   --bg-fill: #181818;
   --accept-bg-color: #458531;
   --reject-bg-color: #8f222f;
+  --hyperlink-color: #5ad7dc;
+}
+
+.hyperlink, .hyperlink:visited, .hyperlink:active {
+  text-decoration: none;
+  color: var(--hyperlink-color);
+  cursor: pointer;
+}
+
+.hyperlink:hover {
+  text-shadow: 0 0 2px #98dfd3;
+}
+
+input::placeholder {
+  color: var(--font-fade) !important;
 }
