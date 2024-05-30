@@ -2,9 +2,11 @@ const priceInput = document.getElementById('event-price');
 const requirementsContainer = document.getElementById('event-requirements-container');
 const addRequirementButton = document.getElementById('event-requirements-add-button');
 const toggleChatButton = document.getElementById('event-chat-button');
+const addressInput = document.getElementById('event-address');
 
 
 
+initAddress();
 // Listeners
 priceInput.addEventListener("focus", function() {
   this.value = "";
@@ -29,10 +31,20 @@ toggleChatButton.addEventListener('click', function() {
     toggleChatButton.value = "Enabled";
   }
 });
+addressInput.addEventListener('blur', function() {
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: addressInput.value }, async (results, status) => {
+    if (status === "OK" && results[0]) {
+      const lat = results[0].geometry.location.lat();
+      const lng = results[0].geometry.location.lng();
+      await updateMiniMarker(lat, lng);
+    }
+  });
+});
 
 
 
-// Add listeners
+// Add listeners manually
 function addInputChangeListener(input) {
   input.addEventListener('input', function() {
     this.style.width = '50px';
@@ -81,4 +93,25 @@ function createRequirementElement(requirement) {
   requirementElement.appendChild(input);
   requirementElement.appendChild(removeButton);
   requirementsContainer.insertBefore(requirementElement, addRequirementButton);
+}
+
+
+// Init Address
+function initAddress() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const lat = urlParams.get('lat');
+  const lng = urlParams.get('lng');
+
+  if (lat && lng) {
+    const geocoder = new google.maps.Geocoder();
+    const latLng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({location: latLng}, (results, status) => {
+      if (status === "OK" && results[0]) {
+        const addressData = results[0].formatted_address.replace(/, /g, '\n');
+        addressInput.value = addressData;
+      } else {
+        addressInput.value = "Address not found";
+      }
+    });
+  }
 }
