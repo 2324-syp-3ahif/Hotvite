@@ -25,7 +25,7 @@ eventRouter.post("/create", isAuthenticated, async (req, res) => {
         const event: Event = createEvent(req.body, user);
 
         if (!await isValidEvent(event)) {
-            return res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "Invalid event"});
         }
 
         await dbUtility.saveEvent(event);
@@ -191,3 +191,13 @@ eventRouter.get("/getMyLocations", isAuthenticated, async (req, res) => {
     }
 });
 
+eventRouter.get("/getLocationById/:id", async (req, res) => {
+    const data: Location[] | undefined = await dbUtility.getAllFromTable("location");
+
+    const result = data?.filter(location => location.id === req.params.id)[0];
+
+    if (!result) {
+        return res.status(StatusCodes.NOT_FOUND).json({error: "Location not found"});
+    }
+    res.status(200).json({latitude: result.latitude, longitude: result.longitude });
+});

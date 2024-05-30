@@ -3,7 +3,10 @@ const requirementsContainer = document.getElementById('event-requirements-contai
 const addRequirementButton = document.getElementById('event-requirements-add-button');
 const toggleChatButton = document.getElementById('event-chat-button');
 const addressInput = document.getElementById('event-address');
-let {lat, lng} = new URLSearchParams(window.location.search);
+const urlSearchParams = new URLSearchParams(window.location.search);
+let lat = urlSearchParams.get('lat');
+let lng = urlSearchParams.get('lng');
+
 
 
 initAddress();
@@ -131,28 +134,29 @@ function submitEventForm() {
   }
 
   const data = {
-    title,
-    description,
-    addressData, // TODO: Parse addressData
-    event_start_date: dateStringToTimestamp(dateData[0]),
-    event_end_date: dateStringToTimestamp(dateData[1]),
-    price,
-    conditions: requirements,
-    chatEnabled,
-    type,
-    location: {lat, lng},
-    created_at: Date.now()
+    title: title,
+    description: description,
+    address: addressData, // TODO: Validate addressData
+    location: {latitude: lat, longitude: lng},
+    type: type,
+    chat: chatEnabled,
+    price: price,
+    created_at: Date.now(),
+    event_start_date: dateStringToTimestamp(dateData[0].trim()),
+    event_end_date: dateStringToTimestamp(dateData[1].trim()),
+    requirements: requirements
   };
 
   fetch('http://localhost:3000/api/event/create', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      "Authorization": "Bearer " + localStorage.getItem("token")
     },
     body: JSON.stringify(data)
   }).then((response) => {
-    if (response.status === 200) {
-      window.location.href = '/index.html';
+    if (response.status === 201) {
+      window.location.href = './index.html';
     }
   });
 }

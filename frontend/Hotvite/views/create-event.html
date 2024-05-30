@@ -44,7 +44,7 @@
         </div>
         <div id="about-block">
           <span id="abt-text">About me:</span>
-          <p id="abt-user-text">Some text here yayayayyayayayyaaya test to see if it works with line breaks and stuff</p>
+          <p id="abt-user-text"></p>
         </div>
       </div>
       <div id="contact-block">
@@ -127,8 +127,8 @@
   $(function() {
     $('input[name="datetimes"]').daterangepicker({
       timePicker: true,
-      startDate: moment().startOf('hour'),
-      endDate: moment().startOf('hour').add(4, 'hour'),
+      startDate: moment().startOf("hour").add(1, "hour"),
+      endDate: moment().startOf("hour").add(4, "hour"),
       locale: {
         format: 'DD.M.Y HH:mm'
       }

@@ -1,7 +1,7 @@
 import {AddressDto} from "./addressDto";
 import {LocationDto} from "./locationDto";
 import {ConditionDto} from "./conditionDto";
-import {Requirment} from "./requirment";
+import {Requirement} from "./requirement";
 
 export interface EventDto {
     title: string;
@@ -15,5 +15,5 @@ export interface EventDto {
     created_at: number;
     event_start_date: number;
     event_end_date: number;
-    requirements: Requirment[];
+    requirements: Requirement[];
 }

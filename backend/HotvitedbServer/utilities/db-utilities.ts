@@ -2,7 +2,7 @@ import * as sqlite from "sqlite";
 import {open} from "sqlite";
 import sqlite3 from "sqlite3";
 import {Event} from "../models/event";
-import {Requirment} from "../models/requirment";
+import {Requirement} from "../models/requirement";
 import {Chat} from "../models/chat";
 import {Location} from "../models/location";
 import {User} from "../models/user";
@@ -314,7 +314,7 @@ export class dbUtility {
     //     }
     // }
 
-    private static async saveConditions(conditions: Requirment[]): Promise<boolean> {
+    private static async saveConditions(conditions: Requirement[]): Promise<boolean> {
         try {
             const stmt = await this.db.prepare('INSERT INTO condition (event_id, text) VALUES (:event_id, :text)');
 

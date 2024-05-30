@@ -7,10 +7,10 @@ POST {{url}}/signup
 Content-Type: application/json
 
 {
-  "username": "testname",
-  "email": "test12@gmail.com",
-  "password": "123pw",
-  "aboutme": "about me blabla"
+  "username": "admin",
+  "email": "admin@hotvite.com",
+  "password": "admin",
+  "aboutme": "Some text here yayayayyayayayyaaya test to see if it works with line breaks and stuff"
 }
 
 ### login
@@ -19,8 +19,8 @@ POST {{url}}/login
 Content-Type: application/json
 
 {
-  "email": "test12@gmail.com",
-  "password": "123pw"
+  "email": "admin@hotvite.com",
+  "password": "admin"
 }
 
 

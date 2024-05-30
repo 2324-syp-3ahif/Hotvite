@@ -1,5 +1,5 @@
 import {Address} from "./address";
-import {Requirment} from "./requirment";
+import {Requirement} from "./requirement";
 import {Location} from "./location";
 
 export interface Event {
@@ -17,5 +17,5 @@ export interface Event {
     created_at: number;
     event_start_date: number;
     event_end_date: number;
-    requirements: Requirment[];
+    requirements: Requirement[];
 }

@@ -1,5 +1,5 @@
 @url=http://localhost:3000/api/event/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTcwOTQ3MDcuNzQ5LCJpYXQiOjE3MTcwOTI5MDd9.TCRWFwmfB7LgJSkryAUoy-IbiatLSiOV4vImWw0qTFk
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7I…jI1fQ.0pc_bUXVQfDuFxHBSD1M6XIWxfCUmzaM5T96fpL1rzQ
 
 POST {{url}}create
 Authorization: Bearer {{token}}
@@ -202,7 +202,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "event_id": "8ccf736c-7367-4d68-9fae-c5df6317ba35"
+  "event_id": "da49732b-2177-46f0-9ea0-de81960b1e04"
 }
 
 ###

@@ -1,4 +1,4 @@
-export interface Requirment {
+export interface Requirement {
     event_id: string;
     text: string;
 }

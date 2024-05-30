@@ -46,19 +46,19 @@ userRouter.post("/login", async (req :  Request, res : Response) => {
         }
 
         if (!secret_key) {
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+            return res.sendStatus(StatusCodes.UNAUTHORIZED);
         }
 
         const user = await dbUtility.getTableByValue<User>("user", "email", email);
 
         if (!user) {
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+            return res.status(StatusCodes.NOT_FOUND).send("User not found");
         }
 
         const isValid = await comparePassword(password, user.password);
 
         if (!isValid) {
-            return res.status(StatusCodes.BAD_REQUEST).send("email or password not valid");
+            return res.status(StatusCodes.BAD_REQUEST).send("Email or password not valid");
         }
 
         const userClaims = {

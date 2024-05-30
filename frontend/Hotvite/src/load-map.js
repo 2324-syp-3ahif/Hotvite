@@ -24,8 +24,8 @@ async function initMap(fullInit = true) {
   });
 
   if(fullInit) {
-    loadEvents(AdvancedMarkerElement);
-    initMapClickEvent(AdvancedMarkerElement);
+    await loadEvents(AdvancedMarkerElement);
+    await initMapClickEvent(AdvancedMarkerElement);
   }
 }
 
