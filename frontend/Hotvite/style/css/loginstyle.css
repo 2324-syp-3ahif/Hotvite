@@ -28,7 +28,48 @@
   margin-bottom: 20px;
 }
 
-#login-button {
+input {
+  background: #363539;
+  border: #5c5c5c;
+  color: white;
+  width: auto;
+  height: 45px;
+  margin-bottom: 20px;
+  display: block;
+  transition: .5s;
+  text-transform: capitalize;
+}
+
+input::placeholder {
+  color: white;
+}
+
+input:focus,
+.signup-btn:hover {
+  background: #78777c;
+  color: white;
+}
+
+input:focus::placeholder {
+  color: white;
+}
+
+.signup-btn {
+  background: #3577bf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  align-self: center;
+  width: 90px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.signup-btn:hover {
+  background: #2d6db3;
+}
+
+/*#login-button {
   border-bottom: #1d82f9;
 }
 
@@ -70,7 +111,7 @@
 .login p {
   color: white;
   align-self: center;
-}
+}*/
 
 .bottom {
   margin-top: auto;
