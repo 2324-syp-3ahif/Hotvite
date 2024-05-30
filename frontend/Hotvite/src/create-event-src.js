@@ -3,7 +3,7 @@ const requirementsContainer = document.getElementById('event-requirements-contai
 const addRequirementButton = document.getElementById('event-requirements-add-button');
 const toggleChatButton = document.getElementById('event-chat-button');
 const addressInput = document.getElementById('event-address');
-
+let {lat, lng} = new URLSearchParams(window.location.search);
 
 
 initAddress();
@@ -35,8 +35,8 @@ addressInput.addEventListener('blur', function() {
   const geocoder = new google.maps.Geocoder();
   geocoder.geocode({ address: addressInput.value }, async (results, status) => {
     if (status === "OK" && results[0]) {
-      const lat = results[0].geometry.location.lat();
-      const lng = results[0].geometry.location.lng();
+      lat = results[0].geometry.location.lat();
+      lng = results[0].geometry.location.lng();
       await updateMiniMarker(lat, lng);
     }
   });
@@ -95,13 +95,8 @@ function createRequirementElement(requirement) {
   requirementsContainer.insertBefore(requirementElement, addRequirementButton);
 }
 
-
 // Init Address
 function initAddress() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const lat = urlParams.get('lat');
-  const lng = urlParams.get('lng');
-
   if (lat && lng) {
     const geocoder = new google.maps.Geocoder();
     const latLng = new google.maps.LatLng(lat, lng);
@@ -114,4 +109,64 @@ function initAddress() {
       }
     });
   }
+}
+
+// Submit event form
+function submitEventForm() {
+  const title = document.getElementById('event-title').value;
+  const description = document.getElementById('event-description').value;
+  const dateData = document.getElementById('event-date').value.split('-');
+  const price = parseFloat(document.getElementById('event-price').value);
+  const addressData = document.getElementById('event-address').value.split('\n');
+  const requirements = [];
+  const requirementElements = document.getElementsByClassName('event-requirement');
+  const chatEnabled = toggleChatButton.value === "Enabled";
+  const type = document.getElementById('event-type').value;
+
+  for (const requirementElement of requirementElements) {
+    const input = requirementElement.getElementsByClassName('event-req-input')[0];
+    if (input.value.length > 0) {
+      requirements.push(input.value);
+    }
+  }
+
+  const data = {
+    title,
+    description,
+    addressData, // TODO: Parse addressData
+    event_start_date: dateStringToTimestamp(dateData[0]),
+    event_end_date: dateStringToTimestamp(dateData[1]),
+    price,
+    conditions: requirements,
+    chatEnabled,
+    type,
+    location: {lat, lng},
+    created_at: Date.now()
+  };
+
+  fetch('http://localhost:3000/api/event/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then((response) => {
+    if (response.status === 200) {
+      window.location.href = '/index.html';
+    }
+  });
+}
+
+
+function dateStringToTimestamp(date) {
+  // date format: "dd.MM.yyyy HH:mm"
+  const dateArray = date.split(' ');
+  const dateData = dateArray[0].split('.');
+  const timeData = dateArray[1].split(':');
+  const day = parseInt(dateData[0]);
+  const month = parseInt(dateData[1]);
+  const year = parseInt(dateData[2]);
+  const hours = parseInt(timeData[0]);
+  const minutes = parseInt(timeData[1]);
+  return new Date(year, month - 1, day, hours, minutes).getTime();
 }

@@ -46,7 +46,7 @@ async function updateMiniMarker(lat, lng) {
   miniMarker = new AdvancedMarkerElement({
     position: { lat, lng },
     map,
-    content: createImgElement("../assets/event/ev_icon.png"),
+    content: createImgElement("../assets/event/create_event_icon.png")
   });
 }
 
