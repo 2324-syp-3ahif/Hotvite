@@ -3,5 +3,4 @@ export interface Address {
     Street: string;
     city: string;
     country: string;
-    state: string;
 }

@@ -12,10 +12,12 @@ CREATE TABLE event (
                        description TEXT,
                        address_id TEXT,
                        location_id TEXT,
+                       max_participants INTEGER,
+                       price REAL,
                        type TEXT,
+                       chat TEXT,
                        creator_id TEXT,
                        status VARCHAR(255),
-                       chat_id TEXT,
                        created_at INTEGER,
                        event_start_date INTEGER,
                        event_end_date INTEGER
@@ -31,8 +33,7 @@ CREATE TABLE address (
                          id TEXT PRIMARY KEY,
                          Street VARCHAR(255),
                          city VARCHAR(255),
-                         country VARCHAR(255),
-                         state VARCHAR(255)
+                         country VARCHAR(255)
 );
 
 CREATE TABLE event_participant (

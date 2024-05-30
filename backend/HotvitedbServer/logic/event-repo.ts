@@ -6,8 +6,7 @@ import {EventDto} from "../models/eventDto";
 function generateUUIDs(event: Event, eventID: string): void {
     event.address.id = uuidv4();
     event.location.id = uuidv4();
-    event.chat.id = uuidv4();
-    event.conditions.forEach(c => c.event_id = eventID);
+    event.requirements.forEach(c => c.event_id = eventID);
 }
 
 export function createEvent(eventDto: EventDto, user: User): Event {

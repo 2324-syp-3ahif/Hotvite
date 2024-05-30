@@ -2,7 +2,7 @@ import * as sqlite from "sqlite";
 import {open} from "sqlite";
 import sqlite3 from "sqlite3";
 import {Event} from "../models/event";
-import {Condition} from "../models/condition";
+import {Requirment} from "../models/requirment";
 import {Chat} from "../models/chat";
 import {Location} from "../models/location";
 import {User} from "../models/user";
@@ -124,16 +124,16 @@ export class dbUtility {
                 return false;
             }
 
-            try {
-                await this.saveChat(event.chat);
-            } catch (error) {
-                console.error('Error inserting new chat into database', error);
-                await this.db.run('ROLLBACK;');
-                return false;
-            }
+            // try {
+            //     await this.saveChat(event.chat);
+            // } catch (error) {
+            //     console.error('Error inserting new chat into database', error);
+            //     await this.db.run('ROLLBACK;');
+            //     return false;
+            // }
 
             try {
-                await this.saveConditions(event.conditions);
+                await this.saveConditions(event.requirements);
             } catch (error) {
                 console.error('Error inserting new conditions into database', error);
                 await this.db.run('ROLLBACK;');
@@ -150,12 +150,10 @@ export class dbUtility {
                                        , type
                                        , creator_id
                                        , status
-                                       , chat_id
                                        , created_at
                                        , event_start_date
                                        , event_end_date)
-                     VALUES (:id, :title, :description, :address_id, :location_id, :type, :creator_id, :status,
-                             :chat_id, :created_at, :event_start_date, :event_end_date)`
+                     VALUES (:id, :title, :description, :address_id, :location_id, :type, :creator_id, :status, :created_at, :event_start_date, :event_end_date)`
                 );
                 await stmt.bind({
                     ':id': event.id,
@@ -166,7 +164,6 @@ export class dbUtility {
                     ':type': event.type,
                     ':creator_id': event.creator_id,
                     ':status': event.status,
-                    ':chat_id': event.chat.id,
                     ':created_at': event.created_at,
                     ':event_start_date': event.event_start_date,
                     ':event_end_date': event.event_end_date
@@ -263,13 +260,12 @@ export class dbUtility {
 
     private static async saveAddress(address: Address): Promise<boolean> {
         try {
-            const stmt = await this.db.prepare('INSERT INTO address (id, Street, city, country, state) VALUES (:id, :Street, :city, :country, :state)');
+            const stmt = await this.db.prepare('INSERT INTO address (id, Street, city, country) VALUES (:id, :Street, :city, :country)');
             await stmt.bind({
                 ':id': address.id,
                 ':Street': address.Street,
                 ':city': address.city,
                 ':country': address.country,
-                ':state': address.state
             });
             await stmt.run();
             await stmt.finalize();
@@ -300,25 +296,25 @@ export class dbUtility {
         }
     }
 
-    private static async saveChat(chat: Chat): Promise<boolean> {
-        try {
-            const stmt = await this.db.prepare('INSERT INTO chat (id, about, name) VALUES (:id, :about, :name)');
-            await stmt.bind({
-                ':id': chat.id,
-                ':about': chat.about,
-                ':name': chat.name
-            });
-            await stmt.run();
-            await stmt.finalize();
+    // private static async saveChat(chat: Chat): Promise<boolean> {
+    //     try {
+    //         const stmt = await this.db.prepare('INSERT INTO chat (id, about, name) VALUES (:id, :about, :name)');
+    //         await stmt.bind({
+    //             ':id': chat.id,
+    //             ':about': chat.about,
+    //             ':name': chat.name
+    //         });
+    //         await stmt.run();
+    //         await stmt.finalize();
+    //
+    //         return true;
+    //     } catch (error) {
+    //         console.error('Error inserting new chat into database', error);
+    //         return false;
+    //     }
+    // }
 
-            return true;
-        } catch (error) {
-            console.error('Error inserting new chat into database', error);
-            return false;
-        }
-    }
-
-    private static async saveConditions(conditions: Condition[]): Promise<boolean> {
+    private static async saveConditions(conditions: Requirment[]): Promise<boolean> {
         try {
             const stmt = await this.db.prepare('INSERT INTO condition (event_id, text) VALUES (:event_id, :text)');
 

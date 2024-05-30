@@ -1,11 +1,7 @@
-import {Address} from "./address";
-import {Condition} from "./condition";
-import {Chat} from "./chat";
-import {Location} from "./location";
 import {AddressDto} from "./addressDto";
 import {LocationDto} from "./locationDto";
-import {ChatDto} from "./chatDto";
 import {ConditionDto} from "./conditionDto";
+import {Requirment} from "./requirment";
 
 export interface EventDto {
     title: string;
@@ -13,11 +9,11 @@ export interface EventDto {
     address: AddressDto;
     location: LocationDto;
     type: string;
-    status: string;
-    creator_id: string;
-    chat: ChatDto;
+    chat: boolean;
+    price: number;
+    max_participants: number;
     created_at: number;
     event_start_date: number;
     event_end_date: number;
-    conditions: ConditionDto[];
+    requirements: Requirment[];
 }

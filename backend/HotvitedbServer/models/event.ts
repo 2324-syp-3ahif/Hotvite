@@ -1,6 +1,5 @@
 import {Address} from "./address";
-import {Condition} from "./condition";
-import {Chat} from "./chat";
+import {Requirment} from "./requirment";
 import {Location} from "./location";
 
 export interface Event {
@@ -12,9 +11,11 @@ export interface Event {
     type: string;
     status: string;
     creator_id: string;
-    chat: Chat;
+    price: number;
+    max_participants: number;
+    chat: boolean;
     created_at: number;
     event_start_date: number;
     event_end_date: number;
-    conditions: Condition[];
+    requirements: Requirment[];
 }

@@ -1,5 +1,5 @@
 @url=http://localhost:3000/api/event/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTY1NDkxODguODAzLCJpYXQiOjE3MTY1NDczODh9.wIDM8OBoznAWxbnmbI9dbHrZ0V-5j8A7NK_1BdOpHn4
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTcwOTQ3MDcuNzQ5LCJpYXQiOjE3MTcwOTI5MDd9.TCRWFwmfB7LgJSkryAUoy-IbiatLSiOV4vImWw0qTFk
 
 POST {{url}}create
 Authorization: Bearer {{token}}
@@ -131,37 +131,33 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "Tech Conference",
-  "description": "Stay updated with the latest in tech!",
+  "title": "title",
+  "description": "desc",
   "address": {
-    "Street": "456 Tech Boulevard",
-    "city": "Silicon Valley",
-    "country": "United States",
-    "state": "California"
+    "Street": "geistig Straße 123",
+    "city": "cool city",
+    "country": "austria"
   },
   "location": {
-    "latitude": "37.7749",
-    "longitude": "-122.4194"
+    "latitude": "48.2082",
+    "longitude": "16.3738"
   },
   "type": "event",
-  "creator_id": "053d7d34-9791-4c41-ada3-7a1bed48447a",
-  "status": "active",
-  "chat": {
-    "about": "Exchange ideas and network here!",
-    "name": "Tech Talk Chat"
-  },
+  "chat": "false",
+  "price": 20.00,
+  "max_participants": 1000,
   "created_at": 1711833523765,
   "event_start_date": 1811833533765,
   "event_end_date": 1911834533765,
-  "conditions": [
+  "requirements": [
     {
-      "text": "Open to all tech enthusiasts"
+      "text": "min age 18"
     },
     {
-      "text": "No solicitation allowed"
+      "text": "no smoking"
     },
     {
-      "text": "WiFi available"
+      "text": "no pets allowed"
     }
   ]
 }

@@ -84,6 +84,11 @@ async function initMapClickEvent(AdvancedMarkerElement) {
     if (setMarker) {
       setMarker.setMap(null);
     }
+
+    let user = {
+      username: "test",
+      email: "email@test.gmx.at"
+    }
   });
 }
 
