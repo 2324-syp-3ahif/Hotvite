@@ -2,22 +2,40 @@ import {v4 as uuidv4} from "uuid";
 import {Event} from "../models/event";
 import {User} from "../models/user";
 import {EventDto} from "../models/eventDto";
-
-function generateUUIDs(event: Event, eventID: string): void {
-    event.address.id = uuidv4();
-    event.location.id = uuidv4();
-
-    event.requirements = event.requirements.map(requirement =>
-        ({event_id: eventID, text: requirement.text}));
-}
+import {Requirement} from "../models/requirement";
 
 export function createEvent(eventDto: EventDto, user: User): Event {
-    const eventID = uuidv4();
-    const event: Event = {...eventDto, id: eventID, creator_id: user.id} as Event;
+    const eventId = uuidv4();
+    const addressId = uuidv4();
+    const locationId = uuidv4();
 
-    generateUUIDs(event, eventID);
-
-    return event;
+    const requirementObjects = eventDto.requirements.map(req => {
+        const requirement: Requirement = {event_id: eventId, text: req};
+        return requirement;
+    });
+    return {
+        id: eventId,
+        title: eventDto.title,
+        description: eventDto.description,
+        address: {
+            id: addressId,
+            ...eventDto.address
+        },
+        location: {
+            id: locationId,
+            ...eventDto.location
+        },
+        type: eventDto.type,
+        chat: eventDto.chat,
+        price: eventDto.price,
+        max_participants: eventDto.max_participants,
+        created_at: eventDto.created_at,
+        event_start_date: eventDto.event_start_date,
+        event_end_date: eventDto.event_end_date,
+        requirements: requirementObjects,
+        creator_id: user.id,
+        status: "active"
+    }
 }
 
 

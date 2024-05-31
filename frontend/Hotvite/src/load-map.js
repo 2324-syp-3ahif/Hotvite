@@ -49,13 +49,13 @@ async function loadEvents(){
   requestJSON("/event/getAll").then((data) => {
     if(data) {
       data.forEach(async (event) => {
-        await createMarker(event);
+        await createMarkerElement(event);
       });
     }
   });
 }
 
-async function createMarker(event){
+async function createMarkerElement(event){
   requestJSON(`/event/getLocationById/${event.location_id}`).then(async (location) => {
     const { latitude, longitude } = location;
     return await createNewMarker(+latitude, +longitude);
@@ -88,7 +88,7 @@ async function initMapClickEvent() {
       setMarker.setMap(null);
     }
     setMarker = createNewMarker(lat, lng);
-    map.setZoom(12);
+    map.setZoom(20);
     map.panTo({ lat, lng });
     currentTimeout = setTimeout(() => {
       window.location.href = "./create-event.html?lat=" + lat + "&lng=" + lng;

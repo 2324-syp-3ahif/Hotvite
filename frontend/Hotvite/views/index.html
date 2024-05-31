@@ -120,6 +120,28 @@
     }
   }
   window.onload = checkPopup;
+
+  /*
+  WARNING! DELETE THIS BEFORE FINAL-PUSHING!
+  THIS IS JUST FOR TESTING PURPOSES UNTIL THE LOGIN FUNCTIONALITY IS IMPLEMENTED!
+   */
+  // REGION START
+  fetch("http://localhost:3000/api/user/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: "admin@hotvite.com",
+      password: "admin",
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      localStorage.setItem("token", data.token);
+    });
+  // REGION END
+
 </script>
 </body>
 </html>

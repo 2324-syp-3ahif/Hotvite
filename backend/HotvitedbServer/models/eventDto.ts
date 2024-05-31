@@ -15,5 +15,5 @@ export interface EventDto {
     created_at: number;
     event_start_date: number;
     event_end_date: number;
-    requirements: Requirement[];
+    requirements: string[];
 }
