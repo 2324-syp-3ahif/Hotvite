@@ -10,6 +10,7 @@ import {StatusCodes} from "http-status-codes";
 import {UpdateEventDto} from "../models/updateEventDto";
 import {Event_participant} from "../models/event_participant";
 import {UserPublic} from "../models/userPublic";
+import {Address} from "../models/address";
 
 export const eventRouter = express.Router();
 
@@ -35,6 +36,17 @@ eventRouter.post("/create", isAuthenticated, async (req, res) => {
         console.error("Error creating event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while creating event"});
     }
+});
+
+eventRouter.get("/getEventById/:id", async (req, res) => {
+    const data: Event[] | undefined = await dbUtility.getAllFromTable("event");
+
+    const result = data?.filter(event => event.id === req.params.id)[0];
+
+    if (!result) {
+        return res.status(StatusCodes.NOT_FOUND).json({error: "Event not found"});
+    }
+    res.status(200).json(result);
 });
 
 eventRouter.get("/getAll", async (req, res) => {
@@ -202,4 +214,16 @@ eventRouter.get("/getLocationById/:id", async (req, res) => {
         return res.status(StatusCodes.NOT_FOUND).json({error: "Location not found"});
     }
     res.status(200).json({latitude: result.latitude, longitude: result.longitude });
+});
+
+eventRouter.get("/getAddressById/:id", async (req, res) => {
+    const data: Address[] | undefined = await dbUtility.getAllFromTable("address");
+
+    const result = data?.filter(address => address.id === req.params.id)[0];
+
+    if (!result) {
+        return res.status(StatusCodes.NOT_FOUND).json({error: "Address not found"});
+    }
+
+    res.status(200).json(result);
 });

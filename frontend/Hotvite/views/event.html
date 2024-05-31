@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hotvite - Create Event</title>
+  <title></title>
   <link rel="stylesheet" href="../style/css/headerstyle.css">
   <link rel="stylesheet" href="../style/css/indexstyle.css">
   <link rel="stylesheet" href="../style/css/event.css">
@@ -11,6 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
   <script src="../src/load-map.js"></script>
+  <script src="../src/communication.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -55,7 +56,7 @@
   </div>
   <div id="property-section">
     <div id="event-head">
-      <input class="form-control" id="event-title" value="New Event" maxlength="35">
+      <input class="form-control" id="event-title" value="Event Title" maxlength="35" readonly>
       <img onclick="window.location.href='./index.html'" id="event-action-close" alt="close" src="../assets/event/close.png">
     </div>
       <form id="event-form">
@@ -63,30 +64,27 @@
           <div class="form-section" id="event-description-group">
             <div class="f-group">
               <label for="event-description">Description:</label>
-              <textarea class="form-control" id="event-description" rows="1" placeholder="Event description"></textarea>
+              <textarea class="form-control" id="event-description" rows="1" placeholder="Event description" readonly></textarea>
             </div>
           </div>
           <div class="f-group" id="event-specifications-group">
             <div class="group-child">
                 <label for="event-date">Date:</label>
-                <input name="datetimes" class="form-control" id="event-date">
+                <input name="datetimes" class="form-control" id="event-date" readonly>
               </div>
             <div class="group-child prop-col-2">
               <div id="event-type-container">
                 <label for="event-type">Type:</label>
-                <select class="form-select" id="event-type">
-                  <option selected>Not specified</option>
-                  <option>...</option>
-                </select>
+                <input class="form-control" id="event-type" value="Not specified" readonly>
               </div>
               <div id="event-price-container">
                 <label for="event-price">Price:</label>
-                <input value="0.00€" min="0" class="form-control" id="event-price" placeholder="Price">
+                <input value="0.00€" min="0" class="form-control" id="event-price" placeholder="Price" readonly>
               </div>
             </div>
             <div class="group-child" id="event-address-container">
               <label for="event-address">Address:</label>
-              <textarea class="form-control" id="event-address" placeholder="Address"></textarea>
+              <textarea class="form-control" id="event-address" placeholder="Address" readonly></textarea>
             </div>
           </div>
         </div>
@@ -96,49 +94,33 @@
               <label>Requirements:</label>
               <div id="event-requirements-container">
                 <!-- Event requirements will be added here. Example: -->
-                <div id="event-requirements-add-button">
-                  <img src="../assets/event/add_event.png" alt="Add" width="15" height="15">
-                </div>
               </div>
             </div>
             <div class="group-child" id="event-requirements-chat">
               <label for="event-chat-button">Chat:</label>
-              <input id="event-chat-button" type="button" value="Disabled">
+              <input id="event-chat-button" type="button" value="Disabled" readonly>
             </div>
           </div>
           <div class="f-group" id="event-participant-group">
             <div class="group-child">
-              <label for="event-participants-count">Participants:</label>
+              <label>Participants (0/0):</label>
               <div id="event-participants-container">
                 <span id="participants-display-text">Participants will be displayed here</span>
-                <input class="form-control" type="number" value="0" min="0" step="1" id="event-participants-count">
-                <span style="color: var(--font-fade); font-size: 12px">(0 = No limitation)</span>
             </div>
           </div>
         </div>
         </div>
         <div class="row" id="form-handle-buttons">
-          <input type="button" id="event-action-save" onclick="submitEventForm()" value="Create Event">
+          <input type="button" id="event-action-save" onclick="" value="Join Event">
         </div>
       </form>
     </div>
   </div>
 </body>
 <script>
-  $(function() {
-    $('input[name="datetimes"]').daterangepicker({
-      timePicker: true,
-      startDate: moment().startOf("hour").add(1, "hour"),
-      endDate: moment().startOf("hour").add(4, "hour"),
-      locale: {
-        format: 'DD.M.Y HH:mm'
-      }
-    });
-  });
-
   window.onload = function() {
     const s = document.createElement('script');
-    s.src = "../src/create-event-src.js";
+    s.src = '../src/load-event.js';
     document.body.appendChild(s);
   }
 </script>

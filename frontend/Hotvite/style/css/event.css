@@ -3,7 +3,7 @@ body {
   height: auto;
 }
 
-#create-event {
+#event {
   display: flex;
   width: 100%;
   color: white;
