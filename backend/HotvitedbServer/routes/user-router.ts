@@ -65,7 +65,7 @@ userRouter.post("/login", async (req :  Request, res : Response) => {
             email: email
         };
 
-        const minutes = 30;
+        const minutes = 45;
         const expiresAt = new Date(Date.now() + minutes * 60_000);
 
         const token = jwt.sign(

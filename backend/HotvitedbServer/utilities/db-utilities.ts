@@ -260,10 +260,10 @@ export class dbUtility {
 
     private static async saveAddress(address: Address): Promise<boolean> {
         try {
-            const stmt = await this.db.prepare('INSERT INTO address (id, Street, city, country) VALUES (:id, :Street, :city, :country)');
+            const stmt = await this.db.prepare('INSERT INTO address (id, street, city, country) VALUES (:id, :street, :city, :country)');
             await stmt.bind({
                 ':id': address.id,
-                ':Street': address.Street,
+                ':street': address.street,
                 ':city': address.city,
                 ':country': address.country,
             });

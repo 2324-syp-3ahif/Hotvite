@@ -1,5 +1,5 @@
 @url=http://localhost:3000/api/event/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYWRtaW5AaG90dml0ZS5jb20ifSwiZXhwIjoxNzE3MTQ2NjU2Ljg0OSwiaWF0IjoxNzE3MTQ0ODU2fQ.dmcHQd99Y44W_zp4MxX1lpJNuNnuv_hOV3EKka600cE
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYWRtaW5AaG90dml0ZS5jb20ifSwiZXhwIjoxNzE3MTYwNjQ2Ljc5LCJpYXQiOjE3MTcxNTc5NDZ9.NIfi3rJqUi8X5oNGUewV3qDtzdvtOnCGDlpY0Bne8O0
 
 POST {{url}}create
 Authorization: Bearer {{token}}
@@ -134,7 +134,7 @@ Content-Type: application/json
   "title": "title",
   "description": "desc",
   "address": {
-    "Street": "geistig Straße 123",
+    "street": "geistig Straße 123",
     "city": "cool city",
     "country": "austria"
   },

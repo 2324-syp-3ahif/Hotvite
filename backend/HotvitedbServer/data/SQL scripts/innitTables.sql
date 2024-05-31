@@ -31,7 +31,7 @@ CREATE TABLE condition (
 
 CREATE TABLE address (
                          id TEXT PRIMARY KEY,
-                         Street VARCHAR(255),
+                         street VARCHAR(255),
                          city VARCHAR(255),
                          country VARCHAR(255)
 );
