@@ -12,6 +12,7 @@
 
   <script src="../src/load-map.js"></script>
   <script src="../src/communication.js"></script>
+  <script src="../src/event/common.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -97,8 +98,8 @@
               </div>
             </div>
             <div class="group-child" id="event-requirements-chat">
-              <label for="event-chat-button">Chat:</label>
-              <input id="event-chat-button" type="button" value="Disabled" readonly>
+              <label>Chat:</label>
+              <p style="font-style: italic; color: var(--font-fade)">This feature is currently not available.</p>
             </div>
           </div>
           <div class="f-group" id="event-participant-group">
@@ -120,7 +121,7 @@
 <script>
   window.onload = function() {
     const s = document.createElement('script');
-    s.src = '../src/load-event.js';
+    s.src = '../src/event/load-event.js';
     document.body.appendChild(s);
   }
 </script>

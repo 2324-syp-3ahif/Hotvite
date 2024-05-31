@@ -11,6 +11,7 @@ import {UpdateEventDto} from "../models/updateEventDto";
 import {Event_participant} from "../models/event_participant";
 import {UserPublic} from "../models/userPublic";
 import {Address} from "../models/address";
+import {Requirement} from "../models/requirement";
 
 export const eventRouter = express.Router();
 
@@ -222,5 +223,21 @@ eventRouter.get("/getAddressById/:id", async (req, res) => {
         return res.status(StatusCodes.NOT_FOUND).json({error: "Address not found"});
     }
 
-    res.status(200).json(address);
+    res.status(StatusCodes.OK).json(address);
+});
+
+eventRouter.get("/getRequirementsByEventId/:id", async (req, res) => {
+    try {
+        const data = await dbUtility.getAllFromTable<Requirement[]>("requirement");
+        const requirements = data?.filter(requirement => requirement.event_id === req.params.id);
+
+        if(!data || !requirements){
+            return res.status(StatusCodes.NOT_FOUND).json({error: "No requirements found"});
+        }
+
+        res.status(StatusCodes.OK).json(requirements);
+    } catch (error) {
+        console.error("Error getting all requirements:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while getting all requirements"});
+    }
 });

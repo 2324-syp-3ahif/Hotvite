@@ -50,12 +50,7 @@ addressInput.addEventListener('blur', function() {
 // Add listeners manually
 function addInputChangeListener(input) {
   input.addEventListener('input', function() {
-    this.style.width = '50px';
-    if(this.value.length > 0) {
-      this.style.width = (this.scrollWidth + 1) + 'px';
-    } else {
-      this.style.width = 'auto';
-    }
+    updateInputWidth(this);
   });
 }
 
@@ -69,33 +64,7 @@ function addRemoveButtonListener(removeButton) {
 
 // Create new requirement
 function createNewRequirement() {
-  createRequirementElement({ text: 'New Requirement' });
-}
-
-function createRequirementElement(requirement) {
-  const requirementElement = document.createElement('div');
-  const input = document.createElement('input');
-  const removeButton = document.createElement('div');
-  const img = document.createElement('img');
-
-  requirementElement.classList.add('event-requirement');
-  input.classList.add('event-req-input');
-  input.setAttribute('maxlength', '30');
-  input.setAttribute('type', 'text');
-  input.setAttribute('placeholder', requirement.text);
-  addInputChangeListener(input);
-
-  removeButton.classList.add('event-requirement-remove-button');
-  img.setAttribute('src', '../assets/event/close.png');
-  img.setAttribute('alt', 'Remove');
-  img.setAttribute('width', '13');
-  img.setAttribute('height', '13');
-  removeButton.appendChild(img);
-  addRemoveButtonListener(removeButton);
-
-  requirementElement.appendChild(input);
-  requirementElement.appendChild(removeButton);
-  requirementsContainer.insertBefore(requirementElement, addRequirementButton);
+  requirementsContainer.insertBefore(createRequirementElement({ text: 'New Requirement' }, true), addRequirementButton);
 }
 
 // Init Address
@@ -136,7 +105,11 @@ function submitEventForm() {
   const data = {
     title: title,
     description: description,
-    address: addressData, // TODO: Validate addressData
+    address: {
+      street: addressData[0],
+      city: addressData[1],
+      country: addressData[2]
+    },
     location: {latitude: lat, longitude: lng},
     max_participants: participants,
     price: price,
@@ -173,4 +146,13 @@ function dateStringToTimestamp(date) {
   const hours = parseInt(timeData[0]);
   const minutes = parseInt(timeData[1]);
   return new Date(year, month - 1, day, hours, minutes).getTime();
+}
+
+function updateInputWidth(input) {
+  input.style.width = '50px';
+  if(input.value.length > 0) {
+    input.style.width = (input.scrollWidth + 1) + 'px';
+  } else {
+    input.style.width = 'auto';
+  }
 }

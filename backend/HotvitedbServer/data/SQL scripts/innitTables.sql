@@ -22,7 +22,7 @@ CREATE TABLE event (
                        event_end_date INTEGER
 );
 
-CREATE TABLE condition (
+CREATE TABLE requirement (
                            event_id TEXT,
                            text TEXT,
                            FOREIGN KEY (event_id) REFERENCES event(id)

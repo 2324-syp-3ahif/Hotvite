@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS user_saved_events;
 DROP TABLE IF EXISTS location;
 DROP TABLE IF EXISTS event_participant;
 DROP TABLE IF EXISTS address;
-DROP TABLE IF EXISTS condition;
+DROP TABLE IF EXISTS requirement;
 DROP TABLE IF EXISTS event;
 DROP TABLE IF EXISTS user;
 
