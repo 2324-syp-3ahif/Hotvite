@@ -2,6 +2,7 @@ import {NextFunction, Request, Response} from "express";
 import jwt from "jsonwebtoken";
 import {secret_key} from "../app";
 import {AuthRequest} from "../models/authRequest";
+import {StatusCodes} from "http-status-codes";
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -9,11 +10,11 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
 
 
         if (!token) {
-            return res.sendStatus(401);
+            return res.status(StatusCodes.UNAUTHORIZED).send('Please authenticate!');
         }
 
         if (!secret_key) {
-            return res.sendStatus(500);
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
         }
 
         let decoded = jwt.verify(token, secret_key);

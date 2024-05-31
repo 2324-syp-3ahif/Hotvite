@@ -12,7 +12,7 @@ export async function createUser(user: UserDto): Promise<User> {
         username: user.username,
         email: user.email,
         password: hashedPassword,
-        aboutme: user.aboutme,
+        about_me: user.about_me,
     };
 }
 

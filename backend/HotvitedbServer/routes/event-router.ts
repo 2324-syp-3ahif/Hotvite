@@ -19,7 +19,7 @@ eventRouter.post("/create", isAuthenticated, async (req, res) => {
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
 
         if(!user){
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "Events can only be created by registered users"});
         }
 
         const event: Event = createEvent(req.body, user);
@@ -33,7 +33,7 @@ eventRouter.post("/create", isAuthenticated, async (req, res) => {
         res.status(StatusCodes.CREATED).json({result: true, event_id: event.id});
     } catch (error) {
         console.error("Error creating event:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while creating event"});
     }
 });
 
@@ -44,7 +44,7 @@ eventRouter.get("/getAll", async (req, res) => {
         res.status(StatusCodes.OK).json(data);
     } catch (error) {
         console.error("Error getting all events:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while getting all events"});
     }
 });
 
@@ -54,14 +54,14 @@ eventRouter.post("/changeEventDetails", isAuthenticated, async (req, res) => {
         const newEvent: UpdateEventDto = req.body;
 
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
-        const oldEvent = await dbUtility.getTableByValue<Event>("event", "id", newEvent.id)
+        const eventExists = await dbUtility.getTableByValue<Event>("event", "id", newEvent.id)
 
-        if (!user || !oldEvent) {
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        if (!user || !eventExists) {
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User or event does not exist"});
         }
 
-        if (oldEvent.creator_id !== user.id) {
-            return res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
+        if (eventExists.creator_id !== user.id) {
+            return res.status(StatusCodes.FORBIDDEN).json({error: "User is not the creator of the event"});
         }
 
         const result = await dbUtility.updateEvent(newEvent)
@@ -69,7 +69,7 @@ eventRouter.post("/changeEventDetails", isAuthenticated, async (req, res) => {
         res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error registering user to event:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while updating event details"});
     }
 });
 
@@ -82,7 +82,7 @@ eventRouter.post("/register", isAuthenticated, async (req, res) => {
         const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
 
         if (!user || !event) {
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User or event does not exist"});
         }
 
         const result = await dbUtility.registerUserToEvent(user, event)
@@ -90,7 +90,7 @@ eventRouter.post("/register", isAuthenticated, async (req, res) => {
         res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error registering user to event:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while registering user to event"});
     }
 });
 
@@ -103,7 +103,7 @@ eventRouter.post("/unregister", isAuthenticated, async (req, res) => {
         const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
 
         if (!user || !event) {
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User or event does not exist"});
         }
 
         const result = await dbUtility.unregisterUserFromEvent(user, event)
@@ -111,7 +111,7 @@ eventRouter.post("/unregister", isAuthenticated, async (req, res) => {
         res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error unregistering user to event:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while unregistering user from event"});
     }
 });
 
@@ -123,25 +123,27 @@ eventRouter.get("/getParticipantsFromEvent/:event_id", isAuthenticated, async (r
         const loggedInUser = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
         const participants = await dbUtility.getAllFromTable<Event_participant[]>("event_participant");
 
-        if (!loggedInUser || !participants) {
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        if (!loggedInUser) {
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User does not exist"});
+        }
+
+        if (!participants) {
+            return res.status(StatusCodes.OK).json({users: []});
         }
 
         const userIDs = participants.filter(value => value.event_id === event_id).map(value => value.user_id);
-
-        let allUsers = await dbUtility.getAllFromTable<User[]>("user");
+        const allUsers = await dbUtility.getAllFromTable<User[]>("user");
 
         if (!allUsers) {
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+            return res.status(StatusCodes.CONFLICT).json({error: "No users found"});
         }
 
-        const users : UserPublic[] = allUsers.filter(user => userIDs.includes(user.id)).map(user => ({username: user.username, aboutme: user.aboutme}));
-
+        const users : UserPublic[] = allUsers.filter(user => userIDs.includes(user.id)).map(user => ({username: user.username, about_me: user.about_me}));
         res.status(200).json({users: users});
 
     } catch (error) {
         console.error("Error getting users from event", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while getting users from event"});
     }
 });
 
@@ -154,11 +156,11 @@ eventRouter.delete("/deleteEvent", isAuthenticated, async (req, res) => {
         const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
 
         if (!user || !event) {
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User or event does not exist"});
         }
 
         if (event.creator_id !== user.id) {
-            return res.sendStatus(StatusCodes.METHOD_NOT_ALLOWED);
+            return res.status(StatusCodes.FORBIDDEN).json({error: "User is not the creator of the event"});
         }
 
         const result = await dbUtility.deleteRowInTable("event", "id", event.id);
@@ -166,7 +168,7 @@ eventRouter.delete("/deleteEvent", isAuthenticated, async (req, res) => {
         res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error unregistering user to event:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while deleting event"});
     }
 });
 
@@ -179,7 +181,7 @@ eventRouter.get("/getMyLocations", isAuthenticated, async (req, res) => {
         const allLocations = await dbUtility.getAllFromTable<Location[]>("location");
 
         if(!allLocations || !user){
-            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User or locations not found"});
         }
 
         const result = allLocations.filter(location => location.id === user.id);
@@ -187,7 +189,7 @@ eventRouter.get("/getMyLocations", isAuthenticated, async (req, res) => {
         res.status(StatusCodes.OK).json({result: result});
     } catch (error) {
         console.error("Error getting locations from user:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while getting locations from user"});
     }
 });
 
