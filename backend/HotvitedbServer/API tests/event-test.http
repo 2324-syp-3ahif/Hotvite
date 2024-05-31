@@ -1,5 +1,5 @@
 @url=http://localhost:3000/api/event/
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYWRtaW5AaG90dml0ZS5jb20ifSwiZXhwIjoxNzE3MTYwNjQ2Ljc5LCJpYXQiOjE3MTcxNTc5NDZ9.NIfi3rJqUi8X5oNGUewV3qDtzdvtOnCGDlpY0Bne8O0
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiYWRtaW5AaG90dml0ZS5jb20ifSwiZXhwIjoxNzE3MTYxMDkzLjgzLCJpYXQiOjE3MTcxNTgzOTN9.T2hOWuBzq1MegzIZ4bAetnyTKWFCTTQo0lsHVv49pDg
 
 POST {{url}}create
 Authorization: Bearer {{token}}
@@ -217,3 +217,7 @@ GET {{url}}getLocationById/a3c008e2-04c5-4297-93a5-2e992310e5a5
 
 GET {{url}}getParticipantsFromEvent/a4ae88fd-b0e6-49af-a730-0da9c6334299
 Authorization: Bearer {{token}}
+
+### getAddressByID
+
+GET {{url}}getAddressById/b2f29f22-7103-4040-a4f8-ef7fcfd23c10

@@ -148,13 +148,16 @@ export class dbUtility {
                                        , address_id
                                        , location_id
                                        , type
+                                       , price
+                                       , max_participants
+                                       , chat
                                        , creator_id
-                                       , status
                                        , created_at
                                        , event_start_date
                                        , event_end_date)
-                     VALUES (:id, :title, :description, :address_id, :location_id, :type, :creator_id, :status, :created_at, :event_start_date, :event_end_date)`
+                     VALUES (:id, :title, :description, :address_id, :location_id, :type, :price, :max_participants, :chat, :creator_id, :created_at, :event_start_date, :event_end_date)`
                 );
+
                 await stmt.bind({
                     ':id': event.id,
                     ':title': event.title,
@@ -162,12 +165,15 @@ export class dbUtility {
                     ':address_id': event.address.id,
                     ':location_id': event.location.id,
                     ':type': event.type,
+                    ':price': event.price,
+                    ':max_participants': event.max_participants,
+                    ':chat': event.chat,
                     ':creator_id': event.creator_id,
-                    ':status': event.status,
                     ':created_at': event.created_at,
                     ':event_start_date': event.event_start_date,
                     ':event_end_date': event.event_end_date
                 });
+
 
                 await stmt.run();
                 await stmt.finalize();

@@ -17,7 +17,6 @@ CREATE TABLE event (
                        type TEXT,
                        chat TEXT,
                        creator_id TEXT,
-                       status VARCHAR(255),
                        created_at INTEGER,
                        event_start_date INTEGER,
                        event_end_date INTEGER

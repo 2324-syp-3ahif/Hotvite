@@ -206,24 +206,21 @@ eventRouter.get("/getMyLocations", isAuthenticated, async (req, res) => {
 });
 
 eventRouter.get("/getLocationById/:id", async (req, res) => {
-    const data: Location[] | undefined = await dbUtility.getAllFromTable("location");
+    const location = await dbUtility.getTableByValue<Location>("location", "id", req.params.id);
 
-    const result = data?.filter(location => location.id === req.params.id)[0];
-
-    if (!result) {
+    if (!location) {
         return res.status(StatusCodes.NOT_FOUND).json({error: "Location not found"});
     }
-    res.status(200).json({latitude: result.latitude, longitude: result.longitude });
+
+    res.status(200).json(location);
 });
 
 eventRouter.get("/getAddressById/:id", async (req, res) => {
-    const data: Address[] | undefined = await dbUtility.getAllFromTable("address");
+    const address = await dbUtility.getTableByValue<Address>("address", "id", req.params.id);
 
-    const result = data?.filter(address => address.id === req.params.id)[0];
-
-    if (!result) {
+    if (!address) {
         return res.status(StatusCodes.NOT_FOUND).json({error: "Address not found"});
     }
 
-    res.status(200).json(result);
+    res.status(200).json(address);
 });
