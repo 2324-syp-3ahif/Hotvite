@@ -53,7 +53,7 @@
         <h2>Welcome to Hotvite</h2>
       </div>
       <div id="close-button">
-        <button type="button" class="btn cancel" onclick="closeForm()"><img src="../assets/welcome-popup/x.png" alt="x"></button>
+        <button type="button" class="btn cancel" onclick="closeWelcomePopup()"><img src="../assets/welcome-popup/x.png" alt="x"></button>
         <!--<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
         <img src="../assets/x.png" alt="x">-->
       </div>
@@ -101,15 +101,25 @@
           we need to ensure a great experience!</p>
       </div>
       <div id="start">
-        <button>Let's start!</button>
+        <button type="button" onclick="closeWelcomePopup()">Let's start!</button>
       </div>
     </div>
   </form>
 </div>
 <script>
-  function closeForm() {
+  //Welcome-popup
+  function closeWelcomePopup() {
     document.getElementById("welcome-popup").style.display = "none";
+    localStorage.setItem('welcomePopupShown', 'true');
   }
+  function checkPopup() {
+    if (!localStorage.getItem('welcomePopupShown')) {
+      document.getElementById("welcome-popup").style.display = "block";
+    } else {
+      document.getElementById("welcome-popup").style.display = "none";
+    }
+  }
+  window.onload = checkPopup;
 </script>
 </body>
 </html>
