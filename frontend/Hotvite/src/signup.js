@@ -1,43 +1,38 @@
-document.getElementById('registerForm').addEventListener('submit', async function (e) {
-  e.preventDefault();
+document.getElementById('register-form').addEventListener('submit', async function (event) {
+  event.preventDefault();
+
+  const url = 'http://localhost:3000/api/user/signup';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYxNDI5MjAuMDA4LCJpYXQiOjE3MTYxNDExMjB9.Rqj2bdC2J0zCoEjoRb3FASRIvp0bnxtohhNBUcFQTrA';
+
+  const username = document.getElementById('username-input').value;
+  const email = document.getElementById('email-input').value;
+  const password = document.getElementById('password-input').value;
+  //const aboutMe = document.getElementById('about-me-input').value;
+
   const user = {
-
-    email: document.getElementById('email').value,
-    password: document.getElementById('password').value,
-    username: document.getElementById('username').value
+    username: username,
+    email: email,
+    password: password,
+    //about_me: aboutMe
   };
-  await signup(user);
-});
-
-async function signup(user) {
-  /*let user = {
-    username: "testname",
-    email: "test@gmail.com",
-    password: "123pw",
-    aboutme: "about me blabla"
-  }*/
 
   try {
-    const response = await fetchRestEndpoint("http://localhost:3000/api/user/signup", "POST", user);
-    console.log('Signup successful:', response);
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(user)
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+
+    const result = await response.json();
+    alert('Registration successful: ' + JSON.stringify(result));
   } catch (error) {
-    console.error('Signup failed:', error);
+    alert('There was a problem with the registration: ' + error.message);
   }
-}
-
-async function fetchRestEndpoint(route: string, method: "GET" | "POST" | "PUT" | "DELETE", data?: object) {
-  let options = {method};
-  if (data) {
-    options.headers = {"Content-Type": "application/json"};
-    options.body = JSON.stringify(data);
-  }
-  const res = await fetch(route, options);
-  if (!res.ok) {
-    const error = new Error(`${method} ${res.url} ${res.status} (${res.statusText})`);
-    throw error;
-  }
-  if (res.status !== 204) {
-    return await res.json();
-  }
-}
-
+});
