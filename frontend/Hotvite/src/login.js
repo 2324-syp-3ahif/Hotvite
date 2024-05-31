@@ -1,4 +1,4 @@
-document.getElementById("login-form").addEventListener("submit", function(event) {
+document.getElementById("login-form").addEventListener("submit", function (event) {
   event.preventDefault();
 
   var email = document.getElementById("email-input").value;
@@ -9,7 +9,6 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     password: password
   };
 
-  // Make API request
   fetch("http://localhost:3000/api/user/login", {
     method: "POST",
     headers: {
