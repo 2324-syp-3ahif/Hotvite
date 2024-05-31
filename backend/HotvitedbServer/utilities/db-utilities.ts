@@ -133,9 +133,9 @@ export class dbUtility {
             // }
 
             try {
-                await this.saveConditions(event.requirements);
+                await this.saveRequirements(event.requirements);
             } catch (error) {
-                console.error('Error inserting new conditions into database', error);
+                console.error('Error inserting new requirements into database', error);
                 await this.db.run('ROLLBACK;');
                 return false;
             }
@@ -320,14 +320,14 @@ export class dbUtility {
     //     }
     // }
 
-    private static async saveConditions(conditions: Requirement[]): Promise<boolean> {
+    private static async saveRequirements(requirements: Requirement[]): Promise<boolean> {
         try {
-            const stmt = await this.db.prepare('INSERT INTO condition (event_id, text) VALUES (:event_id, :text)');
+            const stmt = await this.db.prepare('INSERT INTO requirement (event_id, text) VALUES (:event_id, :text)');
 
-            for (const condition of conditions) {
+            for (const requirement of requirements) {
                 await stmt.bind({
-                    ':event_id': condition.event_id,
-                    ':text': condition.text
+                    ':event_id': requirement.event_id,
+                    ':text': requirement.text
                 });
                 await stmt.run();
             }
@@ -336,7 +336,7 @@ export class dbUtility {
 
             return true;
         } catch (error) {
-            console.error('Error inserting new conditions into database', error);
+            console.error('Error inserting new requirements into database', error);
             return false;
         }
     }
