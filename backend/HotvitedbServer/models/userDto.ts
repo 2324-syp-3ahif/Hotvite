@@ -2,5 +2,5 @@ export interface UserDto {
     username: string;
     email: string;
     password: string;
-    aboutme: string;
+    about_me: string;
 }

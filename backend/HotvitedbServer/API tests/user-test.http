@@ -10,7 +10,7 @@ Content-Type: application/json
   "username": "admin",
   "email": "admin@hotvite.com",
   "password": "admin",
-  "aboutme": "Some text here yayayayyayayayyaaya test to see if it works with line breaks and stuff"
+  "about_me": "Some text here yayayayyayayayyaaya test to see if it works with line breaks and stuff"
 }
 
 ### login

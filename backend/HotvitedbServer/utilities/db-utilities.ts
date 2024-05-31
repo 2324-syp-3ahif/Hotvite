@@ -29,7 +29,7 @@ export class dbUtility {
                 ':username': user.username,
                 ':email': user.email,
                 ':password': user.password,
-                ':aboutme': user.aboutme
+                ':aboutme': user.about_me
             });
             await stmt.run();
             await stmt.finalize();
