@@ -105,8 +105,7 @@ function initAddress() {
     const latLng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({location: latLng}, (results, status) => {
       if (status === "OK" && results[0]) {
-        const addressData = results[0].formatted_address.replace(/, /g, '\n');
-        addressInput.value = addressData;
+        addressInput.value = results[0].formatted_address.replace(/, /g, '\n');
       } else {
         addressInput.value = "Address not found";
       }
@@ -119,8 +118,9 @@ function submitEventForm() {
   const title = document.getElementById('event-title').value;
   const description = document.getElementById('event-description').value;
   const dateData = document.getElementById('event-date').value.split('-');
-  const price = parseFloat(document.getElementById('event-price').value);
+  const price = document.getElementById('event-price').value.slice(0, -1);
   const addressData = document.getElementById('event-address').value.split('\n');
+  const participants = document.getElementById('event-participants-count').value;
   const requirements = [];
   const requirementElements = document.getElementsByClassName('event-requirement');
   const chatEnabled = toggleChatButton.value === "Enabled";
@@ -138,9 +138,10 @@ function submitEventForm() {
     description: description,
     address: addressData, // TODO: Validate addressData
     location: {latitude: lat, longitude: lng},
+    max_participants: participants,
+    price: price,
     type: type,
     chat: chatEnabled,
-    price: price,
     created_at: Date.now(),
     event_start_date: dateStringToTimestamp(dateData[0].trim()),
     event_end_date: dateStringToTimestamp(dateData[1].trim()),
@@ -163,7 +164,6 @@ function submitEventForm() {
 
 
 function dateStringToTimestamp(date) {
-  // date format: "dd.MM.yyyy HH:mm"
   const dateArray = date.split(' ');
   const dateData = dateArray[0].split('.');
   const timeData = dateArray[1].split(':');

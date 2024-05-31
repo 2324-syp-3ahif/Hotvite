@@ -2,9 +2,7 @@ let map;
 let miniMarker;
 
 async function initMap(fullInit = true) {
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
   map = new google.maps.Map(document.getElementById("map"), {
-    // 48.143168, 13.991348
     center: { lat: 48.143168, lng: 13.991348 },
     zoom: fullInit ? 8 : 15,
     minZoom: 3,
@@ -20,12 +18,13 @@ async function initMap(fullInit = true) {
     zoomControl: fullInit,
     streetViewControl: false,
     fullscreenControl: false,
+    clickableIcons: false,
     mapId: "de1416925a195d99",
   });
 
   if(fullInit) {
-    await loadEvents(AdvancedMarkerElement);
-    await initMapClickEvent(AdvancedMarkerElement);
+    await loadEvents();
+    await initMapClickEvent();
   }
 }
 
@@ -38,35 +37,31 @@ async function initMiniMap() {
 }
 
 async function updateMiniMarker(lat, lng) {
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
   map.panTo({ lat: lat, lng: lng });
   if (miniMarker) {
     miniMarker.setMap(null);
   }
-  miniMarker = new AdvancedMarkerElement({
-    position: { lat, lng },
-    map,
-    content: createImgElement("../assets/event/create_event_icon.png")
-  });
+  miniMarker = await createNewMarker(lat, lng, "create_event_icon.png");
 }
 
 
-async function loadEvents(AdvancedMarkerElement){
+async function loadEvents(){
   requestJSON("/api/event/getAll").then((data) => {
-    data.forEach((event) => {
-      createMarker(event, AdvancedMarkerElement);
-    });
+    if(data) {
+      data.forEach(async (event) => {
+        await createMarker(event);
+      });
+    }
   });
 }
 
-async function createMarker(event, AdvancedMarkerElement){
-  const img = createImgElement("../assets/event/ev_icon.png");
-  requestJSON(`/api/event/getLocationById/${event.location_id}`).then((location) => {
+async function createMarker(event){
+  requestJSON(`/api/event/getLocationById/${event.location_id}`).then(async (location) => {
     const { latitude, longitude } = location;
-    new AdvancedMarkerElement({
-      position: { lat: +latitude, lng: +longitude },
-      map,
-      content: img,
+    return await createNewMarker(+latitude, +longitude);
+  }).then((marker) => {
+    marker.addListener("click", () => {
+      window.location.href = `./event.html?id=${event.id}`;
     });
   });
 }
@@ -74,14 +69,13 @@ async function createMarker(event, AdvancedMarkerElement){
 function createImgElement(imgSrc){
   const img = document.createElement("img");
   img.src = imgSrc;
-  // img.src = "https://cdn.discordapp.com/attachments/907636016674902037/1226616985413226536/2c90950f81e0533916080d2f4c8f71ad.webp?ex=66256b16&is=6612f616&hm=4560c272309319a581a433b1acac3e8f0bee79a9a558594a5fbbf0db23ab002a&;"
   img.style.width = "30px";
   img.style.height = "39px";
   img.style.filter = "drop-shadow(0 0 2px white)"
   return img;
 }
 
-async function initMapClickEvent(AdvancedMarkerElement) {
+async function initMapClickEvent() {
   let currentTimeout = null;
   let setMarker = null;
   map.addListener("rightclick", async (event) => {
@@ -93,11 +87,7 @@ async function initMapClickEvent(AdvancedMarkerElement) {
     if (setMarker) {
       setMarker.setMap(null);
     }
-    setMarker = new AdvancedMarkerElement({
-      position: { lat, lng },
-      map,
-      content: createImgElement("../assets/event/ev_icon.png"),
-    });
+    setMarker = createNewMarker(lat, lng);
     map.setZoom(12);
     map.panTo({ lat, lng });
     currentTimeout = setTimeout(() => {
@@ -112,11 +102,15 @@ async function initMapClickEvent(AdvancedMarkerElement) {
     if (setMarker) {
       setMarker.setMap(null);
     }
+  });
+}
 
-    let user = {
-      username: "test",
-      email: "email@test.gmx.at"
-    }
+async function createNewMarker(lat, lng, icon="ev_icon.png"){
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+  return new AdvancedMarkerElement({
+    position: {lat, lng},
+    map,
+    content: createImgElement(`../assets/event/${icon}`),
   });
 }
 
