@@ -251,5 +251,48 @@
     ...
     }
     </pre>
+<h3>get /getLocationById/:id</h3>
+<p>Gets the location of an event by its ID. <span class="no-token-required">No token required.</span></p>
+<pre>
+    good Response:
+    code: 200
+    {
+        "id": "id",
+        "latitude": "43.24354346",
+        "longitude": "23.23423423",
+    }
+    </pre>
+<h3>get /getAddressById/:id</h3>
+<p>Gets the address of an event by its ID. <span class="no-token-required">No token required.</span></p>
+<pre>
+    good Response:
+    code: 200
+    {
+        "id": "id",
+        "Street": "geistig Straße 123",
+        "city": "cool city",
+        "country": "austria"
+    }
+    </pre>
+<h3>get /getRequirementsByEventId/:id</h3>
+<p>Gets all requirements of an event associated with the event id. <span class="no-token-required">No token required.</span></p>
+<pre>
+    good Response:
+    code: 200
+    {
+        {
+            "id": "event_id",
+            "text": "min age 18"
+        },
+        {
+            "id": "event_id",
+            "text": "no smoking"
+        },
+        {
+            "id": "event_id",
+            "text": "no pets allowed"
+        }
+    }
+    </pre>
 </body>
 </html>
