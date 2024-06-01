@@ -9,6 +9,7 @@
   <title>Hotvite - Discover</title>
   <script src="../src/communication.js"></script>
   <script src="../src/load-map.js"></script>
+  <script src="../src/welcome-popup.js"></script>
   <link rel="stylesheet" href="../style/css/indexstyle.css">
   <link rel="stylesheet" href="../style/css/headerstyle.css">
   <link rel="stylesheet" href="../style/css/welcome-popupstyle.css">
@@ -111,20 +112,6 @@
 <!--Login/Register-->
 <div id="login-container"></div>
 <script>
-  //Welcome-popup
-  function closeWelcomePopup() {
-    document.getElementById("welcome-popup").style.display = "none";
-    localStorage.setItem('welcomePopupShown', 'true');
-  }
-  function checkPopup() {
-    if (!localStorage.getItem('welcomePopupShown')) {
-      document.getElementById("welcome-popup").style.display = "block";
-    } else {
-      document.getElementById("welcome-popup").style.display = "none";
-    }
-  }
-  window.onload = checkPopup;
-
   /*
   WARNING! DELETE THIS BEFORE FINAL-PUSHING!
   THIS IS JUST FOR TESTING PURPOSES UNTIL THE LOGIN FUNCTIONALITY IS IMPLEMENTED!
