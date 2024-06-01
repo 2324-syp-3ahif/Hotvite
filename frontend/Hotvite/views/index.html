@@ -10,7 +10,6 @@
   <script src="../src/communication.js"></script>
   <script src="../src/load-map.js"></script>
   <script src="../src/welcome-popup.js"></script>
-  <script src="../src/switch-login-register.js"></script>
   <link rel="stylesheet" href="../style/css/indexstyle.css">
   <link rel="stylesheet" href="../style/css/headerstyle.css">
   <link rel="stylesheet" href="../style/css/welcome-popupstyle.css">
@@ -34,7 +33,7 @@
 <header class="hv-sidebar">
   <div id="menu-buttons">
     <!--<a href="#"><img src="../assets/sidebar/LoginButton.png" alt="login"></a>-->
-    <button id="login-menu-button" onclick="openLogin()" type="button"><img src="../assets/sidebar/LoginButton.png" alt="login"></button>
+    <span id="login-menu-button" onclick="openLogin()"><img src="../assets/sidebar/LoginButton.png" alt="login"></span>
     <a href="#"><img src="../assets/sidebar/MenuButton.png" alt="menu"></a>
     <a href="#"><img src="../assets/sidebar/RecentButton.png" alt="recent"></a>
     <a href="#"><img src="../assets/sidebar/SavedButton.png" alt="saved"></a>
@@ -114,7 +113,7 @@
 </div>
 
 <!--Login/Register-->
-<div id="login-container"></div>
+<iframe src="login.html" id="portal-popup"></iframe>
 <script>
   /*
   WARNING! DELETE THIS BEFORE FINAL-PUSHING!
@@ -138,6 +137,6 @@
   // REGION END
 
 </script>
-<script src="../src/popup-login.js"></script>
+<script src="../src/portal-popup.js"></script>
 </body>
 </html>
