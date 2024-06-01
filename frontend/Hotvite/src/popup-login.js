@@ -5,17 +5,21 @@ function openLogin() {
     .then(response => response.text())
     .then(data => {
       loginContainer.innerHTML = data;
-      const login = document.getElementById('login-popup');
-      login.style.display = "flex";
-      login.style.alignItems = "center";
+      loginContainer.style.display = "flex";
 
       // Close when clicking outside
       window.onclick = function(event) {
-        if (event.target === login) {
-          login.style.display = "none";
+        if (event.target === loginContainer) {
+          closeLoginPopup();
         }
       }
     })
     .catch(error => console.error('Error fetching the modal content:', error));
 }
+
 document.getElementById('login-button').addEventListener('click', openLogin);
+
+function closeLoginPopup() {
+  const loginContainer = document.getElementById('login-container');
+  loginContainer.style.display = "none";
+}
