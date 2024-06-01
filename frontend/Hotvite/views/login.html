@@ -7,7 +7,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../style/css/login.css">
   <link rel="stylesheet" href="../style/css/palettes.css">
-  <script src="../src/login.js"></script>
+  <script src="../src/portal.js"></script>
 </head>
 <body>
 <div id="login-popup" class="login-popup">
@@ -15,7 +15,7 @@
     <div class="button" id="login-form-button">Login</div>
     <div class="button" onclick="window.location.href='register.html'" id="register-form-button">Register</div>
   </div>
-  <form id="login-form">
+  <form id="login-form" onsubmit="event.preventDefault(); sendLoginRequest(this)">
     <div>
       <label for="email-input">Email</label>
       <input class="form-control" id="email-input" type="text" name="email" placeholder="example@gmail.com">
@@ -31,7 +31,7 @@
     </div>
   </form>
   <div id="login-footer">
-    <p>Click <a class="hyperlink">here</a> if you forgot your password. Click <a class="hyperlink">here</a> if you don't have an account yet.</p>
+    <p>Click <a class="hyperlink">here</a> if you forgot your password. Click <a class="hyperlink" href="register.html">here</a> if you don't have an account yet.</p>
   </div>
 </div>
 <div id="register-popup"></div>
