@@ -19,6 +19,7 @@ function sendRequest(route, method="GET", body=null, token=false, showLoginPromp
       openPortal();
     } else {
       console.error('Response-Error:', response);
+      throw response;
     }
   });
 }

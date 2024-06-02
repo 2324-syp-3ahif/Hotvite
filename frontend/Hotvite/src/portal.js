@@ -30,31 +30,14 @@ function sendLoginRequest(formElement) {
     password: password
   };
 
-  fetch('http://localhost:3000/api/user/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(user)
-  })
-    .then(response => response.json())
-    .then(data => {
-      localStorage.setItem("token", data.token);
-      closeMe();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      let message;
-      switch (error.message) {
-        case 'Not Found: User not found.':
-          message = "Invalid email or passwort";
-          break;
-        default:
-          message = "An unexpected error occurred.";
-          break;
-      }
-      document.getElementById('login-error').textContent = message;
-    });
+  sendRequest('/user/login', 'POST', user).then((data) => {
+    localStorage.setItem("token", data.token);
+    closeMe();
+  }).catch(async (error) => {
+    const loginError = document.getElementById('login-error');
+    loginError.innerText = await error.text();
+    loginError.style.display = 'block';
+  });
 }
 
 function sendRegisterRequest(formElement) {

@@ -74,23 +74,23 @@ userRouter.post("/login", async (req :  Request, res : Response) => {
         const {email, password} = {email: req.body.email, password: req.body.password};
 
         if (!password || !email) {
-            return res.status(StatusCodes.BAD_REQUEST).send("requiring <email, password>");
+            return res.status(StatusCodes.BAD_REQUEST).send("Requiring <email, password>");
         }
 
         if (!secret_key) {
-            return res.sendStatus(StatusCodes.UNAUTHORIZED);
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Server could not process request. Please try again later.");
         }
 
         const user = await dbUtility.getTableByValue<User>("user", "email", email);
 
         if (!user) {
-            return res.status(StatusCodes.NOT_FOUND).send("User not found");
+            return res.status(StatusCodes.NOT_FOUND).send("User does not exist");
         }
 
         const isValid = await comparePassword(password, user.password);
 
         if (!isValid) {
-            return res.status(StatusCodes.BAD_REQUEST).send("Email or password not valid");
+            return res.status(StatusCodes.BAD_REQUEST).send("Invalid password");
         }
 
         const userClaims = {
