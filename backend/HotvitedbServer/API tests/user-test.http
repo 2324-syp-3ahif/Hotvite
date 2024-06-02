@@ -7,10 +7,10 @@ POST {{url}}/signup
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "email": "admin@hotvite.com",
-  "password": "admin",
-  "about_me": "Some text here yayayayyayayayyaaya test to see if it works with line breaks and stuff"
+  "username": "user",
+  "email": "someone@gmail.com",
+  "password": "1234",
+  "about_me": "Ich bin ein Student"
 }
 
 ### login

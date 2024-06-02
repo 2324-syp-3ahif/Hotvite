@@ -5,17 +5,14 @@ const eventType = document.getElementById('event-type');
 const eventAddress = document.getElementById('event-address');
 const eventRequirementsContainer = document.getElementById('event-requirements-container');
 const eventPrice = document.getElementById('event-price');
-const eventParticipantsContainer = document.getElementById('event-participants-container');
 const maxParticipants = document.getElementById('max-participants');
-const joinedParticipants = document.getElementById('joined-participants');
+const urlParams = new URLSearchParams(window.location.search);
+const eventId = urlParams.get('id');
 
 populateEventForm();
 function populateEventForm() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const eventId = urlParams.get('id');
   sendRequest(`/event/getEventById/${eventId}`).then(async (event) => {
     if(event) {
-      const participants = await sendRequest(`/event/getParticipantsFromEvent/${eventId}`).then((data) => data.users);
       const address = await sendRequest(`/event/getAddressById/${event.address_id}`).then((address) => {
         return `${address.street}\n${address.city}\n${address.country}`;
       });
@@ -28,14 +25,25 @@ function populateEventForm() {
       eventPrice.value = `${event.price}€`;
 
       maxParticipants.innerText = event.max_participants;
-      joinedParticipants.innerText = participants.length;
-      // TODO: Show participants
+      updateParticipants();
       await updateMiniMarker(+location.latitude, +location.longitude);
       sendRequest(`/event/getRequirementsByEventId/${eventId}`).then((requirements) => {
         requirements.forEach((requirement) => {
           eventRequirementsContainer.appendChild(createRequirementElement(requirement));
         });
       });
+      setEventFormHandleButtons(eventId);
+    } else {
+      console.error('Event not found');
+    }
+  });
+}
+
+function setEventFormHandleButtons(eventId) {
+  sendRequest(`/event/isCreator/${eventId}`, 'GET', "", true, false).then((response) => {
+    if (response) {
+      document.getElementById('event-action-edit').style.display = 'block';
+    } else {
       sendRequest(`/event/isUserRegistered/${eventId}`, 'GET', "", true, false).then((response) => {
         if (response) {
           showLeaveButton();
@@ -43,8 +51,6 @@ function populateEventForm() {
           showJoinButton();
         }
       });
-    } else {
-      console.error('Event not found');
     }
   });
 }
@@ -55,18 +61,20 @@ function timestampToDateTime(timestamp) {
 }
 
 function addUserToEvent() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const eventId = urlParams.get('id');
   sendRequest(`/event/register/${eventId}`, 'PUT', "", true).then((response) => {
-    if(response) showLeaveButton();
+    if(response) {
+      updateParticipants();
+      showLeaveButton();
+    }
   });
 }
 
 function removeUserFromEvent() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const eventId = urlParams.get('id');
   sendRequest(`/event/unregister/${eventId}`, 'PUT', "", true).then((response) => {
-    if(response) showJoinButton();
+    if(response) {
+      updateParticipants();
+      showJoinButton();
+    }
   });
 }
 
@@ -78,8 +86,45 @@ function showJoinButton() {
 }
 
 function showLeaveButton() {
-  const joinButton = document.getElementById("event-action-join");
   const leaveButton = document.getElementById("event-action-leave");
-  joinButton.style.display = 'none';
+  const joinButton = document.getElementById("event-action-join");
   leaveButton.style.display = 'block';
+  joinButton.style.display = 'none';
+}
+
+function updateParticipants() {
+  sendRequest(`/event/getParticipantsFromEvent/${eventId}`).then((data) => data.users).then((participants) => {
+    const eventParticipantsContainer = document.getElementById('event-participants-container');
+    const joinedParticipants = document.getElementById('joined-participants');
+    joinedParticipants.innerText = participants.length;
+    if(participants.length === 0) {
+      eventParticipantsContainer.innerHTML = '<span id="participants-display-text">Be the first to join this event!</span>';
+    } else {
+      eventParticipantsContainer.innerHTML = '';
+      participants.forEach((participant) => {
+        eventParticipantsContainer.appendChild(createParticipantElement(participant));
+      });
+    }
+  });
+}
+
+function createParticipantElement(participant) {
+  /*
+                  <div class="participant">
+                  <img class="participant-profile-icon" src="../assets/event/close.png" alt="user">
+                  <p class="participant-name">John Doe</p>
+                </div>
+   */
+  const participantElement = document.createElement('div');
+  participantElement.classList.add('participant');
+  const participantProfileIcon = document.createElement('img');
+  participantProfileIcon.classList.add('participant-profile-icon');
+  participantProfileIcon.src = '...';
+  participantProfileIcon.alt = 'user';
+  const participantName = document.createElement('p');
+  participantName.classList.add('participant-name');
+  participantName.innerText = participant.username;
+  participantElement.appendChild(participantProfileIcon);
+  participantElement.appendChild(participantName);
+  return participantElement;
 }

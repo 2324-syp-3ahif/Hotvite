@@ -39,6 +39,25 @@ eventRouter.post("/create", isAuthenticated, async (req, res) => {
     }
 });
 
+eventRouter.get("/isCreator/:id", isAuthenticated, async (req, res) => {
+    try {
+        const payload = (req as AuthRequest).payload;
+        const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
+        const event = await dbUtility.getTableByValue<Event>("event", "id", req.params.id);
+
+        if (!user || !event) {
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User or event does not exist"});
+        }
+
+        const result = event.creator_id === user.id;
+
+        res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+        console.error("Error checking if user is creator of event:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while checking if user is creator of event"});
+    }
+});
+
 eventRouter.get("/getEventById/:id", async (req, res) => {
     const data: Event[] | undefined = await dbUtility.getAllFromTable("event");
 
