@@ -139,7 +139,7 @@ function submitEventForm() {
 
 function createEvent(data) {
   sendRequest('/event/create', 'POST', data, true).then((response) => {
-    if (response.status === 201) {
+    if (response.result) {
       window.location.href = './index.html';
     }
   });
