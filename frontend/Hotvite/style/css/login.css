@@ -86,3 +86,14 @@ input {
   text-align: center;
   margin-bottom: 20px;
 }
+
+#password-input {
+}
+
+#login-error {
+  font-style: italic;
+  padding: 10px 0 0;
+  margin: 0;
+  color: red;
+  display: none;
+}
