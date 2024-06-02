@@ -32,7 +32,7 @@ eventRouter.post("/create", isAuthenticated, async (req, res) => {
 
         await dbUtility.saveEvent(event);
 
-        res.status(StatusCodes.CREATED).json({result: true, event_id: event.id});
+        res.status(StatusCodes.CREATED).json(true);
     } catch (error) {
         console.error("Error creating event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while creating event"});

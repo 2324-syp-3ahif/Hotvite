@@ -1,6 +1,26 @@
 const urlParams = new URLSearchParams(window.location.search);
 const eventId = urlParams.get('id');
 
+function populateProfileForm(creatorId=null) {
+  const userName = document.getElementById("name");
+  const userAbout = document.getElementById("abt-user-text");
+  if(!creatorId) {
+    sendRequest(`/user/getMyDetails`, "GET", null, true, false).then((user) => {
+      if(user){
+        userName.innerText = user.username;
+        userAbout.innerText = user.aboutme;
+      }
+    });
+  } else {
+    sendRequest(`/user/getDetails/${creatorId}`).then((user) => {
+      if(user){
+        userName.innerText = user.username;
+        userAbout.innerText = user.aboutme;
+      }
+    });
+  }
+}
+
 function populateEventForm(edit=false) {
   const eventTitle = document.getElementById('event-title');
   const eventDescription = document.getElementById('event-description');
@@ -13,6 +33,7 @@ function populateEventForm(edit=false) {
 
   sendRequest(`/event/getEventById/${eventId}`).then(async (event) => {
     if(event) {
+      populateProfileForm(event.creator_id);
       const address = await sendRequest(`/event/getAddressById/${event.address_id}`).then((address) => {
         return `${address.street}\n${address.city}\n${address.country}`;
       });

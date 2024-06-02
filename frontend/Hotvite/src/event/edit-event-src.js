@@ -17,7 +17,7 @@ if(eventId) {
   populateEventForm(true);
 }
 
-
+populateProfileForm();
 initAddress();
 // Listeners
 priceInput.addEventListener("focus", function() {
@@ -139,7 +139,7 @@ function submitEventForm() {
 
 function createEvent(data) {
   sendRequest('/event/create', 'POST', data, true).then((response) => {
-    if (response.result) {
+    if (response) {
       window.location.href = './index.html';
     }
   });
