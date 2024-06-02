@@ -37,10 +37,25 @@ userRouter.post("/signup", validateUserSignup, async (req: Request, res: Respons
     }
 });
 
-userRouter.get("/getDetails", isAuthenticated, async (req: Request, res: Response) => {
+userRouter.get("/getMyDetails", isAuthenticated, async (req: Request, res: Response) => {
     try {
         const payload = (req as AuthRequest).payload;
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
+
+        if (!user) {
+            return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        }
+
+        res.status(200).json({username: user.username, aboutme: user.aboutme, email: user.email});
+    } catch (error) {
+        console.error("Error in my getting details:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
+    }
+});
+
+userRouter.get("/getDetails/:id", async (req: Request, res: Response) => {
+    try {
+        const user = await dbUtility.getTableByValue<User>("user", "id", req.params.id);
 
         if (!user) {
             return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -52,6 +67,7 @@ userRouter.get("/getDetails", isAuthenticated, async (req: Request, res: Respons
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });
+
 
 userRouter.post("/login", async (req :  Request, res : Response) => {
     try {

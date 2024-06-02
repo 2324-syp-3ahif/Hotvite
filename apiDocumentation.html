@@ -58,8 +58,18 @@
       "result": "user created"
     }
     </pre>
-<h3>GET /getDetails</h3>
+<h3>GET /getMyDetails</h3>
 <p>Gets the Details from the Current logged in user <span class="token-required">Token required.</span></p>
+    good Responses:
+    code: 200
+    {
+        "username": "user",
+        "aboutme": "Ich bin ein Student",
+        "email": "someone@gmail.com"
+    }
+    </pre>
+    <h3>GET /getDetails/:id</h3>
+    <p>Gets the Details from the Current logged in user <span class="no-token-required">No token required.</span></p>
     good Responses:
     code: 200
     {
