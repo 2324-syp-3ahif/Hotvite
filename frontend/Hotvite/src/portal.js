@@ -40,7 +40,10 @@ function sendLoginRequest(formElement) {
     })
     .catch(error => {
       console.error('Error:', error);
-      // Now do something with the error
+      /*const text = document.createElement("p");
+      text.innerText = error;
+
+      document.body.appendChild(text);*/
     });
 }
 
