@@ -1,16 +1,20 @@
 function openPortal() {
   const popup = document.getElementById('portal-popup');
   popup.style.display = "block";
-  popup.contentWindow.document.addEventListener('click', function (event) {
-    if (event.target === popup.contentWindow.document.body) {
-      closePortal();
-    }
-  });
 }
 
 function closePortal() {
   const popup = document.getElementById('portal-popup');
   popup.style.display = "none";
+}
+
+function addCloseListenerToParentWindow(){
+  const popup = window.parent.document.getElementById('portal-popup');
+  popup.contentWindow.document.addEventListener('click', function (event) {
+    if (event.target === popup.contentWindow.document.body) {
+      window.parent.closePortal();
+    }
+  });
 }
 
 function closeMe() {
