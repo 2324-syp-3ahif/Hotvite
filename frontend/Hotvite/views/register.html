@@ -10,7 +10,7 @@
           crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../style/css/registerstyle.css">
   <link rel="stylesheet" href="../style/css/palettes.css">
-  <script src="../src/signup.js"></script>
+  <script src="../src/portal.js"></script>
 </head>
 <body>
 <div id="register-popup">
@@ -18,7 +18,7 @@
     <div class="button" onclick="window.location.href='login.html'" id="login-form-button">Login</div>
     <div class="button" id="register-form-button">Register</div>
   </div>
-  <form id="register-form">
+  <form id="register-form" onsubmit="event.preventDefault(); sendRegisterRequest(this)">
     <div>
       <label for="username-input">Username</label>
       <input class="form-control" id="username-input" type="text" name="username" placeholder="Username">
