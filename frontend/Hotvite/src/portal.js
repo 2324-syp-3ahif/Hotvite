@@ -40,10 +40,16 @@ function sendLoginRequest(formElement) {
     })
     .catch(error => {
       console.error('Error:', error);
-      /*const text = document.createElement("p");
-      text.innerText = error;
-
-      document.body.appendChild(text);*/
+      let message;
+      switch (error.message) {
+        case 'Not Found: User not found.':
+          message = "Invalid email or passwort";
+          break;
+        default:
+          message = "An unexpected error occurred.";
+          break;
+      }
+      document.getElementById('login-error').textContent = message;
     });
 }
 
