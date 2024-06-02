@@ -7,10 +7,10 @@ POST {{url}}/signup
 Content-Type: application/json
 
 {
-  "username": "user",
-  "email": "someone@gmail.com",
-  "password": "1234",
-  "about_me": "Ich bin ein Student"
+  "username": "admin",
+  "email": "admin@hotvite.com",
+  "password": "admin",
+  "about_me": "Ich bin ein Admin"
 }
 
 ### login 1

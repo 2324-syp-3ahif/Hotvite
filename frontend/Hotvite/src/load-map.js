@@ -95,7 +95,7 @@ async function initMapClickEvent() {
     }, 1000);
   });
 
-  map.addListener("click", async (event) => {
+  map.addListener("click", () => {
     if (currentTimeout) {
       clearTimeout(currentTimeout);
     }
