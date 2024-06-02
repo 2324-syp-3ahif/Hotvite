@@ -123,7 +123,7 @@ eventRouter.put("/register/:id", isAuthenticated, async (req, res) => {
             return res.status(StatusCodes.BAD_REQUEST).json({error: "Creator cannot join their own event"});
         }
 
-        if(event_participant){
+        if(await dbUtility.isUserRegisteredToEvent(user, event)){
             return res.status(StatusCodes.BAD_REQUEST).json({error: "User is already registered to this event"});
         }
 

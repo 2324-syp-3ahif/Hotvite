@@ -105,9 +105,23 @@ export class dbUtility {
     }
 
     public static async isUserRegisteredToEvent(user: User, event: Event): Promise<boolean> {
-        const result = await dbUtility.getTableByValue('event_participant', 'event_id', event.id);
+        try {
+            const stmt = await this.db.prepare(`SELECT * FROM event_participant WHERE user_id = :user_id AND event_id = :event_id`);
 
-        return result !== undefined;
+            await stmt.bind({
+                ':user_id': user.id,
+                ':event_id': event.id
+            });
+
+            const result = await stmt.get();
+
+            await stmt.finalize();
+
+            return result !== undefined;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
     }
 
     public static async saveEvent(event: Event): Promise<boolean> {

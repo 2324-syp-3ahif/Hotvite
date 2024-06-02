@@ -46,7 +46,7 @@ async function updateMiniMarker(lat, lng) {
 
 
 async function loadEvents(){
-  requestJSON("/event/getAll").then((data) => {
+  sendRequest("/event/getAll").then((data) => {
     if(data) {
       data.forEach(async (event) => {
         await createMarkerElement(event);
@@ -56,7 +56,7 @@ async function loadEvents(){
 }
 
 async function createMarkerElement(event){
-  requestJSON(`/event/getLocationById/${event.location_id}`).then(async (location) => {
+  sendRequest(`/event/getLocationById/${event.location_id}`).then(async (location) => {
     const { latitude, longitude } = location;
     return await createNewMarker(+latitude, +longitude);
   }).then((marker) => {

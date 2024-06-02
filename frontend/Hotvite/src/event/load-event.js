@@ -109,12 +109,6 @@ function updateParticipants() {
 }
 
 function createParticipantElement(participant) {
-  /*
-                  <div class="participant">
-                  <img class="participant-profile-icon" src="../assets/event/close.png" alt="user">
-                  <p class="participant-name">John Doe</p>
-                </div>
-   */
   const participantElement = document.createElement('div');
   participantElement.classList.add('participant');
   const participantProfileIcon = document.createElement('img');

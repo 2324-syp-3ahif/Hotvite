@@ -326,8 +326,11 @@ Property Section
 }
 
 #event-action-save, #event-action-join {
-  display: none;
   background-color: var(--accept-bg-color) !important;
+}
+
+#event-action-join {
+  display: none;
 }
 
 #event-action-delete, #event-action-leave {
