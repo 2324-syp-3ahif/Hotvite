@@ -195,7 +195,7 @@ eventRouter.get("/getParticipantsFromEvent/:event_id", async (req, res) => {
             return res.status(StatusCodes.CONFLICT).json({error: "No users found"});
         }
 
-        const users : UserPublic[] = allUsers.filter(user => userIDs.includes(user.id)).map(user => ({username: user.username, about_me: user.about_me}));
+        const users : UserPublic[] = allUsers.filter(user => userIDs.includes(user.id)).map(user => ({username: user.username, about_me: user.aboutme}));
         res.status(200).json({users: users});
 
     } catch (error) {

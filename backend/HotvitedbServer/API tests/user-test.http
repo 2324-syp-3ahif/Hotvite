@@ -1,5 +1,5 @@
 @url=http://localhost:3000/api/user
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoidGVzdDEyQGdtYWlsLmNvbSJ9LCJleHAiOjE3MTYxNDI5MjAuMDA4LCJpYXQiOjE3MTYxNDExMjB9.Rqj2bdC2J0zCoEjoRb3FASRIvp0bnxtohhNBUcFQTrA
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic29tZW9uZUBnbWFpbC5jb20ifSwiZXhwIjoxNzE3MzUxNTkxLjcxLCJpYXQiOjE3MTczNDg4OTF9.9tOxWiCP3qOqz0d3-OuQKZlitEn9OXWxjCbGsve8dXo
 
 ### signup
 
@@ -13,7 +13,17 @@ Content-Type: application/json
   "about_me": "Ich bin ein Student"
 }
 
-### login
+### login 1
+
+POST {{url}}/login
+Content-Type: application/json
+
+{
+  "email": "someone@gmail.com",
+  "password": "1234"
+}
+
+### login 2
 
 POST {{url}}/login
 Content-Type: application/json
@@ -39,3 +49,8 @@ Content-Type: application/json
 DELETE {{url}}/delete
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
+### get user details
+
+GET {{url}}/getDetails
+Authorization: Bearer {{token}}
