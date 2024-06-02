@@ -50,6 +50,10 @@ export async function isValidEvent(event: Event): Promise<boolean> {
     //possible to add check here for the future
     //checking creator_id is no longer need because of token
 
+    if(!event.address.city || !event.address.country || !event.address.street){
+        return false;
+    }
+
     return event.created_at < event.event_start_date &&
         event.event_start_date < event.event_end_date;
 }
