@@ -87,9 +87,6 @@ input {
   margin-bottom: 20px;
 }
 
-#password-input {
-}
-
 #login-error {
   font-style: italic;
   padding: 10px 0 0;

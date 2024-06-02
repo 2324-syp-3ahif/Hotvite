@@ -19,11 +19,11 @@
   <form id="login-form" onsubmit="event.preventDefault(); sendLoginRequest(this)">
     <div>
       <label for="email-input">Email</label>
-      <input class="form-control" id="email-input" type="text" name="email" placeholder="example@gmail.com">
+      <input class="form-control" id="email-input" type="text" name="email" placeholder="example@gmail.com" required>
     </div>
     <div>
       <label for="password-input">Password</label>
-      <input class="form-control" id="password-input" type="password" name="password" placeholder="Password">
+      <input class="form-control" id="password-input" type="password" name="password" placeholder="Password" required>
       <p id="login-error"></p>
     </div>
     <div id="opt-container">

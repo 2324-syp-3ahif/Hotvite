@@ -24,7 +24,7 @@ userRouter.post("/signup", validateUserSignup, async (req: Request, res: Respons
         const user: User = await createUser(req.body);
 
         if (!await isValidNewUser(user)) {
-            res.status(StatusCodes.METHOD_NOT_ALLOWED).json({result: "user already exists"});
+            res.status(StatusCodes.METHOD_NOT_ALLOWED).send("User already exists");
             return;
         }
 
