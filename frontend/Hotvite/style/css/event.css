@@ -325,14 +325,30 @@ Property Section
 
 /* Form Action Buttons */
 #form-handle-buttons {
-  margin: auto 0 0 auto;
+  display: flex;
+  justify-content: end;
+  gap: 15px;
+  flex-direction: row-reverse;
 }
 
-#event-action-save {
-  background-color: var(--accept-bg-color);
+#form-handle-buttons input {
+  background-color: var(--field-color);
   color: white;
   border: none;
   padding: 10px 30px;
   border-radius: 5px;
   cursor: pointer;
+  width: auto;
+}
+
+#event-action-save, #event-action-join {
+  background-color: var(--accept-bg-color) !important;
+}
+
+#event-action-delete, #event-action-leave {
+  background-color: var(--reject-bg-color) !important;
+}
+
+#event-action-edit {
+  background-color: var(--button-color) !important;
 }

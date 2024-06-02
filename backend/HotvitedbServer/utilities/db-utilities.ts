@@ -104,6 +104,12 @@ export class dbUtility {
         }
     }
 
+    public static async isUserRegisteredToEvent(user: User, event: Event): Promise<boolean> {
+        const result = await dbUtility.getTableByValue('event_participant', 'event_id', event.id);
+
+        return result !== undefined;
+    }
+
     public static async saveEvent(event: Event): Promise<boolean> {
         try {
             await this.db.run('BEGIN TRANSACTION;');

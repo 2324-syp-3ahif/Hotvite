@@ -86,16 +86,26 @@ eventRouter.post("/changeEventDetails", isAuthenticated, async (req, res) => {
     }
 });
 
-eventRouter.post("/register", isAuthenticated, async (req, res) => {
+eventRouter.put("/register/:id", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
-        const eventID = req.body.event_id;
+        const eventID = req.params.id;
 
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
-        const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
+        const event = await dbUtility.getTableByValue<Event>("event", "id", eventID);
 
         if (!user || !event) {
             return res.status(StatusCodes.BAD_REQUEST).json({error: "User or event does not exist"});
+        }
+
+        const creator = await dbUtility.getTableByValue<User>("user", "id", event?.creator_id);
+        const event_participant = await dbUtility.getTableByValue<Event_participant>("event_participant", "user_id", user.id);
+        if (creator?.id === user.id) {
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "Creator cannot join their own event"});
+        }
+
+        if(event_participant){
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User is already registered to this event"});
         }
 
         const result = await dbUtility.registerUserToEvent(user, event)
@@ -107,10 +117,10 @@ eventRouter.post("/register", isAuthenticated, async (req, res) => {
     }
 });
 
-eventRouter.post("/unregister", isAuthenticated, async (req, res) => {
+eventRouter.put("/unregister/:id", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
-        const eventID = req.body.event_id;
+        const eventID = req.params.id;
 
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
         const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
@@ -128,17 +138,32 @@ eventRouter.post("/unregister", isAuthenticated, async (req, res) => {
     }
 });
 
-eventRouter.get("/getParticipantsFromEvent/:event_id", isAuthenticated, async (req, res) => {
+eventRouter.get("/isUserRegistered/:id", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
+        const eventID = req.params.id;
+
+        const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
+        const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
+
+        if (!user || !event) {
+            return res.status(StatusCodes.BAD_REQUEST).json({error: "User or event does not exist"});
+        }
+
+        const result = await dbUtility.isUserRegisteredToEvent(user, event);
+
+        res.status(StatusCodes.OK).json(result);
+    } catch (error) {
+        console.error("Error checking if user is registered to event:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while checking if user is registered to event"});
+    }
+});
+
+eventRouter.get("/getParticipantsFromEvent/:event_id", async (req, res) => {
+    try {
         const event_id = req.params.event_id;
 
-        const loggedInUser = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
         const participants = await dbUtility.getAllFromTable<Event_participant[]>("event_participant");
-
-        if (!loggedInUser) {
-            return res.status(StatusCodes.BAD_REQUEST).json({error: "User does not exist"});
-        }
 
         if (!participants) {
             return res.status(StatusCodes.OK).json({users: []});

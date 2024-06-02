@@ -53,4 +53,5 @@ div[style*="border: 2px solid rgb(26, 115, 232)"] {
   backdrop-filter: blur(3px);
   display: none; /* Initially hidden */
   border: none;
+  z-index: 100;
 }
