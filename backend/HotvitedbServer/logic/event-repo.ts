@@ -4,15 +4,22 @@ import {User} from "../models/user";
 import {EventDto} from "../models/eventDto";
 import {Requirement} from "../models/requirement";
 
-export function createEvent(eventDto: EventDto, user: User): Event {
-    const eventId = uuidv4();
-    const addressId = uuidv4();
-    const locationId = uuidv4();
+export function createUUID(): string {
+    return uuidv4();
+}
 
-    const requirementObjects = eventDto.requirements.map(req => {
-        const requirement: Requirement = {event_id: eventId, text: req};
-        return requirement;
+export function createRequirements(requirements: string[], eventId: string): Requirement[] {
+    return requirements.map(req => {
+        return {event_id: eventId, text: req};
     });
+}
+
+export function createEvent(eventDto: EventDto, user: User): Event {
+    const eventId = createUUID();
+    const addressId = createUUID();
+    const locationId = createUUID();
+
+    const requirementObjects = createRequirements(eventDto.requirements, eventId);
     return {
         id: eventId,
         title: eventDto.title,

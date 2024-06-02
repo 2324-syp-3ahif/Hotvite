@@ -8,6 +8,7 @@ import {Location} from "../models/location";
 import {User} from "../models/user";
 import {Address} from "../models/address";
 import {UpdateEventDto} from "../models/updateEventDto";
+import {createRequirements, createUUID} from "../logic/event-repo";
 
 export class dbUtility {
     private static db: sqlite.Database;
@@ -62,24 +63,84 @@ export class dbUtility {
         }
     }
 
-    public static async updateEvent(event: UpdateEventDto): Promise<boolean> {
+    public static async updateEvent(id: string, event: UpdateEventDto): Promise<boolean> {
         try {
-            const stmt = await this.db.prepare(
-                `UPDATE event SET title = :title, description = :description, status = :status WHERE id = '${event.id}'`
-            );
+            await this.db.run('BEGIN TRANSACTION;');
 
-            await stmt.bind({
-                ':title': event.title,
-                ':description': event.description,
-                ':status': event.status,
-            });
+            const addressId = createUUID();
+            const locationId = createUUID();
+            try {
+                await this.saveAddress({
+                    id: addressId,
+                    ...event.address
+                });
+            } catch (error) {
+                console.error('Error inserting new address into database', error);
+                await this.db.run('ROLLBACK;');
+                return false;
+            }
 
-            await stmt.run();
-            await stmt.finalize();
+            try {
+                await this.saveLocation({
+                    id: locationId,
+                    ...event.location
+                });
+            } catch (error) {
+                console.error('Error inserting new location into database', error);
+                await this.db.run('ROLLBACK;');
+                return false;
+            }
 
+            try {
+                await this.saveRequirements(id, createRequirements(event.requirements, id));
+            } catch (error) {
+                console.error('Error inserting new requirements into database', error);
+                await this.db.run('ROLLBACK;');
+                return false;
+            }
+
+            try {
+                const stmt = await this.db.prepare(
+                    `UPDATE event
+                     SET title = :title,
+                         description = :description,
+                         address_id = :address_id,
+                         location_id = :location_id,
+                         type = :type,
+                         price = :price,
+                         max_participants = :max_participants,
+                         chat = :chat,
+                         event_start_date = :event_start_date,
+                         event_end_date = :event_end_date
+                     WHERE id = :id`
+                );
+
+                await stmt.bind({
+                    ':title': event.title,
+                    ':description': event.description,
+                    ':address_id': addressId,
+                    ':location_id': locationId,
+                    ':type': event.type,
+                    ':price': event.price,
+                    ':max_participants': event.max_participants,
+                    ':chat': event.chat,
+                    ':event_start_date': event.event_start_date,
+                    ':event_end_date': event.event_end_date,
+                    ':id': id
+                });
+
+                await stmt.run();
+                await stmt.finalize();
+            } catch (error) {
+                console.error('Error inserting new event into database', error);
+                await this.db.run('ROLLBACK;');
+                return false;
+            }
+
+            await this.db.run('COMMIT;');
             return true;
         } catch (error) {
-            console.error('Error updating event in database', error);
+            console.error('Error inserting new event into database', error);
             return false;
         }
     }
@@ -144,16 +205,8 @@ export class dbUtility {
                 return false;
             }
 
-            // try {
-            //     await this.saveChat(event.chat);
-            // } catch (error) {
-            //     console.error('Error inserting new chat into database', error);
-            //     await this.db.run('ROLLBACK;');
-            //     return false;
-            // }
-
             try {
-                await this.saveRequirements(event.requirements);
+                await this.saveRequirements(event.id, event.requirements);
             } catch (error) {
                 console.error('Error inserting new requirements into database', error);
                 await this.db.run('ROLLBACK;');
@@ -340,19 +393,36 @@ export class dbUtility {
     //     }
     // }
 
-    private static async saveRequirements(requirements: Requirement[]): Promise<boolean> {
+    private static async saveRequirements(id: string, requirements: Requirement[]): Promise<boolean> {
         try {
-            const stmt = await this.db.prepare('INSERT INTO requirement (event_id, text) VALUES (:event_id, :text)');
+            const insertStmt = await this.db.prepare('INSERT INTO requirement (event_id, text) VALUES (:event_id, :text)');
+            const selectStmt = await this.db.prepare('SELECT * FROM requirement WHERE event_id = :event_id');
+            const deleteStmt = await this.db.prepare('DELETE FROM requirement WHERE event_id = :event_id AND text = :text');
+            await selectStmt.bind({':event_id': id});
+            const existingRequirements = await selectStmt.all();
 
+            for (const existingRequirement of existingRequirements) {
+                if (!requirements.find(req => req.text === existingRequirement.text)) {
+                    await deleteStmt.bind({
+                        ':event_id': id,
+                        ':text': existingRequirement.text
+                    });
+                    await deleteStmt.run();
+                }
+            }
             for (const requirement of requirements) {
-                await stmt.bind({
-                    ':event_id': requirement.event_id,
-                    ':text': requirement.text
-                });
-                await stmt.run();
+                if(!existingRequirements.find(req => req.text === requirement.text)) {
+                    await insertStmt.bind({
+                        ':event_id': id,
+                        ':text': requirement.text
+                    });
+                    await insertStmt.run();
+                }
             }
 
-            await stmt.finalize();
+            await insertStmt.finalize();
+            await selectStmt.finalize();
+            await deleteStmt.finalize();
 
             return true;
         } catch (error) {

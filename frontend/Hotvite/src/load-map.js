@@ -91,7 +91,7 @@ async function initMapClickEvent() {
     map.setZoom(20);
     map.panTo({ lat, lng });
     currentTimeout = setTimeout(() => {
-      window.location.href = "./create-event.html?lat=" + lat + "&lng=" + lng;
+      window.location.href = "./edit-event.html?lat=" + lat + "&lng=" + lng;
     }, 1000);
   });
 

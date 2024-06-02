@@ -4,9 +4,18 @@ const addRequirementButton = document.getElementById('event-requirements-add-but
 const toggleChatButton = document.getElementById('event-chat-button');
 const addressInput = document.getElementById('event-address');
 const urlSearchParams = new URLSearchParams(window.location.search);
+
 let lat = urlSearchParams.get('lat');
 let lng = urlSearchParams.get('lng');
-
+if(eventId) {
+  sendRequest(`/event/getEventById/${eventId}`).then(event => {
+    sendRequest(`/event/getLocationById/${event.location_id}`).then(location => {
+      lat = location.latitude;
+      lng = location.longitude;
+    });
+  });
+  populateEventForm(true);
+}
 
 
 initAddress();
@@ -63,8 +72,8 @@ function addRemoveButtonListener(removeButton) {
 
 
 // Create new requirement
-function createNewRequirement() {
-  requirementsContainer.insertBefore(createRequirementElement({ text: 'New Requirement' }, true), addRequirementButton);
+function createNewRequirement(text="") {
+  requirementsContainer.insertBefore(createRequirementElement(true, text), addRequirementButton);
 }
 
 // Init Address
@@ -89,7 +98,7 @@ function submitEventForm() {
   const dateData = document.getElementById('event-date').value.split('-');
   const price = document.getElementById('event-price').value.slice(0, -1);
   const addressData = document.getElementById('event-address').value.split('\n');
-  const participants = document.getElementById('event-participants-count').value;
+  const participants = document.getElementById('max-participants').value;
   const requirements = [];
   const requirementElements = document.getElementsByClassName('event-requirement');
   const chatEnabled = toggleChatButton.value === "Enabled";
@@ -115,21 +124,40 @@ function submitEventForm() {
     price: price,
     type: type,
     chat: chatEnabled,
-    created_at: Date.now(),
     event_start_date: dateStringToTimestamp(dateData[0].trim()),
     event_end_date: dateStringToTimestamp(dateData[1].trim()),
     requirements: requirements
   };
 
-  fetch('http://localhost:3000/api/event/create', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    },
-    body: JSON.stringify(data)
-  }).then((response) => {
+  if (eventId) {
+    updateEvent(data);
+  } else {
+    data.created_at = Date.now();
+    createEvent(data);
+  }
+}
+
+function createEvent(data) {
+  sendRequest('/event/create', 'POST', JSON.stringify(data), true).then((response) => {
     if (response.status === 201) {
+      window.location.href = './index.html';
+    }
+  });
+}
+
+function updateEvent(data) {
+  const eventId = urlSearchParams.get('id');
+  sendRequest(`/event/changeEventDetails/${eventId}`, 'PUT', data, true).then((response) => {
+    if (response) {
+      window.location.href = `./event.html?id=${eventId}`;
+    }
+  });
+}
+
+function deleteEvent() {
+  const eventId = urlSearchParams.get('id');
+  sendRequest(`/event/deleteEvent/${eventId}`, "DELETE", "", true).then((response) => {
+    if (response) {
       window.location.href = './index.html';
     }
   });

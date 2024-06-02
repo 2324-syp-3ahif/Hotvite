@@ -375,7 +375,7 @@ Property Section
   background-color: #494955;
 }
 
-#event-participants-count {
+#event-participants-container #max-participants {
   width: 50%;
   background-color: var(--field-color) !important;
 }

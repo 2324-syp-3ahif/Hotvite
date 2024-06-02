@@ -80,13 +80,14 @@ eventRouter.get("/getAll", async (req, res) => {
     }
 });
 
-eventRouter.post("/changeEventDetails", isAuthenticated, async (req, res) => {
+eventRouter.put("/changeEventDetails/:id", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
+        const eventId = req.params.id;
         const newEvent: UpdateEventDto = req.body;
 
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
-        const eventExists = await dbUtility.getTableByValue<Event>("event", "id", newEvent.id)
+        const eventExists = await dbUtility.getTableByValue<Event>("event", "id", eventId)
 
         if (!user || !eventExists) {
             return res.status(StatusCodes.BAD_REQUEST).json({error: "User or event does not exist"});
@@ -96,9 +97,9 @@ eventRouter.post("/changeEventDetails", isAuthenticated, async (req, res) => {
             return res.status(StatusCodes.FORBIDDEN).json({error: "User is not the creator of the event"});
         }
 
-        const result = await dbUtility.updateEvent(newEvent)
+        const result = await dbUtility.updateEvent(eventId, newEvent)
 
-        res.status(StatusCodes.OK).json({result: result});
+        res.status(StatusCodes.OK).json(result);
     } catch (error) {
         console.error("Error registering user to event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while updating event details"});
@@ -118,7 +119,6 @@ eventRouter.put("/register/:id", isAuthenticated, async (req, res) => {
         }
 
         const creator = await dbUtility.getTableByValue<User>("user", "id", event?.creator_id);
-        const event_participant = await dbUtility.getTableByValue<Event_participant>("event_participant", "user_id", user.id);
         if (creator?.id === user.id) {
             return res.status(StatusCodes.BAD_REQUEST).json({error: "Creator cannot join their own event"});
         }
@@ -204,10 +204,10 @@ eventRouter.get("/getParticipantsFromEvent/:event_id", async (req, res) => {
     }
 });
 
-eventRouter.delete("/deleteEvent", isAuthenticated, async (req, res) => {
+eventRouter.delete("/deleteEvent/:id", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
-        const eventID = req.body.event_id;
+        const eventID = req.params.id;
 
         const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
         const event = await dbUtility.getTableByValue<Event>("event", "id", eventID)
@@ -222,7 +222,7 @@ eventRouter.delete("/deleteEvent", isAuthenticated, async (req, res) => {
 
         const result = await dbUtility.deleteRowInTable("event", "id", event.id);
 
-        res.status(StatusCodes.OK).json({result: result});
+        res.status(StatusCodes.OK).json(result);
     } catch (error) {
         console.error("Error unregistering user to event:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Something went wrong while deleting event"});

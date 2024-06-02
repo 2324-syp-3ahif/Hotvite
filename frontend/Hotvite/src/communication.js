@@ -4,11 +4,12 @@ function sendRequest(route, method="GET", body=null, token=false, showLoginPromp
   const reqest = {
     method: method,
     headers: {
+      'Content-Type': 'application/json',
       'Authorization': token ? 'Bearer ' + localStorage.getItem('token') : ''
     }
   };
   if (body) {
-    reqest.body = body;
+    reqest.body = JSON.stringify(body);
   }
   return fetch(`${url}${route}`, reqest).then(response => {
     if (response.ok) return response.json();
