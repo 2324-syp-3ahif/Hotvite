@@ -126,3 +126,6 @@ Wenn ein User sich für ein Event anmeldet, wird er benachrichtigt, wenn sich et
 
 ## 4. Data Model
 ![DataModel](assets/Datamodel.png)
+
+## 5. Architecture diagram
+![Architecture diagram](Architekturdiagramm.png)
