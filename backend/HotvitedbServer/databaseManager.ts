@@ -1,16 +1,16 @@
 import * as sqlite from "sqlite";
 import {open} from "sqlite";
 import sqlite3 from "sqlite3";
-import {Event} from "../models/event";
-import {Requirement} from "../models/requirement";
-import {Chat} from "../models/chat";
-import {Location} from "../models/location";
-import {User} from "../models/user";
-import {Address} from "../models/address";
-import {UpdateEventDto} from "../models/updateEventDto";
-import {createRequirements, createUUID} from "../logic/event-repo";
+import {v4 as uuidv4} from "uuid";
+import {User} from "./dataModels/user";
+import {UpdateEventDto} from "./dataModels/updateEventDto";
+import {createRequirements} from "./routes/event-router";
+import {Requirement} from "./dataModels/requirement";
+import {Event } from "./dataModels/event";
+import {Location } from "./dataModels/location";
+import {Address} from "./dataModels/address";
 
-export class dbUtility {
+export class databaseManager {
     private static db: sqlite.Database;
 
     static async initialize() {
@@ -67,8 +67,8 @@ export class dbUtility {
         try {
             await this.db.run('BEGIN TRANSACTION;');
 
-            const addressId = createUUID();
-            const locationId = createUUID();
+            const addressId = uuidv4();
+            const locationId = uuidv4();
             try {
                 await this.saveAddress({
                     id: addressId,
@@ -432,7 +432,7 @@ export class dbUtility {
     }
 
     public static async hasEntryInColumnInTable(table: string, column: string, value: string): Promise<boolean> {
-        const result = await dbUtility.getTableByValue(table, column, value);
+        const result = await databaseManager.getTableByValue(table, column, value);
 
         return result !== undefined;
     }

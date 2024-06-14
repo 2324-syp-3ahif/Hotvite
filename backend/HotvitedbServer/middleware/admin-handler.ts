@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {AuthRequest} from "../models/authRequest";
+import {AuthRequest} from "../dataModels/authRequest";
 
 export const adminHandler = (req: Request, res: Response, next: NextFunction) => {
     try {

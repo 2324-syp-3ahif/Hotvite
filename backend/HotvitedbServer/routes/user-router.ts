@@ -1,13 +1,15 @@
 import express, {Request, Response} from "express";
 import {check} from 'express-validator';
-import {dbUtility} from "../utilities/db-utilities";
-import {comparePassword, createUser, isValidNewUser} from "../logic/user-repo";
-import {User} from "../models/user";
+import {User} from "../dataModels/user";
 import {isAuthenticated} from "../middleware/auth-handler";
 import jwt from "jsonwebtoken";
 import {secret_key} from "../app";
-import {AuthRequest} from "../models/authRequest";
+import {AuthRequest} from "../dataModels/authRequest";
 import {StatusCodes} from "http-status-codes";
+import {UserDto} from "../dataModels/userDto";
+import bcrypt from "bcrypt";
+import {v4 as uuidv4} from "uuid";
+import {databaseManager} from "../databaseManager";
 
 export const userRouter = express.Router();
 
@@ -28,7 +30,7 @@ userRouter.post("/signup", validateUserSignup, async (req: Request, res: Respons
             return;
         }
 
-        await dbUtility.saveUser(user);
+        await databaseManager.saveUser(user);
 
         res.status(StatusCodes.CREATED).json({result: "user created"});
     } catch (error) {
@@ -40,7 +42,7 @@ userRouter.post("/signup", validateUserSignup, async (req: Request, res: Respons
 userRouter.get("/getMyDetails", isAuthenticated, async (req: Request, res: Response) => {
     try {
         const payload = (req as AuthRequest).payload;
-        const user = await dbUtility.getTableByValue<User>("user", "email", payload.user.email);
+        const user = await databaseManager.getTableByValue<User>("user", "email", payload.user.email);
 
         if (!user) {
             return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -55,7 +57,7 @@ userRouter.get("/getMyDetails", isAuthenticated, async (req: Request, res: Respo
 
 userRouter.get("/getDetails/:id", async (req: Request, res: Response) => {
     try {
-        const user = await dbUtility.getTableByValue<User>("user", "id", req.params.id);
+        const user = await databaseManager.getTableByValue<User>("user", "id", req.params.id);
 
         if (!user) {
             return res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -81,7 +83,7 @@ userRouter.post("/login", async (req :  Request, res : Response) => {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Server could not process request. Please try again later.");
         }
 
-        const user = await dbUtility.getTableByValue<User>("user", "email", email);
+        const user = await databaseManager.getTableByValue<User>("user", "email", email);
 
         if (!user) {
             return res.status(StatusCodes.NOT_FOUND).send("User does not exist");
@@ -123,7 +125,7 @@ userRouter.put("/changeUsername", isAuthenticated, async (req: Request, res: Res
         if (!username)
             return res.status(StatusCodes.BAD_REQUEST).send("need username as");
 
-        await dbUtility.updateValueByRowInTableWithCondition("user"
+        await databaseManager.updateValueByRowInTableWithCondition("user"
             , "username"
             , username
             , "email"
@@ -140,7 +142,7 @@ userRouter.delete("/delete", isAuthenticated, async (req, res) => {
     try {
         const payload = (req as AuthRequest).payload;
 
-        await dbUtility.deleteRowInTable("user", "email", payload.user.email);
+        await databaseManager.deleteRowInTable("user", "email", payload.user.email);
 
         res.status(StatusCodes.OK).send("user deleted");
     } catch (error) {
@@ -148,3 +150,25 @@ userRouter.delete("/delete", isAuthenticated, async (req, res) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error: "Internal server error"});
     }
 });
+
+export async function createUser(user: UserDto): Promise<User> {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+
+    return {
+        id: uuidv4(),
+        username: user.username,
+        email: user.email,
+        password: hashedPassword,
+        aboutme: user.about_me,
+    };
+}
+
+async function isValidNewUser(user: User): Promise<boolean> {
+    //check if the email is already in use
+
+    return !(await databaseManager.hasEntryInColumnInTable("user", "email", user.email));
+}
+
+async function comparePassword(password: string, hashedPassword: string) {
+    return await bcrypt.compare(password, hashedPassword);
+}

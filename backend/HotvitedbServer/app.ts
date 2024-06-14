@@ -3,7 +3,7 @@ import cors from "cors";
 import {userRouter} from "./routes/user-router";
 import {eventRouter} from "./routes/event-router";
 import dotenv from "dotenv";
-import {dbUtility} from "./utilities/db-utilities";
+import {databaseManager} from "./databaseManager";
 
 const server = express();
 
@@ -23,7 +23,7 @@ server.use("/api/event/", eventRouter);
 
 server.listen(3000, async () => {
     //initialize
-    await dbUtility.initialize();
+    await databaseManager.initialize();
 
     console.log("http://localhost:3000/");
     console.log(secret_key);
